@@ -1,0 +1,1130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>KGAT</title>
+    <url>/2023/02/24/KGAT/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="background">Background</h1>
+<p>利用KG作为辅助信息，并将KG与user-item graph 整合为一个图</p>
+<h2 id="background-1">Background</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230224155340260.png"
+alt="image-20230224155340260" />
+<figcaption aria-hidden="true">image-20230224155340260</figcaption>
+</figure>
+<p><strong>Previous model:</strong></p>
+<p>CF: behaviorally similar users would exhibit similar preference on
+items.</p>
+<p><strong>focus on the histories of similar users who also watched
+<span class="math inline">\(i1\)</span>, i.e., <span
+class="math inline">\(u4\)</span> and <span
+class="math inline">\(u5\)</span>;</strong></p>
+<p>SL: transform side information into a generic feature vector,
+together with user ID and item ID, and feed them into a supervised
+learning (SL) model to predict the score.</p>
+<p><strong>emphasize the similar items with the attribute <span
+class="math inline">\(e1\)</span>, i.e.$ i2$.</strong></p>
+<p><strong>current problem:</strong></p>
+<p>existing SL methods fail to unify them, and ignore other
+relationships in the graph:</p>
+<ol type="1">
+<li>the users in the yellow circle who watched other movies directed by
+the same person <span class="math inline">\(e_1\)</span>.</li>
+<li>the items in the grey circle that share other common relations with
+<span class="math inline">\(e_1\)</span>.</li>
+</ol>
+<h2 id="user-item-bipartite-graph-g_1">User-Item Bipartite Graph: <span
+class="math inline">\(G_1\)</span></h2>
+<p><span class="math display">\[
+\{(u,y_{ui},i)|u\in U, i\in I\}
+\]</span> <span class="math inline">\(U\)</span>: user sets</p>
+<p><span class="math inline">\(I\)</span>: item sets</p>
+<p><span class="math inline">\(y_{ui}\)</span>: if user <span
+class="math inline">\(u\)</span> interacts with item <span
+class="math inline">\(i\)</span> <span
+class="math inline">\(y_{ui}\)</span>=, else <span
+class="math inline">\(y_{ui}\)</span>=0.</p>
+<h2 id="knowledge-graph-g2">Knowledge Graph <span
+class="math inline">\(G2\)</span></h2>
+<p><span class="math display">\[
+\{(h,r,t)|h,t\in E, r\in R\}
+\]</span></p>
+<p><span class="math inline">\(t\)</span> there is a relationship <span
+class="math inline">\(r\)</span> from head entity <em>h</em> to tail
+entity <span class="math inline">\(t\)</span>.</p>
+<h2 id="ckg-combination-of-g1-and-g2"><span
+class="math inline">\(CKG\)</span>: Combination of <span
+class="math inline">\(G1\)</span> and <span
+class="math inline">\(G2\)</span></h2>
+<ol type="1">
+<li>represent each user-item behavior as a triplet $ (u,
+Interact,i)<span class="math inline">\(, where\)</span> y^{ui}$ =
+1.</li>
+<li>we establish a set of item-entity alignments</li>
+</ol>
+<p><span class="math display">\[
+A = \{(i, e)|i ∈ I, e ∈ E \}
+\]</span></p>
+<ol start="3" type="1">
+<li>based on the item-entity alignment set, the user-item graph can be
+integrated with KG as a unified graph.</li>
+</ol>
+<p><span class="math display">\[
+G = \{(h,r,t)|h,t ∈ E^′,r ∈R^′\}
+\]</span></p>
+<p><span class="math display">\[
+E^′ = E ∪ U
+\]</span></p>
+<p><span class="math display">\[
+R^′ = R ∪ {Interact}
+\]</span></p>
+<h1 id="methodology">Methodology</h1>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230222185609261.png"
+alt="image-20230222185609261" />
+<figcaption aria-hidden="true">image-20230222185609261</figcaption>
+</figure>
+<p>KGAT has three main components:</p>
+<ol type="1">
+<li>Embedding layer</li>
+<li>Attentive embedding propagation layer</li>
+<li>prediction layer</li>
+</ol>
+<h2 id="embedding-layer">Embedding layer</h2>
+<p>Using <strong>TransR</strong> to calculate embedding</p>
+<p><strong>Assumption</strong>: if a triplet (h,r,t) exist in the graph,
+<span class="math display">\[
+e^r_h+e_r\approx e_t^r
+\]</span> Herein, <span class="math inline">\(e^h\)</span>, <span
+class="math inline">\(e^t\)</span> ∈ <span
+class="math inline">\(R^d\)</span> and <span
+class="math inline">\(e^r\)</span> ∈ <span
+class="math inline">\(R^k\)</span>are the embedding for <em>h</em>,
+<em>t</em>, and <em>r</em>; and <span
+class="math inline">\(e^r_h\)</span>, <span
+class="math inline">\(e^r_t\)</span> are the projected representations
+of <span class="math inline">\(e^h\)</span>, <span
+class="math inline">\(e^t\)</span> in the relation <em>r</em>’s
+space.</p>
+<p><strong>Plausibility score</strong>:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230222193700417.png"
+alt="image-20230222193700417" />
+<figcaption aria-hidden="true">image-20230222193700417</figcaption>
+</figure>
+<p><span class="math inline">\(W_r ∈ R^{k\times d}\)</span> is the
+transformation matrix of relation <em>r</em>, which projects entities
+from the <em>d</em>-dimension entity space into the <em>k</em> dimension
+relation space.</p>
+<p>A lower score suggests that the triplet is more likely to be
+true.</p>
+<p><strong>Loss</strong>:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230222195306105.png"
+alt="image-20230222195306105" />
+<figcaption aria-hidden="true">image-20230222195306105</figcaption>
+</figure>
+<p><span class="math inline">\(\{(h,r,t,t^′ )|(h,r,t) \in G, (h,r,t^′ )
+\notin G\}\)</span>, <span class="math inline">\((h,r,t^′ )\)</span> is
+a negative sample constructed by replacing one entity in a valid triplet
+randomly.</p>
+<p><em>σ</em>(·): sigmoid function, ——》将分数映射再0-1区间，归一化</p>
+<p>？？？？？？？？？？？why this layer model working as a
+regularizer</p>
+<h2 id="attentive-embedding-propagation-layersupon-gcn">Attentive
+Embedding Propagation Layers(upon GCN)</h2>
+<h3 id="first-order-propagation">First-order propagation</h3>
+<p>和之前模型不同，这个的propagation layer encode了<span
+class="math inline">\(e_r\)</span>.</p>
+<p>For entity h, the information propagating from neighbor is :</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230222201217039.png"
+alt="image-20230222201217039" />
+<figcaption aria-hidden="true">image-20230222201217039</figcaption>
+</figure>
+<p><span class="math inline">\(π(h,r,t)\)</span>: to controls the decay
+factor on each propagation on edge (<em>h</em>,<em>r</em>,<em>t</em>),
+indicating how much information is propagated</p>
+<p>from <em>t</em> to <em>h</em> conditioned to relation <em>r</em>.</p>
+<p>For <span class="math inline">\(π(h,r,t)\)</span>, we use attention
+mechanism:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230222204949423.png"
+alt="image-20230222204949423" />
+<figcaption aria-hidden="true">image-20230222204949423</figcaption>
+</figure>
+<p>This makes the attention score dependent on the distance between
+<span class="math inline">\(e^h\)</span> and <span
+class="math inline">\(e^t\)</span> in the relation <em>r</em>’s
+space.</p>
+<p>这里，tanh用于增加非线性因素；但不缺定是否有归一化作用？？？？？归一化就可以把这个function的大小集中在角度上，但是这样<span
+class="math inline">\(e^h_t\)</span>也没有归一化，到时候看看输出参数</p>
+<p>and than use softmax to normalize(no need to use as<span
+class="math inline">\(\frac1{|N_t |}\)</span><span
+class="math inline">\(\frac1{|N_t ||N_h |}\)</span>)</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230222234256082.png"
+alt="image-20230222234256082" />
+<figcaption aria-hidden="true">image-20230222234256082</figcaption>
+</figure>
+<p>The final part is aggregation, threre are three choices:</p>
+<ol type="1">
+<li>GCN aggregator</li>
+</ol>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230222235616598.png"
+alt="image-20230222235616598" />
+<figcaption aria-hidden="true">image-20230222235616598</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>GraphSage aggregator</li>
+</ol>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230222235806956.png"
+alt="image-20230222235806956" />
+<figcaption aria-hidden="true">image-20230222235806956</figcaption>
+</figure>
+<ol start="3" type="1">
+<li>Bi-Interaction aggregator</li>
+</ol>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223000647293.png"
+alt="image-20230223000647293" />
+<figcaption aria-hidden="true">image-20230223000647293</figcaption>
+</figure>
+<h3 id="high-order-propagation">High-order Propagation</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223000834658.png"
+alt="image-20230223000834658" />
+<figcaption aria-hidden="true">image-20230223000834658</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223000850960.png"
+alt="image-20230223000850960" />
+<figcaption aria-hidden="true">image-20230223000850960</figcaption>
+</figure>
+<h2 id="model-prediction">Model Prediction</h2>
+<p>multi-layers combination and inner product</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223001515690.png"
+alt="image-20230223001515690" />
+<figcaption aria-hidden="true">image-20230223001515690</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223001526127.png"
+alt="image-20230223001526127" />
+<figcaption aria-hidden="true">image-20230223001526127</figcaption>
+</figure>
+<h2 id="optimizazion">Optimizazion</h2>
+<h4 id="loss">loss</h4>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223002144083.png"
+alt="image-20230223002144083" />
+<figcaption aria-hidden="true">image-20230223002144083</figcaption>
+</figure>
+<p><span class="math inline">\(L_{cf}\)</span> is BPR Loss</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223002439536.png"
+alt="image-20230223002439536" />
+<figcaption aria-hidden="true">image-20230223002439536</figcaption>
+</figure>
+<p><span class="math inline">\(L_{kg}\)</span> is loss forTranR .</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230222195306105.png"
+alt="image-20230222195306105" />
+<figcaption aria-hidden="true">image-20230222195306105</figcaption>
+</figure>
+<h4 id="optimizer">Optimizer</h4>
+<p>Adam</p>
+<h4 id="updata-method">updata method</h4>
+<p>we update the embeddings for all nodes;</p>
+<p>hereafter, we sample a batch of (<em>u</em>,<em>i</em>, <em>j</em>)
+randomly, retrieve their representations after <em>L</em> steps of
+propagation, and then update model parameters by using the gradients of
+the prediction loss.</p>
+<p>在同一个epoch中，先把所以数据扔进tranR训练，得到loss（此时不更新参数）</p>
+<p>然后sample算BPR LOSS</p>
+<h1 id="experiments">EXPERIMENTS</h1>
+<h2 id="rq1-performance-comparison">RQ1: Performance Comparison</h2>
+<ol type="1">
+<li>regular dataset</li>
+</ol>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223004843914.png"
+alt="image-20230223004843914" />
+<figcaption aria-hidden="true">image-20230223004843914</figcaption>
+</figure>
+<ol start="2" type="1">
+<li><p>Sparsity Levels</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223005253034.png"
+alt="image-20230223005253034" />
+<figcaption aria-hidden="true">image-20230223005253034</figcaption>
+</figure></li>
+</ol>
+<p>KGAT outperforms the other models in most cases, especially on the
+two sparsest user groups.</p>
+<p>说明KGAT能够缓解稀疏性影响</p>
+<h2 id="rq2study-of-kgat">RQ2：Study of KGAT</h2>
+<ol type="1">
+<li>study of layer influence and effect of aggregators</li>
+</ol>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223010038345.png"
+alt="image-20230223010038345" />
+<figcaption aria-hidden="true">image-20230223010038345</figcaption>
+</figure>
+<ol start="2" type="1">
+<li><p>cut attention layer and TransR layer</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223010347815.png"
+alt="image-20230223010347815" />
+<figcaption aria-hidden="true">image-20230223010347815</figcaption>
+</figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>RecSys</category>
+        <category>KGRec</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>LightGCN</title>
+    <url>/2023/02/24/LightGCN/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="background">Background</h1>
+<p>question: why concentrated to sum</p>
+<h2 id="main-contributes">Main contributes</h2>
+<ol type="1">
+<li><p>We empirically show that two common designs in GCN, feature
+transformation and nonlinear activation, have no positive effect on the
+effectiveness of collaborative filtering.</p>
+<p>GCN is originally proposed for node classification on the attributed
+graph, where each node has rich attributes as input features; whereas in
+the user-item interaction graph for CF, each node (user or item) is only
+described by a one-hot ID, which has no concrete semantics besides being
+an identifier.</p></li>
+<li><p>Propose LightGCN.</p></li>
+</ol>
+<h1 id="analyze-about-ngcf">Analyze about NGCF</h1>
+<h2 id="brief">Brief</h2>
+<p>完全想不起来的话建议先看NGCF的笔记</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213192715250.png"
+alt="image-20230213192715250" />
+<figcaption aria-hidden="true">image-20230213192715250</figcaption>
+</figure>
+<p>## Some experiment</p>
+<h3 id="method">Method</h3>
+<p>Using ablation studies, implement three simplified variants of
+NGCF:</p>
+<ol type="1">
+<li>NGCF-f: which removes the feature transformation matrices <span
+class="math inline">\(W1\)</span> and <span
+class="math inline">\(W2\)</span>.</li>
+<li>NGCF-n: which removes the non-linear activation function $ σ$.</li>
+<li>NGCF-fn: which removes both the feature transformation matrices and
+non-linear activation function.</li>
+</ol>
+<p><strong>Note</strong>: Since the core of GCN is to refine embeddings
+by propagation, we are more interested in the embedding quality under
+the same embedding size. Thus, we change the way of obtaining final
+embedding from concatenation (i.e., <span
+class="math inline">\(e_u^*=e_u^{(0)}\|e_u^{(1)}\|...\|e_u^{(L)}\)</span>)
+to sum(i.e., <span
+class="math inline">\(e_u^*=e_u^{(0)}+e_u^{(1)}+...+e_u^{(L)}\)</span>).</p>
+<p>This change has little effect on NGCF’s performance but makes the
+following ablation studies more indicative of the embedding quality
+refined by GCN.</p>
+<h3 id="result">Result</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213193937873.png"
+alt="image-20230213193937873" />
+<figcaption aria-hidden="true">image-20230213193937873</figcaption>
+</figure>
+<ol type="1">
+<li>Adding feature transformation imposes negative effect on NGCF, since
+removing it in both models of NGCF and NGCF-n improves the performance
+significantly;</li>
+<li>Adding nonlinear activation affects slightly when feature
+transformation is included, but it imposes negative effect when feature
+transformation is disabled.</li>
+<li>As a whole, feature transformation and nonlinear activation impose
+rather negative effect on NGCF, since by removing them simultaneously,
+NGCF-fn demonstrates large improvements over NGCF.</li>
+</ol>
+<h3 id="conclusion">Conclusion</h3>
+<p>The deterioration of NGCF stems from the training
+difficulty(underfitting), rather than overfitting, because:</p>
+<ol type="1">
+<li><p>Such lower training loss of NGCF-fn successfully transfers to
+better recommendation accuracy.</p></li>
+<li><p>NGCF is more powerful and complex, but it demonstrates higher
+training loss and worse generalization performance than NGCF-f.</p></li>
+</ol>
+<h1 id="model-of-lightgcn">Model of LightGCN</h1>
+<p>Consisting four parts:</p>
+<ol type="1">
+<li>initialize users and items embedding.</li>
+<li>Light Graph Convolution (LGC)</li>
+<li>Layer Combination</li>
+<li>Model Prediction</li>
+</ol>
+<h2 id="light-graph-convolution-lgc">Light Graph Convolution (LGC)</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213194939594.png"
+alt="image-20230213194939594" />
+<figcaption aria-hidden="true">image-20230213194939594</figcaption>
+</figure>
+<p>$ $： symmetric normalization, which can avoid the scale of
+embeddings increasing with graph convolution operations. Here can use
+other normalization, but symmetric normalization has good
+performance.</p>
+<p><strong>Note</strong>: Without self-connection, because the layer
+combination operation of LightGCN captures the same effect as
+self-connections.</p>
+<h2 id="layer-combination">Layer Combination</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213195607414.png"
+alt="image-20230213195607414" />
+<figcaption aria-hidden="true">image-20230213195607414</figcaption>
+</figure>
+<p><span class="math inline">\(α_k\)</span>can be treated as a
+hyperparameter to be tuned manually, or as a model parameter, and
+setting <span class="math inline">\(α_k\)</span> uniformly as <span
+class="math inline">\(1/(K + 1)\)</span> leads to good performance in
+general.</p>
+<p>This is probably because the training data does not contain
+sufficient signal to learn good α that can generalize to unknown
+data.</p>
+<p>The reason of using the Layer Combination:</p>
+<ol type="1">
+<li>With the increasing of the number of layers, the embeddings will be
+over-smoothed [27]. Thus simply using the last layer is
+problematic.</li>
+<li>The embeddings at different layers capture different semantics.</li>
+<li>Combining embeddings at different layers with weighted sum captures
+the effect of graph convolution with self-connections, an important
+trick in GCNs.</li>
+</ol>
+<h2 id="model-prediction">Model Prediction</h2>
+<p>inner product</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213200915280.png"
+alt="image-20230213200915280" />
+<figcaption aria-hidden="true">image-20230213200915280</figcaption>
+</figure>
+<h2 id="matrix-form">Matrix form</h2>
+<p>Similar to NGCF, and there are some explanations in detail in NGCF
+note.</p>
+<p>Light Graph Convolution:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213201201896.png"
+alt="image-20230213201201896" />
+<figcaption aria-hidden="true">image-20230213201201896</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213201107785.png"
+alt="image-20230213201107785" />
+<figcaption aria-hidden="true">image-20230213201107785</figcaption>
+</figure>
+<p>Layer combination:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213201221159.png"
+alt="image-20230213201221159" />
+<figcaption aria-hidden="true">image-20230213201221159</figcaption>
+</figure>
+<h1 id="analyze-about-lightgcn">Analyze about LightGCN</h1>
+<h2 id="relation-with-sgcn">Relation with SGCN</h2>
+<p><strong>Purpose</strong>: by doing layer combination, LightGCN
+subsumes the effect of self-connection thus there is no need for
+LightGCN to add self-connection in adjacency matrix.</p>
+<p>SGCN: a recent linear GCN model that integrates self-connection into
+graph convolution.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213201725744.png"
+alt="image-20230213201725744" />
+<figcaption aria-hidden="true">image-20230213201725744</figcaption>
+</figure>
+<p>In the following analysis, we omit the <span class="math inline">\((D
++ I)^{-\frac{1}{2}}\)</span> terms for simplicity, since they only
+re-scale embeddings.</p>
+<figure>
+<img
+src="C:\Users\37523\AppData\Roaming\Typora\typora-user-images\image-20230213212117430.png"
+alt="image-20230213212117430" />
+<figcaption aria-hidden="true">image-20230213212117430</figcaption>
+</figure>
+<p>The above derivation shows that, inserting self-connection into A and
+propagating embeddings on it, is essentially equivalent to a weighted
+sum of the embeddings propagated at each LGC layer.</p>
+<p>because <span class="math inline">\(AE^{(0)}=E^{(1)}\)</span>...<span
+class="math inline">\(A^KE^{(0)}=E^{(K)}\)</span></p>
+<h2 id="relation-with-appnp">Relation with APPNP</h2>
+<p><strong>Purpose</strong>: shows the underlying equivalence between
+LightGCN and APPNP, thus our LightGCN enjoys the sames benefits in
+propagating long-range with controllable overs-moothing.</p>
+<p>APPNP: a recent GCN variant that addresses over-smoothing. APPNP
+complements each propagation layer with the starting features.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213212642134.png"
+alt="image-20230213212642134" />
+<figcaption aria-hidden="true">image-20230213212642134</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213212845456.png"
+alt="image-20230213212845456" />
+<figcaption aria-hidden="true">image-20230213212845456</figcaption>
+</figure>
+<p>also equivalent to a weighted sum of the embeddings propagated at
+each LGC layer.</p>
+<h2 id="second-order-embedding-smoothness">Second-Order Embedding
+Smoothness</h2>
+<p><strong>Purpose</strong>: providing more insights into the working
+mechanism of LightGCN.</p>
+<p>below is influence from2-order neighbor to target node.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213213500081.png"
+alt="image-20230213213500081" />
+<figcaption aria-hidden="true">image-20230213213500081</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213213521206.png"
+alt="image-20230213213521206" />
+<figcaption aria-hidden="true">image-20230213213521206</figcaption>
+</figure>
+<p><strong>conclusion</strong>: the influence of a second-order neighbor
+v on u is determined by</p>
+<ol type="1">
+<li>the number of co-interacted items, the more the larger.</li>
+<li>the popularity of the co-interacted items, the less popularity
+(i.e., more indicative of user personalized preference) the larger</li>
+<li>the activity of v, the less active the larger.</li>
+</ol>
+<h1 id="model-train">Model Train</h1>
+<h3 id="loss-function">Loss function</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213213949666.png"
+alt="image-20230213213949666" />
+<figcaption aria-hidden="true">image-20230213213949666</figcaption>
+</figure>
+<h3 id="optimizer-adam">Optimizer: Adam</h3>
+<h3 id="no-dropout-strategy">No dropout strategy</h3>
+<p>The reason is that we do not have feature transformation weight
+matrices in LightGCN, thus enforcing L2 regularization on the embedding
+layer is sufficient to prevent overfitting.</p>
+<h1 id="experiment">Experiment</h1>
+<h2 id="compared-with-ngcf">compared with NGCF</h2>
+<ol type="1">
+<li>LightGCN performs better than NGCF and NGCF-fn, as NGCF-fn still
+contains more useless operations than LightGCN.</li>
+<li>Increasing the number of layers can improve performance, but the
+benefits diminish. Increasing the layer number from 0 to 1 leads to the
+largest performance gain, and using a layer number of 3 leads to
+satisfactory performance in most cases.</li>
+<li>LightGCN consistently obtains lower training loss, which indicates
+that LightGCN fits the training data better than NGCF. Moreover, the
+lower training loss successfully transfers to better testing accuracy,
+indicating the strong generalization power of LightGCN. In contrast, the
+higher training loss and lower testing accuracy of NGCF reflect the
+practical difficulty to train such a heavy model it well.</li>
+</ol>
+<h2 id="ablation-and-effectiveness-analyses">Ablation and Effectiveness
+Analyses</h2>
+<h3 id="impact-of-layer-combination">Impact of Layer Combination</h3>
+<h4 id="using-models">Using models:</h4>
+<ol type="1">
+<li>LightGCN</li>
+<li>LightGCN-single: does not use layer combination</li>
+</ol>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230215151920378.png"
+alt="image-20230215151920378" />
+<figcaption aria-hidden="true">image-20230215151920378</figcaption>
+</figure>
+<h4 id="conclusion-1">Conclusion</h4>
+<ol type="1">
+<li>Focusing on LightGCN-single, we find that its performance first
+improves and then drops when the layer number increases from 1 to 4.
+This indicates that smoothing a node’s embedding with its first-order
+and secondorder neighbors is very useful for CF, but will suffer from
+oversmoothing issues when higher-order neighbors are used.</li>
+<li>Focusing on LightGCN, we find that its performance gradually
+improves with the increasing of layers even using 4 layers. This
+justifies the effectiveness of layer combination for addressing
+over-smoothing.</li>
+<li>we find that LightGCN consistently outperforms LightGCN-single on
+Gowalla, but not on AmazonBook and Yelp2018. There are two reason:
+<ol type="1">
+<li>LightGCN-single is special case of LightGCN that sets αK to 1 and
+other αk to 0;</li>
+<li>we do not tune the <span class="math inline">\(αk\)</span> and
+simply set it as <span class="math inline">\(\frac{1}{K+1}\)</span>
+uniformly for LightGCN.</li>
+</ol></li>
+</ol>
+<h3 id="impact-of-symmetric-sqrt-normalization">Impact of Symmetric Sqrt
+Normalization</h3>
+<h4 id="setting">Setting:</h4>
+<ol type="1">
+<li>LightGCN-L: normalization only at the left side (i.e., the target
+node’s coefficient).</li>
+<li>LightGCN-R: the right side (i.e., the neighbor node’s
+coefficient).</li>
+<li>LightGCN-L1: use L1 normalization( i.e., removing the square
+root).</li>
+<li>LightGCN-L1-L: use L1 normalization only on the left side.</li>
+<li>LightGCN-L1-R: use L1 normalization only on the right side.</li>
+</ol>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230215153734701.png"
+alt="image-20230215153734701" />
+<figcaption aria-hidden="true">image-20230215153734701</figcaption>
+</figure>
+<h4 id="conclusion-2">Conclusion</h4>
+<ol type="1">
+<li>The best setting in general is using sqrt normalization at both
+sides (i.e., the current design of LightGCN). Removing either side will
+drop the performance largely.</li>
+<li>The second best setting is using L1 normalization at the left side
+only (i.e., LightGCN-L1-L). This is equivalent to normalize the
+adjacency matrix as a stochastic matrix by the
+in-degree(norm后矩阵无对称性).</li>
+<li>Normalizing symmetrically on two sides is helpful for the sqrt
+normalization, but will degrade the performance of L1
+normalization.</li>
+</ol>
+<h3 id="analysis-of-embedding-smoothness">Analysis of Embedding
+Smoothness</h3>
+<p><strong>Object</strong>: Making sure such
+smoothing（有点像聚类的感觉） of embeddings is the key reason of
+LightGCN’s effectiveness.</p>
+<p><strong>Method</strong>: we first define the smoothness of user
+embeddings as(用于衡量2-order
+neighbor的embedding差别大小，是否合理聚类的感觉):</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230215160123446.png"
+alt="image-20230215160123446" />
+<figcaption aria-hidden="true">image-20230215160123446</figcaption>
+</figure>
+<p>where the L2 norm on embeddings is used to eliminate the impact of
+the embedding’s scale.</p>
+<p><strong>result</strong>:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230215160328103.png"
+alt="image-20230215160328103" />
+<figcaption aria-hidden="true">image-20230215160328103</figcaption>
+</figure>
+<p><strong>Conclusion</strong>: the smoothness loss of LightGCN-single
+is much lower than that of MF.</p>
+<p>This indicates that by conducting light graph convolution, the
+embeddings become smoother and more suitable for recommendation.</p>
+<h2 id="hyper-parameter-studies">Hyper-parameter Studies</h2>
+<p><strong>object</strong>: Ensure the L2 regularization coefficient
+<span class="math inline">\(λ\)</span></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230215161009450.png"
+alt="image-20230215161009450" />
+<figcaption aria-hidden="true">image-20230215161009450</figcaption>
+</figure>
+<p><strong>Conclusion</strong>:</p>
+<ol type="1">
+<li>LightGCN is relatively insensitive to λ.</li>
+<li>Even when λ sets to 0, LightGCN is better than NGCF, which
+additionally uses dropout to prevent overfitting. This shows that
+LightGCN is less prone to overfitting</li>
+<li>When λ is larger than 1e−3, the performance drops quickly, which
+indicates that too strong regularization will negatively affect model
+normal training and is not encouraged.</li>
+</ol>
+]]></content>
+      <categories>
+        <category>RecSys</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>NGCF</title>
+    <url>/2023/02/24/NGCF/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="background">Background</h1>
+<p>question: example(the Laplacian)</p>
+<h2 id="some-definition">Some Definition</h2>
+<ol type="1">
+<li><p>Recommendation system: Estimate how likely a user will adopt an
+item based on the historical interaction like purchase and
+click.</p></li>
+<li><p>Collaborative filtering(CF): behaviorally similar users would
+exhibit similar preference on items.</p>
+<p>CF consists of</p>
+<ol type="1">
+<li><p>embedding: transforms users and items into vectorized
+representations. e.g. matrix factorization(MF),deep learning
+function...</p></li>
+<li><p>interaction modeling: reconstructs historical interactions based
+on the embeddings. e.g. inner product, neural function...</p></li>
+</ol></li>
+<li><p>collaborative signal: signal latent in user-item
+interactions</p></li>
+</ol>
+<h2 id="existing-problem">Existing Problem</h2>
+<p>The current embedding process of CF doesn't encode a collaborative
+signal. Most of them focus on the descriptive feature(e.g. user id,
+attributes). When the embeddings are insufficient in capturing CF, the
+methods have to rely on the interaction function to make up for the
+deficiency of suboptimal embeddings</p>
+<h2 id="main-contribute">Main contribute</h2>
+<ol type="1">
+<li><p>Highlight the critical importance of explicitly exploiting the
+collaborative signal in the embedding function of model-based CF
+methods.</p></li>
+<li><p>Propose NGCF, a new recommendation framework based on a graph
+neural network, which explicitly encodes the collaborative signal in the
+form of high-order connectivities by performing embedding
+propagation.</p></li>
+</ol>
+<h1 id="model">Model</h1>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230211111222966.png"
+alt="image-20230211111222966" />
+<figcaption aria-hidden="true">image-20230211111222966</figcaption>
+</figure>
+<p>There are three components in the framework:</p>
+<ol type="1">
+<li>Embedding layer: offers and initialization of user embeddings and
+item embeddings;</li>
+<li>Multiple embedding propagation layers: refine the embeddings by
+injecting high-order connectivity relations;</li>
+<li>Prediction layer: aggregates the refined embeddings from different
+propagation layers and outputs the affinity score of a user-item
+pair.</li>
+</ol>
+<h2 id="embedding-layer">Embedding layer</h2>
+<p>Just initializing user embeddings and item embeddings by using ID or
+other features.</p>
+<p>Get user embedding <span class="math inline">\(e_i\)</span> and item
+embedding <span class="math inline">\(e_u\)</span>.</p>
+<h2 id="multiple-embedding-propagation-layers">Multiple Embedding
+Propagation Layers</h2>
+<h3 id="one-layer-propagation">One layer propagation</h3>
+<p>It consists of two parts: Message Construction and Message
+aggregation.</p>
+<h4 id="message-construction">Message Construction</h4>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230211112521161.png"
+alt="image-20230211112521161" />
+<figcaption aria-hidden="true">image-20230211112521161</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230211111736136.png"
+alt="image-20230211111736136" />
+<figcaption aria-hidden="true">image-20230211111736136</figcaption>
+</figure>
+<p><span class="math inline">\(m_{u&lt;-i}\)</span>: the result of the
+message construction module. It is a message embedding that will be used
+to update the target node.</p>
+<p><span class="math inline">\(e_i\)</span>: Embedding of neighbor
+item.</p>
+<p><strong>meaning</strong> : encode neighbor item's feature.</p>
+<p><span class="math inline">\(e_i⊙e_u\)</span> : element-wise product
+of <span class="math inline">\(e_i\)</span> and <span
+class="math inline">\(e_u\)</span>.</p>
+<p><strong>meaning</strong>: encodes the interaction between <span
+class="math inline">\(e_i\)</span> and <span
+class="math inline">\(e_u\)</span> into the message and makes the
+message dependent on the affinity between <span
+class="math inline">\(e_i\)</span> and <span
+class="math inline">\(e_j\)</span>.</p>
+<p><span class="math inline">\(W_1\)</span>, <span
+class="math inline">\(W_2\)</span>: trainable weight matrices， the
+shape is (<span class="math inline">\(d&#39;\)</span>, <span
+class="math inline">\(d\)</span>), while <span
+class="math inline">\(d\)</span> is the size of the initial embedding,
+<span class="math inline">\(d&#39;\)</span> is the size of
+transformation size.</p>
+<p><span class="math inline">\(P_{ui}\)</span>: to control the decay
+factor on each propagation on edge (u, i). Here, we set <span
+class="math inline">\(P_{ui}\)</span> as <strong>Laplacian norm</strong>
+$ $, $ N_u$, $ N_i$ is the first-hot neighbors of user u and item i.
+(就是拉普拉斯矩阵归一化！！<span
+class="math inline">\(D^{-\frac{1}{2}}AD^{-\frac{1}{2}}\)</span>)</p>
+<p><strong>meaning</strong> -From the viewpoint of representation
+learning: <span class="math inline">\(P_{ui}\)</span> reflects how much
+the historical item contributes to the user preference.</p>
+<p>From the viewpoint of the message passing: <span
+class="math inline">\(P_{ui}\)</span> can be interpreted as a discount
+factor, considering the messages being propagated should decay with the
+path length.</p>
+<h4 id="message-aggregation">Message Aggregation</h4>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230211151741633.png"
+alt="image-20230211151741633" />
+<figcaption aria-hidden="true">image-20230211151741633</figcaption>
+</figure>
+<p><span class="math inline">\(e_u^{(1)}\)</span>: the representation of
+user u after 1 propagation layer.</p>
+<p><span class="math inline">\(m_{u&lt;-u}\)</span>: self-connection of
+u. Here is <span class="math inline">\(W1e_u\)</span>.</p>
+<p><strong>meaning</strong>: retain information of original feature.</p>
+<p><span class="math inline">\(m_{u&lt;-i}\)</span>： neighbor node
+propagation.</p>
+<h3 id="high-order-propagation">High-order propagation</h3>
+<h4 id="formulate-form">Formulate Form</h4>
+<p>By stacking l-embedding propagation layers, a user (and an item) is
+capable of receiving the messages propagated from its l-hop neighbors.
+The formulates are similar to one-layer propagation.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212105956664.png"
+alt="image-20230212105956664" />
+<figcaption aria-hidden="true">image-20230212105956664</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212110019741.png"
+alt="image-20230212110019741" />
+<figcaption aria-hidden="true">image-20230212110019741</figcaption>
+</figure>
+<h4 id="matrix-form">Matrix Form</h4>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212110725475.png"
+alt="image-20230212110725475" />
+<figcaption aria-hidden="true">image-20230212110725475</figcaption>
+</figure>
+<p><span class="math inline">\(E^{(l)}\)</span> : the representations
+for users and items obtained after l-layers propagation. Shape is
+(N+M,d)</p>
+<p>L: Laplacian matrix for the user-item graph.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212111719667.png"
+alt="image-20230212111719667" />
+<figcaption aria-hidden="true">image-20230212111719667</figcaption>
+</figure>
+<p>D is the diagonal degree matrix. where <span
+class="math inline">\(D_{tt}=\vert N_t\vert\)</span> meaning the
+<code>D[t][t]</code> is the number of neighbors' node. The shape is
+(N+M, N+M), because there are totally n+m node(including user and
+item)</p>
+<p>A is the adjacency matrix. The shape of R is (N, M), while the shape
+of A is (N+M, N+M).</p>
+<p>some extra knowledge: <a
+href="https://zhuanlan.zhihu.com/p/362416124/">理解拉普拉斯矩阵</a></p>
+<p>I: identity matrix</p>
+<h5 id="a-simple-example-for-matrix-form">A simple example for matrix
+form:</h5>
+<p>Suppose we have 2 users (A, B), 3 items(C, D, E), N=2 and M=3.</p>
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/D9B00E7DDF74FF18B83E42668335328A.png" alt="D9B00E7DDF74FF18B83E42668335328A" style="zoom: 25%;" /></p>
+<p>Let consider this part: <span
+class="math inline">\((L+I)E^{(l-1)}W^{(l)}\)</span></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/81DBE0096BF060771E3355F2E6A34151.png"
+alt="81DBE0096BF060771E3355F2E6A34151" />
+<figcaption
+aria-hidden="true">81DBE0096BF060771E3355F2E6A34151</figcaption>
+</figure>
+<p>After calculating <span
+class="math inline">\((L+I)E^{(l-1)}\)</span>, we get information on
+self-connection and neighbor-propagation (after the Laplacian norm), and
+then we can multiply the trainable parameter W1(MLP).</p>
+<p>拉普拉斯矩阵归一化的不成熟小理解：</p>
+<p>①target node由n个邻居点做贡献，为了避免邻居越多，target
+node的value越大的情况，首先除<span
+class="math inline">\(\frac{1}{\sqrt{N_n}}\)</span>,
+大概也可以理解为邻居越多，每个邻居对其造成的影响越小</p>
+<p>②只做一次norm影响对称性，所以为了保持对称性在做一次<span
+class="math inline">\(\frac{1}{\sqrt{N_t}}\)</span>,可以理解为neighbor
+node有多少邻居对他给到每个邻居的权重有影响，是否能理解为邻居越多说明这个node能提供的信息更普通没价值（例如所有用户购买了水，对推荐系统来说，水能提供的信息就没那么有用）</p>
+<p>Then we calculate <span
+class="math inline">\(LE^{(l-1)}⊙E^{(l-1)}W_2^l\)</span>:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/8EE43A6D961CA0F0145CD44C62B9F9BE.png"
+alt="8EE43A6D961CA0F0145CD44C62B9F9BE" />
+<figcaption
+aria-hidden="true">8EE43A6D961CA0F0145CD44C62B9F9BE</figcaption>
+</figure>
+<p>We get information on the interaction between <span
+class="math inline">\(e_i\)</span> and <span
+class="math inline">\(e_u\)</span> (after the Laplacian norm), and then
+we can multiply the trainable parameter W2(MLP).</p>
+<p>Add two parts and through LeakyRelu, we get user or item embedding
+after l-layers propagation.</p>
+<h2 id="model-prediction">Model Prediction</h2>
+<p>Just concatenate all propagation layers' output embedding, and use
+inner product to estimate the user's preference towards the target
+item.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212173756733.png"
+alt="image-20230212173756733" />
+<figcaption aria-hidden="true">image-20230212173756733</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212173813003.png"
+alt="image-20230212173813003" />
+<figcaption aria-hidden="true">image-20230212173813003</figcaption>
+</figure>
+<h1 id="optimization">Optimization</h1>
+<h3 id="loss">Loss</h3>
+<p>BPR Loss: assumes that the observed interactions, which are more
+reflective of a user’s preferences, should be assigned higher prediction
+values than unobserved ones.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212212248890.png"
+alt="image-20230212212248890" />
+<figcaption aria-hidden="true">image-20230212212248890</figcaption>
+</figure>
+<h3 id="optimizer-adam">Optimizer: Adam</h3>
+<h3 id="model-size">Model Size</h3>
+<p>In NGCF, only W1 and W2 in the propagation layer need to be trained,
+so has <span class="math inline">\(2Ld_ld_{l-1}\)</span> more
+parameters, while L is always smaller than 5 and <span
+class="math inline">\(d\)</span> is set as the embedding size(e.g. 64)
+which is also small.</p>
+<h3 id="message-and-node-dropout">Message and Node Dropout</h3>
+<ol type="1">
+<li><p><strong>Message dropout</strong>: randomly drops out the outgoing
+messages (equal to dropout edge).</p>
+<p><strong>meaning</strong>: endows the representations more robustness
+against the presence or absence of single connections between users and
+items.</p>
+<p><strong>example</strong>: For the <span
+class="math inline">\(l-th\)</span> propagation layer, we drop out the
+messages being propagated, with a probability <span
+class="math inline">\(p1\)</span>.</p></li>
+<li><p><strong>Node dropout</strong>: randomly blocks a particular node
+and discards all its outgoing messages.</p>
+<p><strong>meaning</strong>: focuses on reducing the influences of
+particular users or items.</p>
+<p><strong>example</strong>: For the <span
+class="math inline">\(l-th\)</span> propagation layer, we randomly drop
+<span class="math inline">\((M + N)p2\)</span> nodes of the Laplacian
+matrix, where <span class="math inline">\(p2\)</span> is the dropout
+ratio.</p></li>
+</ol>
+<p>区别：对于message
+dropout，计算时node的邻居数、拉普拉斯norm都是正常的，就是更新embedding的时候遗漏了信息，作用是提高一下鲁棒性和容错性；对于Node
+dropout，直接在拉普拉斯矩阵中屏蔽若干个node，可能影响临界点数、归一化数值等，在矩阵运算时候就有影响，作用是希望模型不要过于依赖某些特定邻接点，没了部分点依然能正常运行。</p>
+<h1 id="experiment">Experiment</h1>
+<h3 id="conclusions-from-comparing-with-other-models">Conclusions from
+comparing with other models</h3>
+<ol type="1">
+<li>The inner product is insufficient to capture the complex relations
+between users and items.</li>
+<li>Nonlinear feature interactions between users and items are
+important</li>
+<li>Neighbor information can improve embedding learning, and using the
+attention mechanism is better than using equal and heuristic
+weight.</li>
+<li>Considering high-order connectivity or neighbor is better than only
+considering first-order neighbor.</li>
+<li>that exploiting high-order connectivity greatly facilitates
+representation learning for inactive users, as the collaborative signal
+can be effectively captured. And the embedding propagation is beneficial
+to relatively inactive users.</li>
+</ol>
+<h3 id="study-for-ngcf">Study for NGCF</h3>
+<p>....</p>
+<h3 id="effect-of-high-order-connectivity">Effect of High-order
+Connectivity</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212225247958.png"
+alt="image-20230212225247958" />
+<figcaption aria-hidden="true">image-20230212225247958</figcaption>
+</figure>
+<ol type="1">
+<li>the representations of NGCF-3 exhibit discernible clustering,
+meaning that the points with the same colors (<em>i.e.,</em> the items
+consumed by the same users) tend to form the clusters.</li>
+<li>when stacking three embedding propagation layers, the embeddings of
+their historical items tend to be closer. It qualitatively verifies that
+the proposed embedding propagation layer is capable of injecting the
+explicit collaborative signal (via NGCF-3) into the
+representations.</li>
+</ol>
+]]></content>
+      <categories>
+        <category>RecSys</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>GraphRec</title>
+    <url>/2023/02/24/Note_for_GraphRec/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="graphrec">GraphRec</h1>
+<h1 id="graphrec-feature">GraphRec feature</h1>
+<ol type="1">
+<li><p>Can capture both interactions and opinions in user-item
+graph.</p></li>
+<li><p>Consider different strengths of social relations.</p></li>
+<li><p>Use attention mechanism.</p></li>
+</ol>
+<h1 id="overall-architecture">Overall architecture</h1>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/Snipaste_2023-02-02_15-10-34.png"
+alt="Snipaste_2023-02-02_15-10-34" />
+<figcaption aria-hidden="true">Snipaste_2023-02-02_15-10-34</figcaption>
+</figure>
+<h3 id="three-import-module">Three import module:</h3>
+<ol type="1">
+<li><p>User Modeling: used to compute User Latent Factor(vector
+containing many useful information)</p></li>
+<li><p>Item Modeling: used to compute Item Latent Factor.</p></li>
+<li><p>Rating Prediction: used to predict the item which user would like
+to interact with.</p></li>
+</ol>
+<h1 id="source-code-analyses">Source code analyses</h1>
+<h2 id="data">Data</h2>
+<h3 id="what-kind-of-datas-we-use"><strong>What kind of datas we
+use?</strong></h3>
+<ol type="1">
+<li><p>User-Item graph: record interation(e.g. purchase) and
+opinion(e.g. five star rating) between user and item</p></li>
+<li><p>User-User social graph: relationship between user and
+user</p></li>
+</ol>
+<h3 id="how-to-represent-these-datas-in-code"><strong>How to represent
+these datas in code?</strong></h3>
+<h4 id="user-item-graph">User-Item graph:</h4>
+<ol type="1">
+<li>history_u_lists, history_ur_lists: user's purchased history (item
+set in training set), and his/her rating score (dict)</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">history_u_list = &#123;</span><br><span class="line">    user_id1:[item_id1, item_id2, item_id3...],</span><br><span class="line">    user_id2:[item_id4...],</span><br><span class="line">&#125;</span><br><span class="line">history_ur_list = &#123;</span><br><span class="line">    user_id1:[rating_score_u1i1, rating_score_u1i2, rating_score_u1i3...],</span><br><span class="line">    user_id2:[rating_score_u2i4...],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">e.g.</span><br><span class="line">history_u_list = &#123;</span><br><span class="line">    <span class="number">681</span>: [<span class="number">0</span>, <span class="number">156</span>], </span><br><span class="line">    <span class="number">81</span>: [<span class="number">1</span>, <span class="number">41</span>, <span class="number">90</span>]&#125;</span><br><span class="line">history_ur_list = &#123;</span><br><span class="line">    <span class="number">681</span>: [<span class="number">5</span>,<span class="number">4</span>],</span><br><span class="line">    <span class="number">81</span>: [<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>]&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>history_v_lists, history_vr_lists: user set (in training set) who
+have interacted with the item, and rating score (dict). Similar with
+history_u_lists, history_ur_lists but key is item id and value is user
+id.</li>
+</ol>
+<h4 id="user-user-socal-graph">User-User socal graph</h4>
+<ol type="1">
+<li>social_adj_lists: user's connected neighborhoods</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">social_adj_lists = &#123;</span><br><span class="line">    user_id1:[user_id2, user_id3, user_id4...],</span><br><span class="line">    user_id2:[user_id1...],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="other">other</h4>
+<ol type="1">
+<li>train_u, train_v, train_r: used for model training, one by one based
+on index (user, item, rating)</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train_u = [user_id1, user_id2,....]</span><br><span class="line">train_v = [item_id34, item_id1,...]</span><br><span class="line">train_r = [rating_socre_u1i34, rating_socre_u2i1]</span><br><span class="line"><span class="built_in">len</span>(train_u) = <span class="built_in">len</span>(train_v) = <span class="built_in">len</span>(train_r)</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li><p>test_u, test_v, test_r: similar with training datas</p></li>
+<li><p>ratings_list: rating value from 0.5 to 4.0 (8 opinion embeddings)
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;2.0: 0, 1.0: 1, 3.0: 2, 4.0: 3, 2.5: 4, 3.5: 5, 1.5: 6, 0.5: 7&#125;</span><br></pre></td></tr></table></figure></p></li>
+</ol>
+<h3 id="how-to-pre-process-data"><strong>How to pre-process
+data?</strong></h3>
+<p>use <code>torch.utils.data.TensorDataset</code> and
+<code>torch.utils.data.DataLoader</code> generate
+<code>training_dataset</code> and <code>testing_dataset</code> (user,
+item, rating)</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">support batchsize = <span class="number">5</span></span><br><span class="line">[tensor([<span class="number">409</span>,  <span class="number">88</span>, <span class="number">134</span>, <span class="number">298</span>, <span class="number">340</span>]),                             <span class="comment">#user id</span></span><br><span class="line">tensor([<span class="number">1221</span>,  <span class="number">761</span>,   <span class="number">39</span>,  <span class="number">145</span>,    <span class="number">0</span>]),                         <span class="comment">#item id</span></span><br><span class="line">tensor([<span class="number">1.0000</span>, <span class="number">2.0000</span>, <span class="number">3.5000</span>, <span class="number">0.5000</span>, <span class="number">1.5000</span>, <span class="number">3.5000</span>])        <span class="comment">#rating score</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h2 id="model">Model</h2>
+<h3 id="init">Init</h3>
+<p>Translate user_id, item_id and rating_id to low-dimension vector,
+just random initize, the weight of embedding layers will be trained.</p>
+<p>After translate we get</p>
+<pre><code>qj-embedding of item vj, 
+pi-embedding of user ui, 
+er-embedding of rating.</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">u2e = nn.Embedding(num_users, embed_dim).to(device)</span><br><span class="line">v2e = nn.Embedding(num_items, embed_dim).to(device)</span><br><span class="line">r2e = nn.Embedding(num_ratings, embed_dim).to(device)</span><br><span class="line"><span class="built_in">print</span>(u2e, v2e, r2e)</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;Output</span></span><br><span class="line"><span class="string">Embedding(705, 64) </span></span><br><span class="line"><span class="string">Embedding(1941, 64) </span></span><br><span class="line"><span class="string">Embedding(8, 64)</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>So that, we can easily get embedding through U2e, V2e and r2e.</p>
+<h3 id="overall-architecture-1">Overall architecture</h3>
+<figure>
+<img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/GraphRec.jpg"
+alt="GraphRec" />
+<figcaption aria-hidden="true">GraphRec</figcaption>
+</figure>
+<p>GraphRec consist of User Modeling, Item Modeling and Rating
+Prediction. The forward code of GraphRec is as follow:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">GraphRec</span>(nn.Module):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, enc_u, enc_v_history, r2e</span>):</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, nodes_u, nodes_v</span>):</span><br><span class="line">        <span class="comment"># nodes_u : [128] 128(batchsize) user id</span></span><br><span class="line">        <span class="comment"># nodes_v : [128] 128(batchsize) item id</span></span><br><span class="line">        <span class="comment"># self.enc_u is the User Modeling part(including Item Aggregation and Social Aggregation )</span></span><br><span class="line">        <span class="comment"># self.enc_v_history is the Item Modeling part(User Aggregation)</span></span><br><span class="line">        embeds_u = self.enc_u(nodes_u)</span><br><span class="line">        embeds_v = self.enc_v_history(nodes_v)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># After aggregation information, forward two layer MLP， and get the Latent vector of user and item</span></span><br><span class="line">        x_u = F.relu(self.bn1(self.w_ur1(embeds_u)))</span><br><span class="line">        x_u = F.dropout(x_u, training=self.training)</span><br><span class="line">        x_u = self.w_ur2(x_u)</span><br><span class="line">        x_v = F.relu(self.bn2(self.w_vr1(embeds_v)))</span><br><span class="line">        x_v = F.dropout(x_v, training=self.training)</span><br><span class="line">        x_v = self.w_vr2(x_v)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># concatenated user vector and item vector, use three layer MLP to predict</span></span><br><span class="line">        x_uv = torch.cat((x_u, x_v), <span class="number">1</span>)</span><br><span class="line">        x = F.relu(self.bn3(self.w_uv1(x_uv)))</span><br><span class="line">        x = F.dropout(x, training=self.training)</span><br><span class="line">        x = F.relu(self.bn4(self.w_uv2(x)))</span><br><span class="line">        x = F.dropout(x, training=self.training)</span><br><span class="line">        scores = self.w_uv3(x)</span><br><span class="line">        <span class="keyword">return</span> scores.squeeze()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">loss</span>(<span class="params">self, nodes_u, nodes_v, labels_list</span>):</span><br><span class="line">        ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>full code of GraphRec class</p>
+<details>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">GraphRec</span>(nn.Module):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, enc_u, enc_v_history, r2e</span>):</span><br><span class="line">        <span class="built_in">super</span>(GraphRec, self).__init__()</span><br><span class="line">        self.enc_u = enc_u</span><br><span class="line">        self.enc_v_history = enc_v_history</span><br><span class="line">        self.embed_dim = enc_u.embed_dim</span><br><span class="line"></span><br><span class="line">        self.w_ur1 = nn.Linear(self.embed_dim, self.embed_dim)</span><br><span class="line">        self.w_ur2 = nn.Linear(self.embed_dim, self.embed_dim)</span><br><span class="line">        self.w_vr1 = nn.Linear(self.embed_dim, self.embed_dim)</span><br><span class="line">        self.w_vr2 = nn.Linear(self.embed_dim, self.embed_dim)</span><br><span class="line">        self.w_uv1 = nn.Linear(self.embed_dim * <span class="number">2</span>, self.embed_dim)</span><br><span class="line">        self.w_uv2 = nn.Linear(self.embed_dim, <span class="number">16</span>)</span><br><span class="line">        self.w_uv3 = nn.Linear(<span class="number">16</span>, <span class="number">1</span>)</span><br><span class="line">        self.r2e = r2e</span><br><span class="line">        self.bn1 = nn.BatchNorm1d(self.embed_dim, momentum=<span class="number">0.5</span>)</span><br><span class="line">        self.bn2 = nn.BatchNorm1d(self.embed_dim, momentum=<span class="number">0.5</span>)</span><br><span class="line">        self.bn3 = nn.BatchNorm1d(self.embed_dim, momentum=<span class="number">0.5</span>)</span><br><span class="line">        self.bn4 = nn.BatchNorm1d(<span class="number">16</span>, momentum=<span class="number">0.5</span>)</span><br><span class="line">        self.criterion = nn.MSELoss()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, nodes_u, nodes_v</span>):</span><br><span class="line">        embeds_u = self.enc_u(nodes_u)</span><br><span class="line">        embeds_v = self.enc_v_history(nodes_v)</span><br><span class="line"></span><br><span class="line">        x_u = F.relu(self.bn1(self.w_ur1(embeds_u)))</span><br><span class="line">        x_u = F.dropout(x_u, training=self.training)</span><br><span class="line">        x_u = self.w_ur2(x_u)</span><br><span class="line">        x_v = F.relu(self.bn2(self.w_vr1(embeds_v)))</span><br><span class="line">        x_v = F.dropout(x_v, training=self.training)</span><br><span class="line">        x_v = self.w_vr2(x_v)</span><br><span class="line"></span><br><span class="line">        x_uv = torch.cat((x_u, x_v), <span class="number">1</span>)</span><br><span class="line">        x = F.relu(self.bn3(self.w_uv1(x_uv)))</span><br><span class="line">        x = F.dropout(x, training=self.training)</span><br><span class="line">        x = F.relu(self.bn4(self.w_uv2(x)))</span><br><span class="line">        x = F.dropout(x, training=self.training)</span><br><span class="line">        scores = self.w_uv3(x)</span><br><span class="line">        <span class="keyword">return</span> scores.squeeze()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">loss</span>(<span class="params">self, nodes_u, nodes_v, labels_list</span>):</span><br><span class="line">        scores = self.forward(nodes_u, nodes_v)</span><br><span class="line">        <span class="keyword">return</span> self.criterion(scores, labels_list)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</details>
+<h3 id="user-modeling">User Modeling</h3>
+<p>It contain Item Aggregation and Social Aggregation</p>
+<p>在这里本质上是先做了一层Item
+Aggregation之后，用得到的结果再做一层Social Aggregation 所以这里的Item
+Aggregation，本质上是Social Aggregation中的self-connection</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Social_Encoder</span>(nn.Module):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, features, embed_dim, social_adj_lists, aggregator, base_model=<span class="literal">None</span>, cuda=<span class="string">&quot;cpu&quot;</span></span>):</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, nodes</span>):</span><br><span class="line"></span><br><span class="line">        <span class="comment"># to_neighs is a list which element is list recording social neighbor node, and len(list) is batchsize,</span></span><br><span class="line">        to_neighs = []</span><br><span class="line">        <span class="keyword">for</span> node <span class="keyword">in</span> nodes:</span><br><span class="line">            to_neighs.append(self.social_adj_lists[<span class="built_in">int</span>(node)])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Social aggregation</span></span><br><span class="line">        neigh_feats = self.aggregator.forward(nodes, to_neighs)  <span class="comment"># user-user network</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Item aggregation</span></span><br><span class="line">        self_feats = self.features(torch.LongTensor(nodes.cpu().numpy())).to(self.device)</span><br><span class="line">        self_feats = self_feats.t()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># self-connection could be considered.</span></span><br><span class="line">        <span class="comment"># Concatenate Item Aggregation and Social Aggregation, and through one layer MLP</span></span><br><span class="line">        combined = torch.cat([self_feats, neigh_feats], dim=<span class="number">1</span>)</span><br><span class="line">        combined = F.relu(self.linear1(combined))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> combined</span><br></pre></td></tr></table></figure>
+<p>full code of User Modeling</p>
+<details>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Social_Encoder</span>(nn.Module):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, features, embed_dim, social_adj_lists, aggregator, base_model=<span class="literal">None</span>, cuda=<span class="string">&quot;cpu&quot;</span></span>):</span><br><span class="line">        <span class="built_in">super</span>(Social_Encoder, self).__init__()</span><br><span class="line"></span><br><span class="line">        self.features = features</span><br><span class="line">        self.social_adj_lists = social_adj_lists</span><br><span class="line">        self.aggregator = aggregator</span><br><span class="line">        <span class="keyword">if</span> base_model != <span class="literal">None</span>:</span><br><span class="line">            self.base_model = base_model</span><br><span class="line">        self.embed_dim = embed_dim</span><br><span class="line">        self.device = cuda</span><br><span class="line">        self.linear1 = nn.Linear(<span class="number">2</span> * self.embed_dim, self.embed_dim)  <span class="comment">#</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, nodes</span>):</span><br><span class="line"></span><br><span class="line">        <span class="comment"># to_neighs is a list which element is list recording social neighbor node, and len(list) is batchsize,</span></span><br><span class="line">        to_neighs = []</span><br><span class="line">        <span class="keyword">for</span> node <span class="keyword">in</span> nodes:</span><br><span class="line">            to_neighs.append(self.social_adj_lists[<span class="built_in">int</span>(node)])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Item aggregation</span></span><br><span class="line">        neigh_feats = self.aggregator.forward(nodes, to_neighs)  <span class="comment"># user-user network</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Social aggregation</span></span><br><span class="line">        self_feats = self.features(torch.LongTensor(nodes.cpu().numpy())).to(self.device)</span><br><span class="line">        self_feats = self_feats.t()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># self-connection could be considered.</span></span><br><span class="line">        <span class="comment"># Concatenate Item Aggregation and Social Aggregation, and through one layer MLP</span></span><br><span class="line">        combined = torch.cat([self_feats, neigh_feats], dim=<span class="number">1</span>)</span><br><span class="line">        combined = F.relu(self.linear1(combined))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> combined</span><br></pre></td></tr></table></figure>
+</details>
+<h4 id="item-aggregation">Item Aggregation</h4>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UV_Encoder</span>(nn.Module):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, features, embed_dim, history_uv_lists, history_r_lists, aggregator, cuda=<span class="string">&quot;cpu&quot;</span>, uv=<span class="literal">True</span></span>):</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, nodes</span>):</span><br><span class="line">        tmp_history_uv = []</span><br><span class="line">        tmp_history_r = []</span><br><span class="line"></span><br><span class="line">        <span class="comment">#get nodes(batch) neighbors</span></span><br><span class="line">        <span class="comment">#tmp_history_uv is a list which len is 128,while it&#x27;s element is also a list meaning that the each node&#x27;s(in batch) neighbor item id list</span></span><br><span class="line">        <span class="comment">#tmp_history_r is similar with tmp_history_uv, but record the rating score instead of item id</span></span><br><span class="line">        <span class="keyword">for</span> node <span class="keyword">in</span> nodes:</span><br><span class="line">            tmp_history_uv.append(self.history_uv_lists[<span class="built_in">int</span>(node)])</span><br><span class="line">            tmp_history_r.append(self.history_r_lists[<span class="built_in">int</span>(node)])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># after neigh aggregation</span></span><br><span class="line">        neigh_feats = self.aggregator.forward(nodes, tmp_history_uv, tmp_history_r)  <span class="comment"># user-item network</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># id to embedding (features : u2e)</span></span><br><span class="line">        self_feats = self.features.weight[nodes]</span><br><span class="line">        <span class="comment"># self-connection could be considered.</span></span><br><span class="line">        combined = torch.cat([self_feats, neigh_feats], dim=<span class="number">1</span>)</span><br><span class="line">        combined = F.relu(self.linear1(combined))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> combined</span><br></pre></td></tr></table></figure>
+<p>And the <code>self.aggregator</code> in neigh aggregation is:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UV_Aggregator</span>(nn.Module):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    item and user aggregator: for aggregating embeddings of neighbors (item/user aggreagator).</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, v2e, r2e, u2e, embed_dim, cuda=<span class="string">&quot;cpu&quot;</span>, uv=<span class="literal">True</span></span>):</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, nodes, history_uv, history_r</span>):</span><br><span class="line">        <span class="comment"># create a container for result, shpe of embed_matrix is (batchsize,embed_dim)</span></span><br><span class="line">        embed_matrix = torch.empty(<span class="built_in">len</span>(history_uv), self.embed_dim, dtype=torch.<span class="built_in">float</span>).to(self.device)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># deal with each single nodes&#x27; neighbors</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(history_uv)):</span><br><span class="line">            history = history_uv[i]</span><br><span class="line">            num_histroy_item = <span class="built_in">len</span>(history)</span><br><span class="line">            tmp_label = history_r[i]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># e_uv : turn neighbors id to embedding</span></span><br><span class="line">            <span class="comment"># uv_rep : turn single node to embedding</span></span><br><span class="line">            <span class="keyword">if</span> self.uv == <span class="literal">True</span>:</span><br><span class="line">                <span class="comment"># user component</span></span><br><span class="line">                e_uv = self.v2e.weight[history]</span><br><span class="line">                uv_rep = self.u2e.weight[nodes[i]]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># item component</span></span><br><span class="line">                e_uv = self.u2e.weight[history]</span><br><span class="line">                uv_rep = self.v2e.weight[nodes[i]]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># get rating score embedding</span></span><br><span class="line">            e_r = self.r2e.weight[tmp_label]</span><br><span class="line">            <span class="comment"># concatenated rating and neighbor, and than through two layers mlp to get xia</span></span><br><span class="line">            x = torch.cat((e_uv, e_r), <span class="number">1</span>)</span><br><span class="line">            x = F.relu(self.w_r1(x))</span><br><span class="line"></span><br><span class="line">            o_history = F.relu(self.w_r2(x))</span><br><span class="line">            <span class="comment"># calculate neighbor attention and xia*weight to finish aggregation</span></span><br><span class="line">            att_w = self.att(o_history, uv_rep, num_histroy_item)</span><br><span class="line">            att_history = torch.mm(o_history.t(), att_w)</span><br><span class="line">            att_history = att_history.t()</span><br><span class="line"></span><br><span class="line">            embed_matrix[i] = att_history</span><br><span class="line">        <span class="comment"># result (batchsize, embed_dim)</span></span><br><span class="line">        to_feats = embed_matrix</span><br><span class="line">        <span class="keyword">return</span> to_feats</span><br></pre></td></tr></table></figure>
+<p>While <code>self.att</code> is:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Attention</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, embedding_dims</span>):</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, node1, u_rep, num_neighs</span>):</span><br><span class="line">        <span class="comment"># pi</span></span><br><span class="line">        uv_reps = u_rep.repeat(num_neighs, <span class="number">1</span>)</span><br><span class="line">        <span class="comment"># concatenated neighbot and pi</span></span><br><span class="line">        x = torch.cat((node1, uv_reps), <span class="number">1</span>)</span><br><span class="line">        <span class="comment"># through 3 layers MLP</span></span><br><span class="line">        x = F.relu(self.att1(x))</span><br><span class="line">        x = F.dropout(x, training=self.training)</span><br><span class="line">        x = F.relu(self.att2(x))</span><br><span class="line">        x = F.dropout(x, training=self.training)</span><br><span class="line">        x = self.att3(x)</span><br><span class="line">        <span class="comment"># get weights</span></span><br><span class="line">        att = F.softmax(x, dim=<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> att</span><br></pre></td></tr></table></figure>
+<h4 id="social-aggregation">Social Aggregation</h4>
+<p>use the result of Item Aggregation and pi as input</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Social_Aggregator</span>(nn.Module):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Social Aggregator: for aggregating embeddings of social neighbors.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, features, u2e, embed_dim, cuda=<span class="string">&quot;cpu&quot;</span></span>):</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, nodes, to_neighs</span>):</span><br><span class="line">        <span class="comment">#return a uninitialize matrix as result container, which shape is (batchsize, embed_dim)</span></span><br><span class="line">        embed_matrix = torch.empty(<span class="built_in">len</span>(nodes), self.embed_dim, dtype=torch.<span class="built_in">float</span>).to(self.device)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nodes)):</span><br><span class="line">            <span class="comment"># get social graph neighbor</span></span><br><span class="line">            tmp_adj = to_neighs[i]</span><br><span class="line">            num_neighs = <span class="built_in">len</span>(tmp_adj)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># fase : can use user embedding instead of result of item aggregation to improve speed</span></span><br><span class="line">            <span class="comment"># e_u = self.u2e.weight[list(tmp_adj)] # fast: user embedding </span></span><br><span class="line">            <span class="comment"># slow: item-space user latent factor (item aggregation)</span></span><br><span class="line">            feature_neigbhors = self.features(torch.LongTensor(<span class="built_in">list</span>(tmp_adj)).to(self.device))</span><br><span class="line">            e_u = torch.t(feature_neigbhors)</span><br><span class="line"></span><br><span class="line">            u_rep = self.u2e.weight[nodes[i]]</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># concatenated node embedding and neigbor vector (result of item aggregation) </span></span><br><span class="line">            <span class="comment"># and than through MLPs and Softmax to calculate weights</span></span><br><span class="line">            att_w = self.att(e_u, u_rep, num_neighs)</span><br><span class="line">            <span class="comment"># weight*neighbor vector</span></span><br><span class="line">            att_history = torch.mm(e_u.t(), att_w).t()</span><br><span class="line">            embed_matrix[i] = att_history</span><br><span class="line">        to_feats = embed_matrix</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> to_feats</span><br></pre></td></tr></table></figure>
+<h3 id="item-modeling">Item Modeling</h3>
+<p>Similar with the Item Aggregation of User Modeling</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UV_Encoder</span>(nn.Module):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, features, embed_dim, history_uv_lists, history_r_lists, aggregator, cuda=<span class="string">&quot;cpu&quot;</span>, uv=<span class="literal">True</span></span>):</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, nodes</span>):</span><br><span class="line">        tmp_history_uv = []</span><br><span class="line">        tmp_history_r = []</span><br><span class="line"></span><br><span class="line">        <span class="comment">#get nodes(batch) neighbors of item</span></span><br><span class="line">        <span class="keyword">for</span> node <span class="keyword">in</span> nodes:</span><br><span class="line">            tmp_history_uv.append(self.history_uv_lists[<span class="built_in">int</span>(node)])</span><br><span class="line">            tmp_history_r.append(self.history_r_lists[<span class="built_in">int</span>(node)])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># after neigh aggregation</span></span><br><span class="line">        neigh_feats = self.aggregator.forward(nodes, tmp_history_uv, tmp_history_r)  <span class="comment"># user-item network</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># id to embedding (features : v2e)</span></span><br><span class="line">        self_feats = self.features.weight[nodes]</span><br><span class="line">        <span class="comment"># self-connection could be considered.</span></span><br><span class="line">        combined = torch.cat([self_feats, neigh_feats], dim=<span class="number">1</span>)</span><br><span class="line">        combined = F.relu(self.linear1(combined))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> combined</span><br></pre></td></tr></table></figure>
+<p>And the <code>self.aggregator</code> in neigh aggregation is:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UV_Aggregator</span>(nn.Module):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    item and user aggregator: for aggregating embeddings of neighbors (item/user aggreagator).</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, v2e, r2e, u2e, embed_dim, cuda=<span class="string">&quot;cpu&quot;</span>, uv=<span class="literal">True</span></span>):</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, nodes, history_uv, history_r</span>):</span><br><span class="line">        <span class="comment"># create a container for result, shpe of embed_matrix is (batchsize,embed_dim)</span></span><br><span class="line">        embed_matrix = torch.empty(<span class="built_in">len</span>(history_uv), self.embed_dim, dtype=torch.<span class="built_in">float</span>).to(self.device)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># deal with each single item nodes&#x27; neighbors</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(history_uv)):</span><br><span class="line">            history = history_uv[i]</span><br><span class="line">            num_histroy_item = <span class="built_in">len</span>(history)</span><br><span class="line">            tmp_label = history_r[i]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># e_uv : turn neighbors(user node) id to embedding</span></span><br><span class="line">            <span class="comment"># uv_rep : turn single node(item node) to embedding</span></span><br><span class="line">            <span class="keyword">if</span> self.uv == <span class="literal">True</span>:</span><br><span class="line">                <span class="comment"># user component</span></span><br><span class="line">                e_uv = self.v2e.weight[history]</span><br><span class="line">                uv_rep = self.u2e.weight[nodes[i]]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># item component</span></span><br><span class="line">                e_uv = self.u2e.weight[history]</span><br><span class="line">                uv_rep = self.v2e.weight[nodes[i]]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># get rating score embedding</span></span><br><span class="line">            e_r = self.r2e.weight[tmp_label]</span><br><span class="line">            <span class="comment"># concatenated rating and neighbor, and than through two layers mlp to get fjt</span></span><br><span class="line">            x = torch.cat((e_uv, e_r), <span class="number">1</span>)</span><br><span class="line">            x = F.relu(self.w_r1(x))</span><br><span class="line"></span><br><span class="line">            o_history = F.relu(self.w_r2(x))</span><br><span class="line">            <span class="comment"># calculate neighbor attention and fjt*weight to finish aggregation</span></span><br><span class="line">            att_w = self.att(o_history, uv_rep, num_histroy_item)</span><br><span class="line">            att_history = torch.mm(o_history.t(), att_w)</span><br><span class="line">            att_history = att_history.t()</span><br><span class="line"></span><br><span class="line">            embed_matrix[i] = att_history</span><br><span class="line">        <span class="comment"># result (batchsize, embed_dim)</span></span><br><span class="line">        to_feats = embed_matrix</span><br><span class="line">        <span class="keyword">return</span> to_feats</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>RecSys</category>
+        <category>SocialRec</category>
+      </categories>
+  </entry>
+</search>

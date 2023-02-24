@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content=".">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LightGCN">
+<meta property="og:url" content="http://example.com/2023/02/24/LightGCN/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content=".">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-24T20:46:26.000Z">
+<meta property="article:modified_time" content="2023-02-24T09:49:47.962Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/02/24/LightGCN/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/02/24/LightGCN/","path":"2023/02/24/LightGCN/","title":"LightGCN"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LightGCN | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#main-contributes"><span class="nav-number">1.1.</span> <span class="nav-text">Main contributes</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#analyze-about-ngcf"><span class="nav-number">2.</span> <span class="nav-text">Analyze about NGCF</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#brief"><span class="nav-number">2.1.</span> <span class="nav-text">Brief</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#method"><span class="nav-number">2.1.1.</span> <span class="nav-text">Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#result"><span class="nav-number">2.1.2.</span> <span class="nav-text">Result</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#conclusion"><span class="nav-number">2.1.3.</span> <span class="nav-text">Conclusion</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#model-of-lightgcn"><span class="nav-number">3.</span> <span class="nav-text">Model of LightGCN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#light-graph-convolution-lgc"><span class="nav-number">3.1.</span> <span class="nav-text">Light Graph Convolution (LGC)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layer-combination"><span class="nav-number">3.2.</span> <span class="nav-text">Layer Combination</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-prediction"><span class="nav-number">3.3.</span> <span class="nav-text">Model Prediction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#matrix-form"><span class="nav-number">3.4.</span> <span class="nav-text">Matrix form</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#analyze-about-lightgcn"><span class="nav-number">4.</span> <span class="nav-text">Analyze about LightGCN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#relation-with-sgcn"><span class="nav-number">4.1.</span> <span class="nav-text">Relation with SGCN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#relation-with-appnp"><span class="nav-number">4.2.</span> <span class="nav-text">Relation with APPNP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#second-order-embedding-smoothness"><span class="nav-number">4.3.</span> <span class="nav-text">Second-Order Embedding
+Smoothness</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#model-train"><span class="nav-number">5.</span> <span class="nav-text">Model Train</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#loss-function"><span class="nav-number">5.0.1.</span> <span class="nav-text">Loss function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#optimizer-adam"><span class="nav-number">5.0.2.</span> <span class="nav-text">Optimizer: Adam</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#no-dropout-strategy"><span class="nav-number">5.0.3.</span> <span class="nav-text">No dropout strategy</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#experiment"><span class="nav-number">6.</span> <span class="nav-text">Experiment</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#compared-with-ngcf"><span class="nav-number">6.1.</span> <span class="nav-text">compared with NGCF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ablation-and-effectiveness-analyses"><span class="nav-number">6.2.</span> <span class="nav-text">Ablation and Effectiveness
+Analyses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#impact-of-layer-combination"><span class="nav-number">6.2.1.</span> <span class="nav-text">Impact of Layer Combination</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#using-models"><span class="nav-number">6.2.1.1.</span> <span class="nav-text">Using models:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#conclusion-1"><span class="nav-number">6.2.1.2.</span> <span class="nav-text">Conclusion</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#impact-of-symmetric-sqrt-normalization"><span class="nav-number">6.2.2.</span> <span class="nav-text">Impact of Symmetric Sqrt
+Normalization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#setting"><span class="nav-number">6.2.2.1.</span> <span class="nav-text">Setting:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#conclusion-2"><span class="nav-number">6.2.2.2.</span> <span class="nav-text">Conclusion</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#analysis-of-embedding-smoothness"><span class="nav-number">6.2.3.</span> <span class="nav-text">Analysis of Embedding
+Smoothness</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hyper-parameter-studies"><span class="nav-number">6.3.</span> <span class="nav-text">Hyper-parameter Studies</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/24/LightGCN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LightGCN | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LightGCN
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-02-24 20:46:26 / Modified: 09:49:47" itemprop="dateCreated datePublished" datetime="2023-02-24T20:46:26+00:00">2023-02-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/RecSys/" itemprop="url" rel="index"><span itemprop="name">RecSys</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>.</p>
+<span id="more"></span>
+<h1 id="background">Background</h1>
+<p>question: why concentrated to sum</p>
+<h2 id="main-contributes">Main contributes</h2>
+<ol type="1">
+<li><p>We empirically show that two common designs in GCN, feature
+transformation and nonlinear activation, have no positive effect on the
+effectiveness of collaborative filtering.</p>
+<p>GCN is originally proposed for node classification on the attributed
+graph, where each node has rich attributes as input features; whereas in
+the user-item interaction graph for CF, each node (user or item) is only
+described by a one-hot ID, which has no concrete semantics besides being
+an identifier.</p></li>
+<li><p>Propose LightGCN.</p></li>
+</ol>
+<h1 id="analyze-about-ngcf">Analyze about NGCF</h1>
+<h2 id="brief">Brief</h2>
+<p>完全想不起来的话建议先看NGCF的笔记</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213192715250.png"
+alt="image-20230213192715250" />
+<figcaption aria-hidden="true">image-20230213192715250</figcaption>
+</figure>
+<p>## Some experiment</p>
+<h3 id="method">Method</h3>
+<p>Using ablation studies, implement three simplified variants of
+NGCF:</p>
+<ol type="1">
+<li>NGCF-f: which removes the feature transformation matrices <span
+class="math inline">\(W1\)</span> and <span
+class="math inline">\(W2\)</span>.</li>
+<li>NGCF-n: which removes the non-linear activation function $ σ$.</li>
+<li>NGCF-fn: which removes both the feature transformation matrices and
+non-linear activation function.</li>
+</ol>
+<p><strong>Note</strong>: Since the core of GCN is to refine embeddings
+by propagation, we are more interested in the embedding quality under
+the same embedding size. Thus, we change the way of obtaining final
+embedding from concatenation (i.e., <span
+class="math inline">\(e_u^*=e_u^{(0)}\|e_u^{(1)}\|...\|e_u^{(L)}\)</span>)
+to sum(i.e., <span
+class="math inline">\(e_u^*=e_u^{(0)}+e_u^{(1)}+...+e_u^{(L)}\)</span>).</p>
+<p>This change has little effect on NGCF’s performance but makes the
+following ablation studies more indicative of the embedding quality
+refined by GCN.</p>
+<h3 id="result">Result</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213193937873.png"
+alt="image-20230213193937873" />
+<figcaption aria-hidden="true">image-20230213193937873</figcaption>
+</figure>
+<ol type="1">
+<li>Adding feature transformation imposes negative effect on NGCF, since
+removing it in both models of NGCF and NGCF-n improves the performance
+significantly;</li>
+<li>Adding nonlinear activation affects slightly when feature
+transformation is included, but it imposes negative effect when feature
+transformation is disabled.</li>
+<li>As a whole, feature transformation and nonlinear activation impose
+rather negative effect on NGCF, since by removing them simultaneously,
+NGCF-fn demonstrates large improvements over NGCF.</li>
+</ol>
+<h3 id="conclusion">Conclusion</h3>
+<p>The deterioration of NGCF stems from the training
+difficulty(underfitting), rather than overfitting, because:</p>
+<ol type="1">
+<li><p>Such lower training loss of NGCF-fn successfully transfers to
+better recommendation accuracy.</p></li>
+<li><p>NGCF is more powerful and complex, but it demonstrates higher
+training loss and worse generalization performance than NGCF-f.</p></li>
+</ol>
+<h1 id="model-of-lightgcn">Model of LightGCN</h1>
+<p>Consisting four parts:</p>
+<ol type="1">
+<li>initialize users and items embedding.</li>
+<li>Light Graph Convolution (LGC)</li>
+<li>Layer Combination</li>
+<li>Model Prediction</li>
+</ol>
+<h2 id="light-graph-convolution-lgc">Light Graph Convolution (LGC)</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213194939594.png"
+alt="image-20230213194939594" />
+<figcaption aria-hidden="true">image-20230213194939594</figcaption>
+</figure>
+<p>$ $： symmetric normalization, which can avoid the scale of
+embeddings increasing with graph convolution operations. Here can use
+other normalization, but symmetric normalization has good
+performance.</p>
+<p><strong>Note</strong>: Without self-connection, because the layer
+combination operation of LightGCN captures the same effect as
+self-connections.</p>
+<h2 id="layer-combination">Layer Combination</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213195607414.png"
+alt="image-20230213195607414" />
+<figcaption aria-hidden="true">image-20230213195607414</figcaption>
+</figure>
+<p><span class="math inline">\(α_k\)</span>can be treated as a
+hyperparameter to be tuned manually, or as a model parameter, and
+setting <span class="math inline">\(α_k\)</span> uniformly as <span
+class="math inline">\(1/(K + 1)\)</span> leads to good performance in
+general.</p>
+<p>This is probably because the training data does not contain
+sufficient signal to learn good α that can generalize to unknown
+data.</p>
+<p>The reason of using the Layer Combination:</p>
+<ol type="1">
+<li>With the increasing of the number of layers, the embeddings will be
+over-smoothed [27]. Thus simply using the last layer is
+problematic.</li>
+<li>The embeddings at different layers capture different semantics.</li>
+<li>Combining embeddings at different layers with weighted sum captures
+the effect of graph convolution with self-connections, an important
+trick in GCNs.</li>
+</ol>
+<h2 id="model-prediction">Model Prediction</h2>
+<p>inner product</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213200915280.png"
+alt="image-20230213200915280" />
+<figcaption aria-hidden="true">image-20230213200915280</figcaption>
+</figure>
+<h2 id="matrix-form">Matrix form</h2>
+<p>Similar to NGCF, and there are some explanations in detail in NGCF
+note.</p>
+<p>Light Graph Convolution:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213201201896.png"
+alt="image-20230213201201896" />
+<figcaption aria-hidden="true">image-20230213201201896</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213201107785.png"
+alt="image-20230213201107785" />
+<figcaption aria-hidden="true">image-20230213201107785</figcaption>
+</figure>
+<p>Layer combination:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213201221159.png"
+alt="image-20230213201221159" />
+<figcaption aria-hidden="true">image-20230213201221159</figcaption>
+</figure>
+<h1 id="analyze-about-lightgcn">Analyze about LightGCN</h1>
+<h2 id="relation-with-sgcn">Relation with SGCN</h2>
+<p><strong>Purpose</strong>: by doing layer combination, LightGCN
+subsumes the effect of self-connection thus there is no need for
+LightGCN to add self-connection in adjacency matrix.</p>
+<p>SGCN: a recent linear GCN model that integrates self-connection into
+graph convolution.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213201725744.png"
+alt="image-20230213201725744" />
+<figcaption aria-hidden="true">image-20230213201725744</figcaption>
+</figure>
+<p>In the following analysis, we omit the <span class="math inline">\((D
++ I)^{-\frac{1}{2}}\)</span> terms for simplicity, since they only
+re-scale embeddings.</p>
+<figure>
+<img
+src="C:\Users\37523\AppData\Roaming\Typora\typora-user-images\image-20230213212117430.png"
+alt="image-20230213212117430" />
+<figcaption aria-hidden="true">image-20230213212117430</figcaption>
+</figure>
+<p>The above derivation shows that, inserting self-connection into A and
+propagating embeddings on it, is essentially equivalent to a weighted
+sum of the embeddings propagated at each LGC layer.</p>
+<p>because <span class="math inline">\(AE^{(0)}=E^{(1)}\)</span>...<span
+class="math inline">\(A^KE^{(0)}=E^{(K)}\)</span></p>
+<h2 id="relation-with-appnp">Relation with APPNP</h2>
+<p><strong>Purpose</strong>: shows the underlying equivalence between
+LightGCN and APPNP, thus our LightGCN enjoys the sames benefits in
+propagating long-range with controllable overs-moothing.</p>
+<p>APPNP: a recent GCN variant that addresses over-smoothing. APPNP
+complements each propagation layer with the starting features.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213212642134.png"
+alt="image-20230213212642134" />
+<figcaption aria-hidden="true">image-20230213212642134</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213212845456.png"
+alt="image-20230213212845456" />
+<figcaption aria-hidden="true">image-20230213212845456</figcaption>
+</figure>
+<p>also equivalent to a weighted sum of the embeddings propagated at
+each LGC layer.</p>
+<h2 id="second-order-embedding-smoothness">Second-Order Embedding
+Smoothness</h2>
+<p><strong>Purpose</strong>: providing more insights into the working
+mechanism of LightGCN.</p>
+<p>below is influence from2-order neighbor to target node.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213213500081.png"
+alt="image-20230213213500081" />
+<figcaption aria-hidden="true">image-20230213213500081</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213213521206.png"
+alt="image-20230213213521206" />
+<figcaption aria-hidden="true">image-20230213213521206</figcaption>
+</figure>
+<p><strong>conclusion</strong>: the influence of a second-order neighbor
+v on u is determined by</p>
+<ol type="1">
+<li>the number of co-interacted items, the more the larger.</li>
+<li>the popularity of the co-interacted items, the less popularity
+(i.e., more indicative of user personalized preference) the larger</li>
+<li>the activity of v, the less active the larger.</li>
+</ol>
+<h1 id="model-train">Model Train</h1>
+<h3 id="loss-function">Loss function</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213213949666.png"
+alt="image-20230213213949666" />
+<figcaption aria-hidden="true">image-20230213213949666</figcaption>
+</figure>
+<h3 id="optimizer-adam">Optimizer: Adam</h3>
+<h3 id="no-dropout-strategy">No dropout strategy</h3>
+<p>The reason is that we do not have feature transformation weight
+matrices in LightGCN, thus enforcing L2 regularization on the embedding
+layer is sufficient to prevent overfitting.</p>
+<h1 id="experiment">Experiment</h1>
+<h2 id="compared-with-ngcf">compared with NGCF</h2>
+<ol type="1">
+<li>LightGCN performs better than NGCF and NGCF-fn, as NGCF-fn still
+contains more useless operations than LightGCN.</li>
+<li>Increasing the number of layers can improve performance, but the
+benefits diminish. Increasing the layer number from 0 to 1 leads to the
+largest performance gain, and using a layer number of 3 leads to
+satisfactory performance in most cases.</li>
+<li>LightGCN consistently obtains lower training loss, which indicates
+that LightGCN fits the training data better than NGCF. Moreover, the
+lower training loss successfully transfers to better testing accuracy,
+indicating the strong generalization power of LightGCN. In contrast, the
+higher training loss and lower testing accuracy of NGCF reflect the
+practical difficulty to train such a heavy model it well.</li>
+</ol>
+<h2 id="ablation-and-effectiveness-analyses">Ablation and Effectiveness
+Analyses</h2>
+<h3 id="impact-of-layer-combination">Impact of Layer Combination</h3>
+<h4 id="using-models">Using models:</h4>
+<ol type="1">
+<li>LightGCN</li>
+<li>LightGCN-single: does not use layer combination</li>
+</ol>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230215151920378.png"
+alt="image-20230215151920378" />
+<figcaption aria-hidden="true">image-20230215151920378</figcaption>
+</figure>
+<h4 id="conclusion-1">Conclusion</h4>
+<ol type="1">
+<li>Focusing on LightGCN-single, we find that its performance first
+improves and then drops when the layer number increases from 1 to 4.
+This indicates that smoothing a node’s embedding with its first-order
+and secondorder neighbors is very useful for CF, but will suffer from
+oversmoothing issues when higher-order neighbors are used.</li>
+<li>Focusing on LightGCN, we find that its performance gradually
+improves with the increasing of layers even using 4 layers. This
+justifies the effectiveness of layer combination for addressing
+over-smoothing.</li>
+<li>we find that LightGCN consistently outperforms LightGCN-single on
+Gowalla, but not on AmazonBook and Yelp2018. There are two reason:
+<ol type="1">
+<li>LightGCN-single is special case of LightGCN that sets αK to 1 and
+other αk to 0;</li>
+<li>we do not tune the <span class="math inline">\(αk\)</span> and
+simply set it as <span class="math inline">\(\frac{1}{K+1}\)</span>
+uniformly for LightGCN.</li>
+</ol></li>
+</ol>
+<h3 id="impact-of-symmetric-sqrt-normalization">Impact of Symmetric Sqrt
+Normalization</h3>
+<h4 id="setting">Setting:</h4>
+<ol type="1">
+<li>LightGCN-L: normalization only at the left side (i.e., the target
+node’s coefficient).</li>
+<li>LightGCN-R: the right side (i.e., the neighbor node’s
+coefficient).</li>
+<li>LightGCN-L1: use L1 normalization( i.e., removing the square
+root).</li>
+<li>LightGCN-L1-L: use L1 normalization only on the left side.</li>
+<li>LightGCN-L1-R: use L1 normalization only on the right side.</li>
+</ol>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230215153734701.png"
+alt="image-20230215153734701" />
+<figcaption aria-hidden="true">image-20230215153734701</figcaption>
+</figure>
+<h4 id="conclusion-2">Conclusion</h4>
+<ol type="1">
+<li>The best setting in general is using sqrt normalization at both
+sides (i.e., the current design of LightGCN). Removing either side will
+drop the performance largely.</li>
+<li>The second best setting is using L1 normalization at the left side
+only (i.e., LightGCN-L1-L). This is equivalent to normalize the
+adjacency matrix as a stochastic matrix by the
+in-degree(norm后矩阵无对称性).</li>
+<li>Normalizing symmetrically on two sides is helpful for the sqrt
+normalization, but will degrade the performance of L1
+normalization.</li>
+</ol>
+<h3 id="analysis-of-embedding-smoothness">Analysis of Embedding
+Smoothness</h3>
+<p><strong>Object</strong>: Making sure such
+smoothing（有点像聚类的感觉） of embeddings is the key reason of
+LightGCN’s effectiveness.</p>
+<p><strong>Method</strong>: we first define the smoothness of user
+embeddings as(用于衡量2-order
+neighbor的embedding差别大小，是否合理聚类的感觉):</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230215160123446.png"
+alt="image-20230215160123446" />
+<figcaption aria-hidden="true">image-20230215160123446</figcaption>
+</figure>
+<p>where the L2 norm on embeddings is used to eliminate the impact of
+the embedding’s scale.</p>
+<p><strong>result</strong>:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230215160328103.png"
+alt="image-20230215160328103" />
+<figcaption aria-hidden="true">image-20230215160328103</figcaption>
+</figure>
+<p><strong>Conclusion</strong>: the smoothness loss of LightGCN-single
+is much lower than that of MF.</p>
+<p>This indicates that by conducting light graph convolution, the
+embeddings become smoother and more suitable for recommendation.</p>
+<h2 id="hyper-parameter-studies">Hyper-parameter Studies</h2>
+<p><strong>object</strong>: Ensure the L2 regularization coefficient
+<span class="math inline">\(λ\)</span></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230215161009450.png"
+alt="image-20230215161009450" />
+<figcaption aria-hidden="true">image-20230215161009450</figcaption>
+</figure>
+<p><strong>Conclusion</strong>:</p>
+<ol type="1">
+<li>LightGCN is relatively insensitive to λ.</li>
+<li>Even when λ sets to 0, LightGCN is better than NGCF, which
+additionally uses dropout to prevent overfitting. This shows that
+LightGCN is less prone to overfitting</li>
+<li>When λ is larger than 1e−3, the performance drops quickly, which
+indicates that too strong regularization will negatively affect model
+normal training and is not encouraged.</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/02/24/KGAT/" rel="prev" title="KGAT">
+                  <i class="fa fa-chevron-left"></i> KGAT
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
