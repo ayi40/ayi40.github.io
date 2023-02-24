@@ -11,12 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-          cache: 'pnpm'
-
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         id: pnpm-install
@@ -24,13 +18,19 @@ jobs:
           version: 7
           run_install: false
 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          cache: 'pnpm'
+
       - name: Install And Build
         run: |
           wget ${{ secrets.PANDOC_PATH }}
           sudo dpkg -i pandoc*.deb
-          npm install
-          npm run clean
-          npm run build
+          pnpm install
+          pnpm run clean
+          pnpm run build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
