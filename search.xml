@@ -1128,8 +1128,30 @@ Aggregation，本质上是Social Aggregation中的self-connection</p>
       </categories>
   </entry>
   <entry>
+    <title>常见激活函数</title>
+    <url>/2023/02/28/activate_function/</url>
+    <content><![CDATA[<h1 id="常见激活函数">常见激活函数</h1>
+<h2 id="sigmoid">Sigmoid</h2>
+<p><span class="math display">\[
+\sigma(x) = \frac{1}{1+exp(-x)}
+\]</span></p>
+<p>输出的值范围在[0,1]之间。但是<code>sigmoid</code>型函数的输出存在<strong>均值不为0</strong>的情况，并且存在<strong>梯度消失的问题</strong>，在深层网络中被其他激活函数替代。在<strong>逻辑回归</strong>中使用的该激活函数用于输出<strong>分类</strong>。</p>
+<h2 id="tanh">tanh</h2>
+<p><span class="math display">\[
+tanh(x) = \frac{e^x-e^{(-x)}}{e^x+e^{(-x)}} =\frac{e^{2x}-1}{e^{2x}+1}=
+2 \cdot sigmoid(2x)-1
+\]</span></p>
+<p><code>tanh(x)</code>型函数可以解决<code>sigmoid</code>型函数的<strong>期望（均值）不为0</strong>的情况。函数输出范围为(-1,+1)。但<code>tanh(x)</code>型函数依然存在<strong>梯度消失的问题</strong>。</p>
+<p>在LSTM中使用了<code>tanh(x)</code>型函数。</p>
+]]></content>
+      <categories>
+        <category>ML</category>
+        <category>Basic</category>
+      </categories>
+  </entry>
+  <entry>
     <title>常见损失函数</title>
-    <url>/2023/02/28/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/</url>
+    <url>/2023/02/28/loss_function/</url>
     <content><![CDATA[<h1 id="常见损失函数">常见损失函数</h1>
 <p><strong>损失函数</strong>用来评价模型的<strong>预测值</strong>和<strong>真实值</strong>不一样的程度，在模型正常拟合的情况下，损失函数值越低，模型的性能越好。不同的模型用的损失函数一般也不一样。</p>
 <p><strong>损失函数</strong>分为<strong>经验风险损失函数</strong>和<strong>结构风险损失函数</strong>。经验风险损失函数指<strong>预测结果</strong>和<strong>实际结果</strong>的差值，结构风险损失函数是指<strong>经验风险损失函数</strong>加上<strong>正则项</strong>。</p>
@@ -1383,28 +1405,6 @@ src="https://www.nowcoder.com/equation?tex=Q(x)&amp;preview=true"
 alt="img" />为<strong>理论概率分布</strong>，<img
 src="https://www.nowcoder.com/equation?tex=P(x)&amp;preview=true"
 alt="img" />为模型<strong>预测概率分布</strong>，而KL就是度量这两个分布的差异性，当然差异越小越好，所以KL也可以用作损失函数。</p>
-]]></content>
-      <categories>
-        <category>ML</category>
-        <category>Basic</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>常见激活函数</title>
-    <url>/2023/02/28/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[<h1 id="常见激活函数">常见激活函数</h1>
-<h2 id="sigmoid">Sigmoid</h2>
-<p><span class="math display">\[
-\sigma(x) = \frac{1}{1+exp(-x)}
-\]</span></p>
-<p>输出的值范围在[0,1]之间。但是<code>sigmoid</code>型函数的输出存在<strong>均值不为0</strong>的情况，并且存在<strong>梯度消失的问题</strong>，在深层网络中被其他激活函数替代。在<strong>逻辑回归</strong>中使用的该激活函数用于输出<strong>分类</strong>。</p>
-<h2 id="tanh">tanh</h2>
-<p><span class="math display">\[
-tanh(x) = \frac{e^x-e^{(-x)}}{e^x+e^{(-x)}} =\frac{e^{2x}-1}{e^{2x}+1}=
-2 \cdot sigmoid(2x)-1
-\]</span></p>
-<p><code>tanh(x)</code>型函数可以解决<code>sigmoid</code>型函数的<strong>期望（均值）不为0</strong>的情况。函数输出范围为(-1,+1)。但<code>tanh(x)</code>型函数依然存在<strong>梯度消失的问题</strong>。</p>
-<p>在LSTM中使用了<code>tanh(x)</code>型函数。</p>
 ]]></content>
       <categories>
         <category>ML</category>
