@@ -5,6 +5,10 @@ categories:
   - [ML, Basic]
 ---
 
+.
+
+<!-- more -->
+
 # 常见激活函数
 
 ## Sigmoid
