@@ -19,23 +19,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Lory&#39;s Page">
-<meta property="og:url" content="http://example.com/index.html">
+    <meta name="description" content="常见损失函数 损失函数用来评价模型的预测值和真实值不一样的程度，在模型正常拟合的情况下，损失函数值越低，模型的性能越好。不同的模型用的损失函数一般也不一样。 损失函数分为经验风险损失函数和结构风险损失函数。经验风险损失函数指预测结果和实际结果的差值，结构风险损失函数是指经验风险损失函数加上正则项。 常用 用于回归： 绝对值损失函数 \[ L(Y,f(x)) &#x3D; |Y-f(x)| \] 平方损失函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见损失函数">
+<meta property="og:url" content="http://example.com/2023/02/28/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="Lory&#39;s Page">
+<meta property="og:description" content="常见损失函数 损失函数用来评价模型的预测值和真实值不一样的程度，在模型正常拟合的情况下，损失函数值越低，模型的性能越好。不同的模型用的损失函数一般也不一样。 损失函数分为经验风险损失函数和结构风险损失函数。经验风险损失函数指预测结果和实际结果的差值，结构风险损失函数是指经验风险损失函数加上正则项。 常用 用于回归： 绝对值损失函数 \[ L(Y,f(x)) &#x3D; |Y-f(x)| \] 平方损失函数">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230224211928602.png">
+<meta property="article:published_time" content="2023-02-28T20:46:28.000Z">
+<meta property="article:modified_time" content="2023-02-28T13:15:21.257Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230224211928602.png">
 
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2023/02/28/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/02/28/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/","path":"2023/02/28/损失函数/","title":"常见损失函数"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Lory's Page</title>
+<title>常见损失函数 | Lory's Page</title>
   
 
 
@@ -68,7 +74,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Lory's Page</h1>
+      <p class="site-title">Lory's Page</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -121,7 +127,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -134,6 +140,8 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">常见损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">常用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E5%9B%9E%E5%BD%92"><span class="nav-number">1.1.1.</span> <span class="nav-text">用于回归：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%9D%E5%AF%B9%E5%80%BC%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">绝对值损失函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B9%B3%E6%96%B9%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">平方损失函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E5%88%86%E7%B1%BB"><span class="nav-number">1.1.2.</span> <span class="nav-text">用于分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0zero-one-loss"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">0-1损失函数（zero-one loss）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E6%95%B0%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0log-loss"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">对数损失函数（log loss）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">交叉熵损失函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%88%E9%A1%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0hinge-loss"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">合页损失函数(hinge loss)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E6%95%B0%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0exponential-loss"><span class="nav-number">1.1.2.5.</span> <span class="nav-text">指数损失函数(exponential
+loss)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E5%88%86%E5%89%B2"><span class="nav-number">1.1.3.</span> <span class="nav-text">用于分割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E6%A3%80%E6%B5%8B"><span class="nav-number">1.1.4.</span> <span class="nav-text">用于检测</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">常见损失函数问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5%E7%9B%B8%E5%85%B3"><span class="nav-number">2.1.</span> <span class="nav-text">交叉熵相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5%E5%87%BD%E6%95%B0%E4%B8%8E%E6%9C%80%E5%A4%A7%E4%BC%BC%E7%84%B6%E5%87%BD%E6%95%B0%E7%9A%84%E8%81%94%E7%B3%BB%E5%92%8C%E5%8C%BA%E5%88%AB"><span class="nav-number">2.1.1.</span> <span class="nav-text">交叉熵函数与最大似然函数的联系和区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%94%A8sigmoid%E4%BD%9C%E4%B8%BA%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E7%9A%84%E6%97%B6%E5%80%99%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E8%80%8C%E4%B8%8D%E7%94%A8%E5%9D%87%E6%96%B9%E8%AF%AF%E5%B7%AE%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.2.</span> <span class="nav-text">在用sigmoid作为激活函数的时候，为什么要用交叉熵损失函数，而不用均方误差损失函数？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5%E5%92%8C%E5%9D%87%E5%88%86%E5%87%BD%E6%95%B0%E5%8C%BA%E5%88%AB"><span class="nav-number">2.1.3.</span> <span class="nav-text">交叉熵和均分函数区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%8E%A8%E5%AF%BC%E5%87%BA%E4%BA%A4%E5%8F%89%E7%86%B5%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.4.</span> <span class="nav-text">如何推导出交叉熵函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BA%A4%E5%8F%89%E7%86%B5%E5%87%BD%E6%95%B0%E6%9C%89log%E9%A1%B9"><span class="nav-number">2.1.5.</span> <span class="nav-text">为什么交叉熵函数有log项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="nav-number">2.1.6.</span> <span class="nav-text">交叉熵的设计思想</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cv%E7%9B%B8%E5%85%B3"><span class="nav-number">2.2.</span> <span class="nav-text">CV相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yolo%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.1.</span> <span class="nav-text">Yolo损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iou%E4%B8%8Emiou%E8%AE%A1%E7%AE%97"><span class="nav-number">2.2.2.</span> <span class="nav-text">IOU与MIOU计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83"><span class="nav-number">2.3.</span> <span class="nav-text">其它</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kl%E6%95%A3%E5%BA%A6"><span class="nav-number">2.3.1.</span> <span class="nav-text">KL散度</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -168,16 +176,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/28/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -191,13 +200,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Lory's Page">
+      <meta itemprop="name" content="常见损失函数 | Lory's Page">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/28/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">常见损失函数</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          常见损失函数
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -234,7 +243,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="常见损失函数">常见损失函数</h1>
+        <h1 id="常见损失函数">常见损失函数</h1>
 <p><strong>损失函数</strong>用来评价模型的<strong>预测值</strong>和<strong>真实值</strong>不一样的程度，在模型正常拟合的情况下，损失函数值越低，模型的性能越好。不同的模型用的损失函数一般也不一样。</p>
 <p><strong>损失函数</strong>分为<strong>经验风险损失函数</strong>和<strong>结构风险损失函数</strong>。经验风险损失函数指<strong>预测结果</strong>和<strong>实际结果</strong>的差值，结构风险损失函数是指<strong>经验风险损失函数</strong>加上<strong>正则项</strong>。</p>
 <h2 id="常用">常用</h2>
@@ -488,7 +497,6 @@ alt="img" />为<strong>理论概率分布</strong>，<img
 src="https://www.nowcoder.com/equation?tex=P(x)&amp;preview=true"
 alt="img" />为模型<strong>预测概率分布</strong>，而KL就是度量这两个分布的差异性，当然差异越小越好，所以KL也可以用作损失函数。</p>
 
-      
     </div>
 
     
@@ -496,482 +504,22 @@ alt="img" />为模型<strong>预测概率分布</strong>，而KL就是度量这�
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/28/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lory">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lory's Page">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Lory's Page">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/28/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">常见激活函数</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2023-02-28 20:46:25 / Modified: 13:15:21" itemprop="dateCreated datePublished" datetime="2023-02-28T20:46:25+00:00">2023-02-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/ML/Basic/" itemprop="url" rel="index"><span itemprop="name">Basic</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="常见激活函数">常见激活函数</h1>
-<h2 id="sigmoid">Sigmoid</h2>
-<p><span class="math display">\[
-\sigma(x) = \frac{1}{1+exp(-x)}
-\]</span></p>
-<p>输出的值范围在[0,1]之间。但是<code>sigmoid</code>型函数的输出存在<strong>均值不为0</strong>的情况，并且存在<strong>梯度消失的问题</strong>，在深层网络中被其他激活函数替代。在<strong>逻辑回归</strong>中使用的该激活函数用于输出<strong>分类</strong>。</p>
-<h2 id="tanh">tanh</h2>
-<p><span class="math display">\[
-tanh(x) = \frac{e^x-e^{(-x)}}{e^x+e^{(-x)}} =\frac{e^{2x}-1}{e^{2x}+1}=
-2 \cdot sigmoid(2x)-1
-\]</span></p>
-<p><code>tanh(x)</code>型函数可以解决<code>sigmoid</code>型函数的<strong>期望（均值）不为0</strong>的情况。函数输出范围为(-1,+1)。但<code>tanh(x)</code>型函数依然存在<strong>梯度消失的问题</strong>。</p>
-<p>在LSTM中使用了<code>tanh(x)</code>型函数。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/24/LightGCN/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lory">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lory's Page">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Lory's Page">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/24/LightGCN/" class="post-title-link" itemprop="url">LightGCN</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-02-24 20:46:26" itemprop="dateCreated datePublished" datetime="2023-02-24T20:46:26+00:00">2023-02-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-02-28 13:15:21" itemprop="dateModified" datetime="2023-02-28T13:15:21+00:00">2023-02-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/RecSys/" itemprop="url" rel="index"><span itemprop="name">RecSys</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/02/24/LightGCN/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/24/KGAT/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lory">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lory's Page">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Lory's Page">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/24/KGAT/" class="post-title-link" itemprop="url">KGAT</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-02-24 20:46:25" itemprop="dateCreated datePublished" datetime="2023-02-24T20:46:25+00:00">2023-02-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-02-28 13:15:21" itemprop="dateModified" datetime="2023-02-28T13:15:21+00:00">2023-02-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/RecSys/" itemprop="url" rel="index"><span itemprop="name">RecSys</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/RecSys/KGRec/" itemprop="url" rel="index"><span itemprop="name">KGRec</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/02/24/KGAT/#more" rel="contents">
-                Read more &raquo;
-              </a>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/02/28/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" rel="prev" title="常见激活函数">
+                  <i class="fa fa-chevron-left"></i> 常见激活函数
+                </a>
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/24/Note_for_GraphRec/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lory">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lory's Page">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Lory's Page">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/24/Note_for_GraphRec/" class="post-title-link" itemprop="url">GraphRec</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-02-24 20:46:25" itemprop="dateCreated datePublished" datetime="2023-02-24T20:46:25+00:00">2023-02-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-02-28 13:15:21" itemprop="dateModified" datetime="2023-02-28T13:15:21+00:00">2023-02-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/RecSys/" itemprop="url" rel="index"><span itemprop="name">RecSys</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/RecSys/SocialRec/" itemprop="url" rel="index"><span itemprop="name">SocialRec</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/02/24/Note_for_GraphRec/#more" rel="contents">
-                Read more &raquo;
-              </a>
+            <div class="post-nav-item">
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          </div>
     </footer>
   </article>
 </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/24/NGCF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Lory">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lory's Page">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Lory's Page">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/24/NGCF/" class="post-title-link" itemprop="url">NGCF</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-02-24 20:46:24" itemprop="dateCreated datePublished" datetime="2023-02-24T20:46:24+00:00">2023-02-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-02-28 13:15:21" itemprop="dateModified" datetime="2023-02-28T13:15:21+00:00">2023-02-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/RecSys/" itemprop="url" rel="index"><span itemprop="name">RecSys</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/02/24/NGCF/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
 
 
