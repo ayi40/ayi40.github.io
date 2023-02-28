@@ -191,19 +191,19 @@ Just concatenate all propagation layers' output embedding, and use inner product
 
 # Optimization
 
-### Loss
+## Loss
 
 BPR Loss: assumes that the observed interactions, which are more reflective of a user’s preferences, should be assigned higher prediction values than unobserved ones.
 
 ![image-20230212212248890](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212212248890.png)
 
-### Optimizer: Adam
+## Optimizer: Adam
 
-### Model Size
+## Model Size
 
 In NGCF, only W1 and W2 in the propagation layer need to be trained, so has $2Ld_ld_{l-1}$ more parameters, while L is always smaller than 5 and $d$ is set as the embedding size(e.g. 64) which is also small.
 
-### Message and Node Dropout
+## Message and Node Dropout
 
 1. **Message dropout**: randomly drops out the outgoing messages (equal to dropout edge).
 
@@ -221,7 +221,7 @@ In NGCF, only W1 and W2 in the propagation layer need to be trained, so has $2Ld
 
 # Experiment
 
-### Conclusions from comparing with other models
+## Conclusions from comparing with other models
 
 1. The inner product is insufficient to capture the complex relations between users and items.
 2. Nonlinear feature interactions between users and items are important
@@ -229,11 +229,11 @@ In NGCF, only W1 and W2 in the propagation layer need to be trained, so has $2Ld
 4. Considering high-order connectivity or neighbor is better than only considering first-order neighbor.
 5.  that exploiting high-order connectivity greatly facilitates representation learning for inactive users, as the collaborative signal can be effectively captured. And the embedding propagation is beneficial to relatively inactive users.
 
-### Study for NGCF
+## Study for NGCF
 
 ....
 
-### Effect of High-order Connectivity
+## Effect of High-order Connectivity
 
 ![image-20230212225247958](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212225247958.png)
 

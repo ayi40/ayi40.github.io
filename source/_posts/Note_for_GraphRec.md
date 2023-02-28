@@ -24,8 +24,7 @@ categories:
 
 ![Snipaste_2023-02-02_15-10-34](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/Snipaste_2023-02-02_15-10-34.png)
 
-
-### Three import module:
+## Three import module:
 
 1. User Modeling: used to compute User Latent Factor(vector containing many useful information)
 
@@ -39,6 +38,7 @@ categories:
 ## Data
 
 ### **What kind of datas we use?**
+
 1. User-Item graph: record interation(e.g. purchase) and opinion(e.g. five star rating) between user and item
 
 2. User-User social graph: relationship between user and user

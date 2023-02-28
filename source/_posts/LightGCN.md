@@ -173,13 +173,13 @@ below is influence from2-order neighbor to target node.
 
 # Model Train
 
-### Loss function
+## Loss function
 
 ![image-20230213213949666](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213213949666.png)
 
-### Optimizer: Adam
+## Optimizer: Adam
 
-### No dropout strategy
+## No dropout strategy
 
 The reason is that we do not have feature transformation weight matrices in LightGCN, thus enforcing L2 regularization on the embedding layer is sufficient to prevent overfitting.
 

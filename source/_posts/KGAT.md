@@ -185,7 +185,7 @@ multi-layers combination and inner product
 
 ## Optimizazion
 
-#### loss
+### loss
 
 ![image-20230223002144083](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223002144083.png)
 
@@ -197,11 +197,11 @@ $L_{kg}$ is loss forTranR .
 
 ![image-20230222195306105](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230222195306105.png)
 
-#### Optimizer
+### Optimizer
 
 Adam
 
-#### updata method
+### updata method
 
 
 
