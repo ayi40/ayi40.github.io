@@ -34,6 +34,9 @@ jobs:
           pnpm install
           pnpm run clean
           pnpm run build
+          cd public
+          touch CNAME
+          echo 'lorypage.com' > CNAME
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
