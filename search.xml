@@ -231,7 +231,7 @@ alt="image-20230223001526127" />
 <figcaption aria-hidden="true">image-20230223001526127</figcaption>
 </figure>
 <h2 id="optimizazion">Optimizazion</h2>
-<h4 id="loss">loss</h4>
+<h3 id="loss">loss</h3>
 <figure>
 <img
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223002144083.png"
@@ -252,9 +252,9 @@ src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230222195306105.png
 alt="image-20230222195306105" />
 <figcaption aria-hidden="true">image-20230222195306105</figcaption>
 </figure>
-<h4 id="optimizer">Optimizer</h4>
+<h3 id="optimizer">Optimizer</h3>
 <p>Adam</p>
-<h4 id="updata-method">updata method</h4>
+<h3 id="updata-method">updata method</h3>
 <p>we update the embeddings for all nodes;</p>
 <p>hereafter, we sample a batch of (<em>u</em>,<em>i</em>, <em>j</em>)
 randomly, retrieve their representations after <em>L</em> steps of
@@ -538,15 +538,15 @@ v on u is determined by</p>
 <li>the activity of v, the less active the larger.</li>
 </ol>
 <h1 id="model-train">Model Train</h1>
-<h3 id="loss-function">Loss function</h3>
+<h2 id="loss-function">Loss function</h2>
 <figure>
 <img
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213213949666.png"
 alt="image-20230213213949666" />
 <figcaption aria-hidden="true">image-20230213213949666</figcaption>
 </figure>
-<h3 id="optimizer-adam">Optimizer: Adam</h3>
-<h3 id="no-dropout-strategy">No dropout strategy</h3>
+<h2 id="optimizer-adam">Optimizer: Adam</h2>
+<h2 id="no-dropout-strategy">No dropout strategy</h2>
 <p>The reason is that we do not have feature transformation weight
 matrices in LightGCN, thus enforcing L2 regularization on the embedding
 layer is sufficient to prevent overfitting.</p>
@@ -915,7 +915,7 @@ alt="image-20230212173813003" />
 <figcaption aria-hidden="true">image-20230212173813003</figcaption>
 </figure>
 <h1 id="optimization">Optimization</h1>
-<h3 id="loss">Loss</h3>
+<h2 id="loss">Loss</h2>
 <p>BPR Loss: assumes that the observed interactions, which are more
 reflective of a user’s preferences, should be assigned higher prediction
 values than unobserved ones.</p>
@@ -925,14 +925,14 @@ src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212212248890.png
 alt="image-20230212212248890" />
 <figcaption aria-hidden="true">image-20230212212248890</figcaption>
 </figure>
-<h3 id="optimizer-adam">Optimizer: Adam</h3>
-<h3 id="model-size">Model Size</h3>
+<h2 id="optimizer-adam">Optimizer: Adam</h2>
+<h2 id="model-size">Model Size</h2>
 <p>In NGCF, only W1 and W2 in the propagation layer need to be trained,
 so has <span class="math inline">\(2Ld_ld_{l-1}\)</span> more
 parameters, while L is always smaller than 5 and <span
 class="math inline">\(d\)</span> is set as the embedding size(e.g. 64)
 which is also small.</p>
-<h3 id="message-and-node-dropout">Message and Node Dropout</h3>
+<h2 id="message-and-node-dropout">Message and Node Dropout</h2>
 <ol type="1">
 <li><p><strong>Message dropout</strong>: randomly drops out the outgoing
 messages (equal to dropout edge).</p>
@@ -957,8 +957,8 @@ ratio.</p></li>
 dropout，计算时node的邻居数、拉普拉斯norm都是正常的，就是更新embedding的时候遗漏了信息，作用是提高一下鲁棒性和容错性；对于Node
 dropout，直接在拉普拉斯矩阵中屏蔽若干个node，可能影响临界点数、归一化数值等，在矩阵运算时候就有影响，作用是希望模型不要过于依赖某些特定邻接点，没了部分点依然能正常运行。</p>
 <h1 id="experiment">Experiment</h1>
-<h3 id="conclusions-from-comparing-with-other-models">Conclusions from
-comparing with other models</h3>
+<h2 id="conclusions-from-comparing-with-other-models">Conclusions from
+comparing with other models</h2>
 <ol type="1">
 <li>The inner product is insufficient to capture the complex relations
 between users and items.</li>
@@ -974,10 +974,10 @@ representation learning for inactive users, as the collaborative signal
 can be effectively captured. And the embedding propagation is beneficial
 to relatively inactive users.</li>
 </ol>
-<h3 id="study-for-ngcf">Study for NGCF</h3>
+<h2 id="study-for-ngcf">Study for NGCF</h2>
 <p>....</p>
-<h3 id="effect-of-high-order-connectivity">Effect of High-order
-Connectivity</h3>
+<h2 id="effect-of-high-order-connectivity">Effect of High-order
+Connectivity</h2>
 <figure>
 <img
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212225247958.png"
@@ -1000,6 +1000,30 @@ representations.</li>
       </categories>
   </entry>
   <entry>
+    <title>常见激活函数</title>
+    <url>/2023/02/28/activate_function/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="常见激活函数">常见激活函数</h1>
+<h2 id="sigmoid">Sigmoid</h2>
+<p><span class="math display">\[
+\sigma(x) = \frac{1}{1+exp(-x)}
+\]</span></p>
+<p>输出的值范围在[0,1]之间。但是<code>sigmoid</code>型函数的输出存在<strong>均值不为0</strong>的情况，并且存在<strong>梯度消失的问题</strong>，在深层网络中被其他激活函数替代。在<strong>逻辑回归</strong>中使用的该激活函数用于输出<strong>分类</strong>。</p>
+<h2 id="tanh">tanh</h2>
+<p><span class="math display">\[
+tanh(x) = \frac{e^x-e^{(-x)}}{e^x+e^{(-x)}} =\frac{e^{2x}-1}{e^{2x}+1}=
+2 \cdot sigmoid(2x)-1
+\]</span></p>
+<p><code>tanh(x)</code>型函数可以解决<code>sigmoid</code>型函数的<strong>期望（均值）不为0</strong>的情况。函数输出范围为(-1,+1)。但<code>tanh(x)</code>型函数依然存在<strong>梯度消失的问题</strong>。</p>
+<p>在LSTM中使用了<code>tanh(x)</code>型函数。</p>
+]]></content>
+      <categories>
+        <category>ML</category>
+        <category>Basic</category>
+      </categories>
+  </entry>
+  <entry>
     <title>GraphRec</title>
     <url>/2023/02/24/Note_for_GraphRec/</url>
     <content><![CDATA[<p>.</p>
@@ -1019,7 +1043,7 @@ src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/Snipaste_2023-02-02_15-10-3
 alt="Snipaste_2023-02-02_15-10-34" />
 <figcaption aria-hidden="true">Snipaste_2023-02-02_15-10-34</figcaption>
 </figure>
-<h3 id="three-import-module">Three import module:</h3>
+<h2 id="three-import-module">Three import module:</h2>
 <ol type="1">
 <li><p>User Modeling: used to compute User Latent Factor(vector
 containing many useful information)</p></li>
@@ -1125,30 +1149,6 @@ Aggregation，本质上是Social Aggregation中的self-connection</p>
       <categories>
         <category>RecSys</category>
         <category>SocialRec</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>常见激活函数</title>
-    <url>/2023/02/28/activate_function/</url>
-    <content><![CDATA[<p>.</p>
-<span id="more"></span>
-<h1 id="常见激活函数">常见激活函数</h1>
-<h2 id="sigmoid">Sigmoid</h2>
-<p><span class="math display">\[
-\sigma(x) = \frac{1}{1+exp(-x)}
-\]</span></p>
-<p>输出的值范围在[0,1]之间。但是<code>sigmoid</code>型函数的输出存在<strong>均值不为0</strong>的情况，并且存在<strong>梯度消失的问题</strong>，在深层网络中被其他激活函数替代。在<strong>逻辑回归</strong>中使用的该激活函数用于输出<strong>分类</strong>。</p>
-<h2 id="tanh">tanh</h2>
-<p><span class="math display">\[
-tanh(x) = \frac{e^x-e^{(-x)}}{e^x+e^{(-x)}} =\frac{e^{2x}-1}{e^{2x}+1}=
-2 \cdot sigmoid(2x)-1
-\]</span></p>
-<p><code>tanh(x)</code>型函数可以解决<code>sigmoid</code>型函数的<strong>期望（均值）不为0</strong>的情况。函数输出范围为(-1,+1)。但<code>tanh(x)</code>型函数依然存在<strong>梯度消失的问题</strong>。</p>
-<p>在LSTM中使用了<code>tanh(x)</code>型函数。</p>
-]]></content>
-      <categories>
-        <category>ML</category>
-        <category>Basic</category>
       </categories>
   </entry>
   <entry>

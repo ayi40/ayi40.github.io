@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/D9B00E7DDF74FF18B83E42668335328A.png">
 <meta property="article:published_time" content="2023-02-24T20:46:24.000Z">
-<meta property="article:modified_time" content="2023-02-28T13:55:51.710Z">
+<meta property="article:modified_time" content="2023-02-28T14:02:50.381Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/D9B00E7DDF74FF18B83E42668335328A.png">
@@ -142,9 +142,9 @@
         <div class="post-toc-wrap sidebar-panel">
             <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#some-definition"><span class="nav-number">1.1.</span> <span class="nav-text">Some Definition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#existing-problem"><span class="nav-number">1.2.</span> <span class="nav-text">Existing Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#main-contribute"><span class="nav-number">1.3.</span> <span class="nav-text">Main contribute</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#model"><span class="nav-number">2.</span> <span class="nav-text">Model</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#embedding-layer"><span class="nav-number">2.1.</span> <span class="nav-text">Embedding layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multiple-embedding-propagation-layers"><span class="nav-number">2.2.</span> <span class="nav-text">Multiple Embedding
 Propagation Layers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#one-layer-propagation"><span class="nav-number">2.2.1.</span> <span class="nav-text">One layer propagation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#message-construction"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">Message Construction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#message-aggregation"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">Message Aggregation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#high-order-propagation"><span class="nav-number">2.2.2.</span> <span class="nav-text">High-order propagation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#formulate-form"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">Formulate Form</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#matrix-form"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">Matrix Form</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-simple-example-for-matrix-form"><span class="nav-number">2.2.2.2.1.</span> <span class="nav-text">A simple example for matrix
-form:</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-prediction"><span class="nav-number">2.3.</span> <span class="nav-text">Model Prediction</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#optimization"><span class="nav-number">3.</span> <span class="nav-text">Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#loss"><span class="nav-number">3.0.1.</span> <span class="nav-text">Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#optimizer-adam"><span class="nav-number">3.0.2.</span> <span class="nav-text">Optimizer: Adam</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#model-size"><span class="nav-number">3.0.3.</span> <span class="nav-text">Model Size</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#message-and-node-dropout"><span class="nav-number">3.0.4.</span> <span class="nav-text">Message and Node Dropout</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#experiment"><span class="nav-number">4.</span> <span class="nav-text">Experiment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#conclusions-from-comparing-with-other-models"><span class="nav-number">4.0.1.</span> <span class="nav-text">Conclusions from
-comparing with other models</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#study-for-ngcf"><span class="nav-number">4.0.2.</span> <span class="nav-text">Study for NGCF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#effect-of-high-order-connectivity"><span class="nav-number">4.0.3.</span> <span class="nav-text">Effect of High-order
-Connectivity</span></a></li></ol></li></ol></li></ol></div>
+form:</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-prediction"><span class="nav-number">2.3.</span> <span class="nav-text">Model Prediction</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#optimization"><span class="nav-number">3.</span> <span class="nav-text">Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#loss"><span class="nav-number">3.1.</span> <span class="nav-text">Loss</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optimizer-adam"><span class="nav-number">3.2.</span> <span class="nav-text">Optimizer: Adam</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-size"><span class="nav-number">3.3.</span> <span class="nav-text">Model Size</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#message-and-node-dropout"><span class="nav-number">3.4.</span> <span class="nav-text">Message and Node Dropout</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#experiment"><span class="nav-number">4.</span> <span class="nav-text">Experiment</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#conclusions-from-comparing-with-other-models"><span class="nav-number">4.1.</span> <span class="nav-text">Conclusions from
+comparing with other models</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#study-for-ngcf"><span class="nav-number">4.2.</span> <span class="nav-text">Study for NGCF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#effect-of-high-order-connectivity"><span class="nav-number">4.3.</span> <span class="nav-text">Effect of High-order
+Connectivity</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -226,7 +226,7 @@ Connectivity</span></a></li></ol></li></ol></li></ol></div>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-02-28 13:55:51" itemprop="dateModified" datetime="2023-02-28T13:55:51+00:00">2023-02-28</time>
+      <time title="Modified: 2023-02-28 14:02:50" itemprop="dateModified" datetime="2023-02-28T14:02:50+00:00">2023-02-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -476,7 +476,7 @@ alt="image-20230212173813003" />
 <figcaption aria-hidden="true">image-20230212173813003</figcaption>
 </figure>
 <h1 id="optimization">Optimization</h1>
-<h3 id="loss">Loss</h3>
+<h2 id="loss">Loss</h2>
 <p>BPR Loss: assumes that the observed interactions, which are more
 reflective of a user’s preferences, should be assigned higher prediction
 values than unobserved ones.</p>
@@ -486,14 +486,14 @@ src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212212248890.png
 alt="image-20230212212248890" />
 <figcaption aria-hidden="true">image-20230212212248890</figcaption>
 </figure>
-<h3 id="optimizer-adam">Optimizer: Adam</h3>
-<h3 id="model-size">Model Size</h3>
+<h2 id="optimizer-adam">Optimizer: Adam</h2>
+<h2 id="model-size">Model Size</h2>
 <p>In NGCF, only W1 and W2 in the propagation layer need to be trained,
 so has <span class="math inline">\(2Ld_ld_{l-1}\)</span> more
 parameters, while L is always smaller than 5 and <span
 class="math inline">\(d\)</span> is set as the embedding size(e.g. 64)
 which is also small.</p>
-<h3 id="message-and-node-dropout">Message and Node Dropout</h3>
+<h2 id="message-and-node-dropout">Message and Node Dropout</h2>
 <ol type="1">
 <li><p><strong>Message dropout</strong>: randomly drops out the outgoing
 messages (equal to dropout edge).</p>
@@ -518,8 +518,8 @@ ratio.</p></li>
 dropout，计算时node的邻居数、拉普拉斯norm都是正常的，就是更新embedding的时候遗漏了信息，作用是提高一下鲁棒性和容错性；对于Node
 dropout，直接在拉普拉斯矩阵中屏蔽若干个node，可能影响临界点数、归一化数值等，在矩阵运算时候就有影响，作用是希望模型不要过于依赖某些特定邻接点，没了部分点依然能正常运行。</p>
 <h1 id="experiment">Experiment</h1>
-<h3 id="conclusions-from-comparing-with-other-models">Conclusions from
-comparing with other models</h3>
+<h2 id="conclusions-from-comparing-with-other-models">Conclusions from
+comparing with other models</h2>
 <ol type="1">
 <li>The inner product is insufficient to capture the complex relations
 between users and items.</li>
@@ -535,10 +535,10 @@ representation learning for inactive users, as the collaborative signal
 can be effectively captured. And the embedding propagation is beneficial
 to relatively inactive users.</li>
 </ol>
-<h3 id="study-for-ngcf">Study for NGCF</h3>
+<h2 id="study-for-ngcf">Study for NGCF</h2>
 <p>....</p>
-<h3 id="effect-of-high-order-connectivity">Effect of High-order
-Connectivity</h3>
+<h2 id="effect-of-high-order-connectivity">Effect of High-order
+Connectivity</h2>
 <figure>
 <img
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212225247958.png"

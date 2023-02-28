@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/GraphRec.jpg">
 <meta property="article:published_time" content="2023-02-24T20:46:25.000Z">
-<meta property="article:modified_time" content="2023-02-28T13:55:51.710Z">
+<meta property="article:modified_time" content="2023-02-28T14:02:50.381Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/GraphRec.jpg">
@@ -140,7 +140,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#graphrec"><span class="nav-number">1.</span> <span class="nav-text">GraphRec</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#graphrec-feature"><span class="nav-number">2.</span> <span class="nav-text">GraphRec feature</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#overall-architecture"><span class="nav-number">3.</span> <span class="nav-text">Overall architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#three-import-module"><span class="nav-number">3.0.1.</span> <span class="nav-text">Three import module:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#source-code-analyses"><span class="nav-number">4.</span> <span class="nav-text">Source code analyses</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#data"><span class="nav-number">4.1.</span> <span class="nav-text">Data</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#what-kind-of-datas-we-use"><span class="nav-number">4.1.1.</span> <span class="nav-text">What kind of datas we
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#graphrec"><span class="nav-number">1.</span> <span class="nav-text">GraphRec</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#graphrec-feature"><span class="nav-number">2.</span> <span class="nav-text">GraphRec feature</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#overall-architecture"><span class="nav-number">3.</span> <span class="nav-text">Overall architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#three-import-module"><span class="nav-number">3.1.</span> <span class="nav-text">Three import module:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#source-code-analyses"><span class="nav-number">4.</span> <span class="nav-text">Source code analyses</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#data"><span class="nav-number">4.1.</span> <span class="nav-text">Data</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#what-kind-of-datas-we-use"><span class="nav-number">4.1.1.</span> <span class="nav-text">What kind of datas we
 use?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#how-to-represent-these-datas-in-code"><span class="nav-number">4.1.2.</span> <span class="nav-text">How to represent
 these datas in code?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#user-item-graph"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">User-Item graph:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#user-user-socal-graph"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">User-User socal graph</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#other"><span class="nav-number">4.1.2.3.</span> <span class="nav-text">other</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#how-to-pre-process-data"><span class="nav-number">4.1.3.</span> <span class="nav-text">How to pre-process
 data?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model"><span class="nav-number">4.2.</span> <span class="nav-text">Model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#init"><span class="nav-number">4.2.1.</span> <span class="nav-text">Init</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#overall-architecture-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">Overall architecture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#user-modeling"><span class="nav-number">4.2.3.</span> <span class="nav-text">User Modeling</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#item-aggregation"><span class="nav-number">4.2.3.1.</span> <span class="nav-text">Item Aggregation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#social-aggregation"><span class="nav-number">4.2.3.2.</span> <span class="nav-text">Social Aggregation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#item-modeling"><span class="nav-number">4.2.4.</span> <span class="nav-text">Item Modeling</span></a></li></ol></li></ol></li></ol></div>
@@ -225,7 +225,7 @@ data?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-li
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-02-28 13:55:51" itemprop="dateModified" datetime="2023-02-28T13:55:51+00:00">2023-02-28</time>
+      <time title="Modified: 2023-02-28 14:02:50" itemprop="dateModified" datetime="2023-02-28T14:02:50+00:00">2023-02-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -268,7 +268,7 @@ src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/Snipaste_2023-02-02_15-10-3
 alt="Snipaste_2023-02-02_15-10-34" />
 <figcaption aria-hidden="true">Snipaste_2023-02-02_15-10-34</figcaption>
 </figure>
-<h3 id="three-import-module">Three import module:</h3>
+<h2 id="three-import-module">Three import module:</h2>
 <ol type="1">
 <li><p>User Modeling: used to compute User Latent Factor(vector
 containing many useful information)</p></li>

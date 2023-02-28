@@ -27,7 +27,7 @@
 <meta property="og:description" content=".">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-02-24T20:46:26.000Z">
-<meta property="article:modified_time" content="2023-02-28T13:55:51.710Z">
+<meta property="article:modified_time" content="2023-02-28T14:02:50.381Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
 
@@ -139,7 +139,7 @@
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
             <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#main-contributes"><span class="nav-number">1.1.</span> <span class="nav-text">Main contributes</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#analyze-about-ngcf"><span class="nav-number">2.</span> <span class="nav-text">Analyze about NGCF</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#brief"><span class="nav-number">2.1.</span> <span class="nav-text">Brief</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#method"><span class="nav-number">2.1.1.</span> <span class="nav-text">Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#result"><span class="nav-number">2.1.2.</span> <span class="nav-text">Result</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#conclusion"><span class="nav-number">2.1.3.</span> <span class="nav-text">Conclusion</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#model-of-lightgcn"><span class="nav-number">3.</span> <span class="nav-text">Model of LightGCN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#light-graph-convolution-lgc"><span class="nav-number">3.1.</span> <span class="nav-text">Light Graph Convolution (LGC)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layer-combination"><span class="nav-number">3.2.</span> <span class="nav-text">Layer Combination</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-prediction"><span class="nav-number">3.3.</span> <span class="nav-text">Model Prediction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#matrix-form"><span class="nav-number">3.4.</span> <span class="nav-text">Matrix form</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#analyze-about-lightgcn"><span class="nav-number">4.</span> <span class="nav-text">Analyze about LightGCN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#relation-with-sgcn"><span class="nav-number">4.1.</span> <span class="nav-text">Relation with SGCN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#relation-with-appnp"><span class="nav-number">4.2.</span> <span class="nav-text">Relation with APPNP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#second-order-embedding-smoothness"><span class="nav-number">4.3.</span> <span class="nav-text">Second-Order Embedding
-Smoothness</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#model-train"><span class="nav-number">5.</span> <span class="nav-text">Model Train</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#loss-function"><span class="nav-number">5.0.1.</span> <span class="nav-text">Loss function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#optimizer-adam"><span class="nav-number">5.0.2.</span> <span class="nav-text">Optimizer: Adam</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#no-dropout-strategy"><span class="nav-number">5.0.3.</span> <span class="nav-text">No dropout strategy</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#experiment"><span class="nav-number">6.</span> <span class="nav-text">Experiment</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#compared-with-ngcf"><span class="nav-number">6.1.</span> <span class="nav-text">compared with NGCF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ablation-and-effectiveness-analyses"><span class="nav-number">6.2.</span> <span class="nav-text">Ablation and Effectiveness
+Smoothness</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#model-train"><span class="nav-number">5.</span> <span class="nav-text">Model Train</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#loss-function"><span class="nav-number">5.1.</span> <span class="nav-text">Loss function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optimizer-adam"><span class="nav-number">5.2.</span> <span class="nav-text">Optimizer: Adam</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#no-dropout-strategy"><span class="nav-number">5.3.</span> <span class="nav-text">No dropout strategy</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#experiment"><span class="nav-number">6.</span> <span class="nav-text">Experiment</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#compared-with-ngcf"><span class="nav-number">6.1.</span> <span class="nav-text">compared with NGCF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ablation-and-effectiveness-analyses"><span class="nav-number">6.2.</span> <span class="nav-text">Ablation and Effectiveness
 Analyses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#impact-of-layer-combination"><span class="nav-number">6.2.1.</span> <span class="nav-text">Impact of Layer Combination</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#using-models"><span class="nav-number">6.2.1.1.</span> <span class="nav-text">Using models:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#conclusion-1"><span class="nav-number">6.2.1.2.</span> <span class="nav-text">Conclusion</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#impact-of-symmetric-sqrt-normalization"><span class="nav-number">6.2.2.</span> <span class="nav-text">Impact of Symmetric Sqrt
 Normalization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#setting"><span class="nav-number">6.2.2.1.</span> <span class="nav-text">Setting:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#conclusion-2"><span class="nav-number">6.2.2.2.</span> <span class="nav-text">Conclusion</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#analysis-of-embedding-smoothness"><span class="nav-number">6.2.3.</span> <span class="nav-text">Analysis of Embedding
 Smoothness</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hyper-parameter-studies"><span class="nav-number">6.3.</span> <span class="nav-text">Hyper-parameter Studies</span></a></li></ol></li></ol></div>
@@ -224,7 +224,7 @@ Smoothness</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="n
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-02-28 13:55:51" itemprop="dateModified" datetime="2023-02-28T13:55:51+00:00">2023-02-28</time>
+      <time title="Modified: 2023-02-28 14:02:50" itemprop="dateModified" datetime="2023-02-28T14:02:50+00:00">2023-02-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -471,15 +471,15 @@ v on u is determined by</p>
 <li>the activity of v, the less active the larger.</li>
 </ol>
 <h1 id="model-train">Model Train</h1>
-<h3 id="loss-function">Loss function</h3>
+<h2 id="loss-function">Loss function</h2>
 <figure>
 <img
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230213213949666.png"
 alt="image-20230213213949666" />
 <figcaption aria-hidden="true">image-20230213213949666</figcaption>
 </figure>
-<h3 id="optimizer-adam">Optimizer: Adam</h3>
-<h3 id="no-dropout-strategy">No dropout strategy</h3>
+<h2 id="optimizer-adam">Optimizer: Adam</h2>
+<h2 id="no-dropout-strategy">No dropout strategy</h2>
 <p>The reason is that we do not have feature transformation weight
 matrices in LightGCN, thus enforcing L2 regularization on the embedding
 layer is sufficient to prevent overfitting.</p>
