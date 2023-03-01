@@ -1000,30 +1000,6 @@ representations.</li>
       </categories>
   </entry>
   <entry>
-    <title>常见激活函数</title>
-    <url>/2023/02/28/activate_function/</url>
-    <content><![CDATA[<p>.</p>
-<span id="more"></span>
-<h1 id="常见激活函数">常见激活函数</h1>
-<h2 id="sigmoid">Sigmoid</h2>
-<p><span class="math display">\[
-\sigma(x) = \frac{1}{1+exp(-x)}
-\]</span></p>
-<p>输出的值范围在[0,1]之间。但是<code>sigmoid</code>型函数的输出存在<strong>均值不为0</strong>的情况，并且存在<strong>梯度消失的问题</strong>，在深层网络中被其他激活函数替代。在<strong>逻辑回归</strong>中使用的该激活函数用于输出<strong>分类</strong>。</p>
-<h2 id="tanh">tanh</h2>
-<p><span class="math display">\[
-tanh(x) = \frac{e^x-e^{(-x)}}{e^x+e^{(-x)}} =\frac{e^{2x}-1}{e^{2x}+1}=
-2 \cdot sigmoid(2x)-1
-\]</span></p>
-<p><code>tanh(x)</code>型函数可以解决<code>sigmoid</code>型函数的<strong>期望（均值）不为0</strong>的情况。函数输出范围为(-1,+1)。但<code>tanh(x)</code>型函数依然存在<strong>梯度消失的问题</strong>。</p>
-<p>在LSTM中使用了<code>tanh(x)</code>型函数。</p>
-]]></content>
-      <categories>
-        <category>ML</category>
-        <category>Basic</category>
-      </categories>
-  </entry>
-  <entry>
     <title>GraphRec</title>
     <url>/2023/02/24/Note_for_GraphRec/</url>
     <content><![CDATA[<p>.</p>
@@ -1149,6 +1125,74 @@ Aggregation，本质上是Social Aggregation中的self-connection</p>
       <categories>
         <category>RecSys</category>
         <category>SocialRec</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>常见激活函数</title>
+    <url>/2023/02/28/activate_function/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="常见激活函数">常见激活函数</h1>
+<p>激活函数作用：加入非线性因素</p>
+<h2 id="sigmoid">Sigmoid</h2>
+<p><span class="math display">\[
+\sigma(x) = \frac{1}{1+exp(-x)}
+\]</span></p>
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228224935533.png" alt="image-20230228224935533" style="zoom:40%;" /></p>
+<p>输出的值范围在[0,1]之间。但是<code>sigmoid</code>型函数的输出存在<strong>均值不为0</strong>的情况，并且存在<strong>梯度消失的问题</strong>，在深层网络中被其他激活函数替代。在<strong>逻辑回归</strong>中使用的该激活函数用于输出<strong>分类</strong>。</p>
+<p>梯度消失原因： <span class="math display">\[
+\sigma&#39;(x) = \
+\]</span></p>
+<p>sigmoid函数两边的斜率趋向0，很难继续学习</p>
+<h2 id="tanh">tanh</h2>
+<p><span class="math display">\[
+tanh(x) = \frac{e^x-e^{(-x)}}{e^x+e^{(-x)}} =\frac{e^{2x}-1}{e^{2x}+1}=
+2 \cdot sigmoid(2x)-1
+\]</span></p>
+<p><code>tanh(x)</code>型函数可以解决<code>sigmoid</code>型函数的<strong>期望（均值）不为0</strong>的情况。函数输出范围为(-1,+1)。但<code>tanh(x)</code>型函数依然存在<strong>梯度消失的问题</strong>。</p>
+<p>在LSTM中使用了<code>tanh(x)</code>型函数。</p>
+<h2 id="relu">Relu</h2>
+<p><code>ReLU(x)</code>型函数可以有效避免<strong>梯度消失的问题</strong>，公式如下：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228222815687.png"
+alt="image-20230228222815687" />
+<figcaption aria-hidden="true">image-20230228222815687</figcaption>
+</figure>
+<p><code>ReLU(x)</code>型函数的缺点是<strong>负值成为“死区”</strong>，神经网络无法再对其进行响应。Alex-Net使用了<code>ReLU(x)</code>型函数。当我们训练深层神经网络时，最好使用<code>ReLU(x)</code>型函数而不是<code>sigmoid(x)</code>型函数。</p>
+<h2 id="leakyrelu">LeakyRelu</h2>
+<p>为<strong>负值增加了一个斜率</strong>，缓解了“死区”现象，公式如下：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228222900735.png"
+alt="image-20230228222900735" />
+<figcaption aria-hidden="true">image-20230228222900735</figcaption>
+</figure>
+<p><code>Leaky ReLU(x)</code>型函数缺点是，<strong>超参数a（阿尔法）合适的值不好设定</strong>。当我们想让神经网络能够学到负值信息，那么使用该激活函数。</p>
+<h2 id="p-relu-参数化relu">P-Relu 参数化Relu</h2>
+<p>数化ReLU（P-ReLU）。参数化ReLU为了解决超参数a（阿尔法）合适的值不好设定的问题，干脆将这个参数也融入模型的整体训练过程中。也使用误差反向传播和随机梯度下降的方法更新参数。</p>
+<h2 id="r-relu-随机化relu">R-Relu 随机化Relu</h2>
+<p>就是超参数a（阿尔法）随机化，<strong>让不同的层自己学习不同的超参数</strong>，但随机化的超参数的分布符合均值分布或高斯分布。</p>
+<h2 id="mish激活函数">Mish激活函数</h2>
+<p><span class="math display">\[
+Mish(x) = x\cdot tanh(log(1+e^x))
+\]</span></p>
+<h2 id="elu指数化线性单元">ELU指数化线性单元</h2>
+<p>也是为了解决死区问题，公式如下：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228224119801.png"
+alt="image-20230228224119801" />
+<figcaption aria-hidden="true">image-20230228224119801</figcaption>
+</figure>
+<p>缺点是<strong>指数计算量大</strong>。</p>
+<h2 id="maxout">Maxout</h2>
+<p>与常规的激活函数不同，<strong>Maxout</strong>是一个可以学习的<strong>分段线性函数</strong>。其原理是，任何ReLU及其变体等激活函数都可以看成分段的线性函数，而Maxout加入的一层神经元正是一个可以学习参数的分段线性函数。</p>
+<p>优点是其拟合能力很强，理论上可以拟合任意的凸函数。缺点是参数量激增！在Network-in-Network中使用的该激活函数。</p>
+]]></content>
+      <categories>
+        <category>ML</category>
+        <category>Basic</category>
       </categories>
   </entry>
   <entry>
