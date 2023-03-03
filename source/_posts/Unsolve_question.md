@@ -1,4 +1,16 @@
-1. KGCN Note
+---
+title: Unsolve problem
+date: 2023/3/2 20:54:26
+categories:
+  - [RecSys, KGRec]
+---
+
+.
+
+<!-- more -->
+
+
+KGCN Note
 
 about ripple net, why
 

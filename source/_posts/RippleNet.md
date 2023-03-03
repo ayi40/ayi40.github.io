@@ -1,10 +1,13 @@
 ---
-title: KGCN
+title: RippleNet
 date: 2023/3/2 20:54:26
 categories:
   - [RecSys, KGRec]
 ---
 
+.
+
+<!-- more -->
 
 # Background
 
