@@ -19,29 +19,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content=".">
+    <meta name="description" content="Background CF: sparsity, cold start KG-benefit:  KG introduces semantic relatedness among items, which can help find their latent connections and improve the precision of recommended items; KG consist">
 <meta property="og:type" content="article">
-<meta property="og:title" content="常见激活函数">
-<meta property="og:url" content="http://example.com/2023/02/28/activate_function/index.html">
+<meta property="og:title" content="KGCN">
+<meta property="og:url" content="http://example.com/2023/03/02/RippleNet/index.html">
 <meta property="og:site_name" content="Lory&#39;s Page">
-<meta property="og:description" content=".">
+<meta property="og:description" content="Background CF: sparsity, cold start KG-benefit:  KG introduces semantic relatedness among items, which can help find their latent connections and improve the precision of recommended items; KG consist">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228224935533.png">
-<meta property="article:published_time" content="2023-02-28T20:46:25.000Z">
+<meta property="article:published_time" content="2023-03-02T20:54:26.000Z">
 <meta property="article:modified_time" content="2023-03-03T02:57:25.980Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228224935533.png">
 
 
-<link rel="canonical" href="http://example.com/2023/02/28/activate_function/">
+<link rel="canonical" href="http://example.com/2023/03/02/RippleNet/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/02/28/activate_function/","path":"2023/02/28/activate_function/","title":"常见激活函数"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/03/02/RippleNet/","path":"2023/03/02/RippleNet/","title":"KGCN"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>常见激活函数 | Lory's Page</title>
+<title>KGCN | Lory's Page</title>
   
 
 
@@ -140,7 +138,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">常见激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sigmoid"><span class="nav-number">1.1.</span> <span class="nav-text">Sigmoid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tanh"><span class="nav-number">1.2.</span> <span class="nav-text">tanh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#relu"><span class="nav-number">1.3.</span> <span class="nav-text">Relu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leakyrelu"><span class="nav-number">1.4.</span> <span class="nav-text">LeakyRelu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#p-relu-%E5%8F%82%E6%95%B0%E5%8C%96relu"><span class="nav-number">1.5.</span> <span class="nav-text">P-Relu 参数化Relu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#r-relu-%E9%9A%8F%E6%9C%BA%E5%8C%96relu"><span class="nav-number">1.6.</span> <span class="nav-text">R-Relu 随机化Relu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mish%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">1.7.</span> <span class="nav-text">Mish激活函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elu%E6%8C%87%E6%95%B0%E5%8C%96%E7%BA%BF%E6%80%A7%E5%8D%95%E5%85%83"><span class="nav-number">1.8.</span> <span class="nav-text">ELU指数化线性单元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#maxout"><span class="nav-number">1.9.</span> <span class="nav-text">Maxout</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#method"><span class="nav-number">2.</span> <span class="nav-text">Method</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#input"><span class="nav-number">2.1.</span> <span class="nav-text">Input</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#some-definition"><span class="nav-number">2.2.</span> <span class="nav-text">Some definition</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#relevant-entity"><span class="nav-number">2.2.1.</span> <span class="nav-text">Relevant entity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ripple-set"><span class="nav-number">2.2.2.</span> <span class="nav-text">Ripple set</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model"><span class="nav-number">2.3.</span> <span class="nav-text">Model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#first-layer-propagation"><span class="nav-number">2.3.1.</span> <span class="nav-text">First layer propagation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#multi-layer"><span class="nav-number">2.3.2.</span> <span class="nav-text">Multi-layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#predict"><span class="nav-number">2.3.3.</span> <span class="nav-text">predict</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#whole-process"><span class="nav-number">2.3.4.</span> <span class="nav-text">Whole process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#loss-function%E8%BF%98%E6%B2%A1%E6%83%B3%E6%98%8E%E7%99%BD"><span class="nav-number">2.3.5.</span> <span class="nav-text">Loss Function（还没想明白）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#experiment"><span class="nav-number">3.</span> <span class="nav-text">Experiment</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#other"><span class="nav-number">4.</span> <span class="nav-text">Other</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -186,7 +184,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/28/activate_function/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/02/RippleNet/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -199,12 +197,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="常见激活函数 | Lory's Page">
+      <meta itemprop="name" content="KGCN | Lory's Page">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          常见激活函数
+          KGCN
         </h1>
 
         <div class="post-meta-container">
@@ -215,7 +213,7 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-02-28 20:46:25" itemprop="dateCreated datePublished" datetime="2023-02-28T20:46:25+00:00">2023-02-28</time>
+      <time title="Created: 2023-03-02 20:54:26" itemprop="dateCreated datePublished" datetime="2023-03-02T20:54:26+00:00">2023-03-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -230,11 +228,11 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
+          <a href="/categories/RecSys/" itemprop="url" rel="index"><span itemprop="name">RecSys</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/ML/Basic/" itemprop="url" rel="index"><span itemprop="name">Basic</span></a>
+          <a href="/categories/RecSys/KGRec/" itemprop="url" rel="index"><span itemprop="name">KGRec</span></a>
         </span>
     </span>
 
@@ -248,65 +246,140 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>.</p>
-<span id="more"></span>
-<h1 id="常见激活函数">常见激活函数</h1>
-<p>激活函数作用：加入非线性因素</p>
-<h2 id="sigmoid">Sigmoid</h2>
-<p><span class="math display">\[
-\sigma(x) = \frac{1}{1+exp(-x)}
-\]</span></p>
-<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228224935533.png" alt="image-20230228224935533" style="zoom:40%;" /></p>
-<p>输出的值范围在[0,1]之间。但是<code>sigmoid</code>型函数的输出存在<strong>均值不为0</strong>的情况，并且存在<strong>梯度消失的问题</strong>，在深层网络中被其他激活函数替代。在<strong>逻辑回归</strong>中使用的该激活函数用于输出<strong>分类</strong>。</p>
-<p>梯度消失原因： <span class="math display">\[
-\sigma&#39;(x) = \
-\]</span></p>
-<p>sigmoid函数两边的斜率趋向0，很难继续学习</p>
-<h2 id="tanh">tanh</h2>
-<p><span class="math display">\[
-tanh(x) = \frac{e^x-e^{(-x)}}{e^x+e^{(-x)}} =\frac{e^{2x}-1}{e^{2x}+1}=
-2 \cdot sigmoid(2x)-1
-\]</span></p>
-<p><code>tanh(x)</code>型函数可以解决<code>sigmoid</code>型函数的<strong>期望（均值）不为0</strong>的情况。函数输出范围为(-1,+1)。但<code>tanh(x)</code>型函数依然存在<strong>梯度消失的问题</strong>。</p>
-<p>在LSTM中使用了<code>tanh(x)</code>型函数。</p>
-<h2 id="relu">Relu</h2>
-<p><code>ReLU(x)</code>型函数可以有效避免<strong>梯度消失的问题</strong>，公式如下：</p>
+        <h1 id="background">Background</h1>
+<p><strong>CF</strong>: sparsity, cold start</p>
+<p><strong>KG-benefit</strong>:</p>
+<ol type="1">
+<li>KG introduces semantic relatedness among items, which can help find
+their latent connections and improve the <em>precision</em> of
+recommended items;</li>
+<li>KG consists of relations with various types, which is helpful for
+extending a user’s interests reasonably and increasing the
+<em>diversity</em> of recommended items;</li>
+<li>KG connects a user’s historical records and the recommended ones,
+thereby bringing <em>explainability</em> to recommender systems.</li>
+</ol>
+<p><strong>Existing KG model</strong>:</p>
+<ol type="1">
+<li><strong>embedding-based method</strong>: DKN, CKE, SHINE, but more
+suitable for in-graph applications</li>
+<li><strong>path-based method</strong>: rely heavily on manually
+designed meta-paths</li>
+</ol>
+<p>so the author proposes RippleNet:</p>
+<ol type="1">
+<li>combine embedding-based and path-based() methods
+<ol type="1">
+<li>RippleNet incorporates the KGE methods into recommendation naturally
+by preference propagation;<br />
+</li>
+<li>RippleNet can automatically discover possible paths from an item in
+a user’s history to a candidate item.</li>
+</ol></li>
+</ol>
+<h1 id="method">Method</h1>
+<h2 id="input">Input</h2>
+<p>interaction matrix <strong>Y</strong> <em>and knowledge graph</em>
+<strong>G</strong></p>
+<h2 id="some-definition">Some definition</h2>
+<h3 id="relevant-entity">Relevant entity</h3>
+<p>the set of <strong>k</strong>-hop relevant entities for user
+<strong>u</strong> is defined as</p>
 <figure>
 <img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228222815687.png"
-alt="image-20230228222815687" />
-<figcaption aria-hidden="true">image-20230228222815687</figcaption>
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302155703683.png"
+alt="image-20230302155703683" />
+<figcaption aria-hidden="true">image-20230302155703683</figcaption>
 </figure>
-<p><code>ReLU(x)</code>型函数的缺点是<strong>负值成为“死区”</strong>，神经网络无法再对其进行响应。Alex-Net使用了<code>ReLU(x)</code>型函数。当我们训练深层神经网络时，最好使用<code>ReLU(x)</code>型函数而不是<code>sigmoid(x)</code>型函数。</p>
-<h2 id="leakyrelu">LeakyRelu</h2>
-<p>为<strong>负值增加了一个斜率</strong>，缓解了“死区”现象，公式如下：</p>
+<p><span class="math inline">\(\varepsilon_u^0=V_u =
+\{v|y_{uv}=1\}\)</span> is the items which the user interacts with, and
+they can link with entities in knowledge graph</p>
+<p>can be seen as the seed set of user u in
+KG(就是user如何参与到KG中)</p>
+<h3 id="ripple-set">Ripple set</h3>
 <figure>
 <img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228222900735.png"
-alt="image-20230228222900735" />
-<figcaption aria-hidden="true">image-20230228222900735</figcaption>
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302155653732.png"
+alt="image-20230302155653732" />
+<figcaption aria-hidden="true">image-20230302155653732</figcaption>
 </figure>
-<p><code>Leaky ReLU(x)</code>型函数缺点是，<strong>超参数a（阿尔法）合适的值不好设定</strong>。当我们想让神经网络能够学到负值信息，那么使用该激活函数。</p>
-<h2 id="p-relu-参数化relu">P-Relu 参数化Relu</h2>
-<p>数化ReLU（P-ReLU）。参数化ReLU为了解决超参数a（阿尔法）合适的值不好设定的问题，干脆将这个参数也融入模型的整体训练过程中。也使用误差反向传播和随机梯度下降的方法更新参数。</p>
-<h2 id="r-relu-随机化relu">R-Relu 随机化Relu</h2>
-<p>就是超参数a（阿尔法）随机化，<strong>让不同的层自己学习不同的超参数</strong>，但随机化的超参数的分布符合均值分布或高斯分布。</p>
-<h2 id="mish激活函数">Mish激活函数</h2>
+<h2 id="model">Model</h2>
+<h3 id="first-layer-propagation">First layer propagation</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302163505799.png"
+alt="image-20230302163505799" />
+<figcaption aria-hidden="true">image-20230302163505799</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302165453023.png"
+alt="image-20230302165453023" />
+<figcaption aria-hidden="true">image-20230302165453023</figcaption>
+</figure>
+<p>v: embedding of item. Item embedding can incorporate one-hot ID ,
+attributes of an item, based on the application scenario.</p>
+<p>r: embedding of relation between head entity and tail entity.</p>
+<p>h: embedding of head entity.</p>
+<p>t: embedding of tail entity.</p>
+<p>attention weight <span class="math inline">\(p_i\)</span> can be
+regarded as the similarity of item <strong>v</strong> and the entity
+<span class="math inline">\(h_i\)</span> measured in the space of
+relation <span class="math inline">\(r_i\)</span>.</p>
+<p><span class="math inline">\(r_i\)</span> is important, since an
+item-entity pair may have different similarities when measured by
+different relations</p>
+<h3 id="multi-layer">Multi-layer</h3>
+<p>the second layer just replace v with <span
+class="math inline">\(o_u^1\)</span></p>
 <p><span class="math display">\[
-Mish(x) = x\cdot tanh(log(1+e^x))
+p_i = softmax(o_u^{1T}R_ih_i) =
+\frac{exp(o_u^{1T}T_ih_i)}{\sum_{(h,r,t)\in S_u^2}exp(o_u^{1T}Rh)}
 \]</span></p>
-<h2 id="elu指数化线性单元">ELU指数化线性单元</h2>
-<p>也是为了解决死区问题，公式如下：</p>
+<p><span class="math display">\[
+o_u^2 = \sum_{(h_i,r_i,t_i)\in S_u^2}p_it_i
+\]</span></p>
+<p>and third layer replace <span class="math inline">\(o_u^1\)</span>
+with <span class="math inline">\(o_u^2\)</span></p>
+<p>while</p>
 <figure>
 <img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228224119801.png"
-alt="image-20230228224119801" />
-<figcaption aria-hidden="true">image-20230228224119801</figcaption>
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302165932080.png"
+alt="image-20230302165932080" />
+<figcaption aria-hidden="true">image-20230302165932080</figcaption>
 </figure>
-<p>缺点是<strong>指数计算量大</strong>。</p>
-<h2 id="maxout">Maxout</h2>
-<p>与常规的激活函数不同，<strong>Maxout</strong>是一个可以学习的<strong>分段线性函数</strong>。其原理是，任何ReLU及其变体等激活函数都可以看成分段的线性函数，而Maxout加入的一层神经元正是一个可以学习参数的分段线性函数。</p>
-<p>优点是其拟合能力很强，理论上可以拟合任意的凸函数。缺点是参数量激增！在Network-in-Network中使用的该激活函数。</p>
+<h3 id="predict">predict</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302170052985.png"
+alt="image-20230302170052985" />
+<figcaption aria-hidden="true">image-20230302170052985</figcaption>
+</figure>
+<h3 id="whole-process">Whole process</h3>
+<p><strong>Propagation only used in KG-graph</strong></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/6C506EFAADC22D9AC38B07273F102601.png"
+alt="6C506EFAADC22D9AC38B07273F102601" />
+<figcaption
+aria-hidden="true">6C506EFAADC22D9AC38B07273F102601</figcaption>
+</figure>
+<p>模型不断扩散，不断获取更高层数neighbor的信息，最后通过加在一起汇总</p>
+<p>所以与曾经互动过的item有关系的实体信息（KG信息）汇总为user
+embedding，最后再与没互动过的item计算估计互动概率，</p>
+<p>所以是否能理解为user汇总的KG信息</p>
+<h3 id="loss-function还没想明白">Loss Function（还没想明白）</h3>
+<p>别人的笔记：：</p>
+<p>这里的分成三个部分：分别是预测分数的交叉熵损失，知识图谱特征表示的损失，参数正则化的损失：</p>
+<p>预测部分的损失很好理解，就是用户和该item之间的预测值和真实值的loss</p>
+<p>知识图谱特征表示的损失：我们在计算每个阶段的加权求和时上面说了，假设前提是hR=t，这是假设，所以我们需要设一个loss让模型学习，学习的内容就是hR和t之间计算相似度后，预测0,1是否相似</p>
+<p>l2正则化损失：每一个hop中h，r，t分别和自己相乘后，求和再求均值得到一个值，即为该loss（这里我理解的不是很深，有了解的可以评论区说说）</p>
+<h1 id="experiment">Experiment</h1>
+<h1 id="other">Other</h1>
+<ol type="1">
+<li><p>ripple set 可能太大，</p>
+<p>在RippleNet中，我们可以对固定大小的邻居集进行采样，而不是使用完整的纹波集来进一步减少计算开销。</p></li>
+</ol>
 
     </div>
 
@@ -320,13 +393,13 @@ alt="image-20230228224119801" />
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/02/24/LightGCN/" rel="prev" title="LightGCN">
-                  <i class="fa fa-chevron-left"></i> LightGCN
+                <a href="/2023/03/02/KGCN/" rel="prev" title="KGCN">
+                  <i class="fa fa-chevron-left"></i> KGCN
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/02/28/loss_function/" rel="next" title="常见损失函数">
-                  常见损失函数 <i class="fa fa-chevron-right"></i>
+                <a href="/2023/03/03/Unsolve_question/" rel="next" title="">
+                   <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

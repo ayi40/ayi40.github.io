@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title></title>
+    <url>/2023/03/03/KG-Rec/</url>
+    <content><![CDATA[<iframe height="800" width="60%" src="https://xmind.works/share/JMcp4hCx" frameborder="0" allowfullscreen>
+</iframe>
+]]></content>
+  </entry>
+  <entry>
     <title>KGAT</title>
     <url>/2023/02/24/KGAT/</url>
     <content><![CDATA[<p>.</p>
@@ -203,7 +210,35 @@ src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223000647293.png
 alt="image-20230223000647293" />
 <figcaption aria-hidden="true">image-20230223000647293</figcaption>
 </figure>
-<h3 id="high-order-propagation">High-order Propagation</h3>
+<h3
+id="xxxxxxxxxx-class-uv_aggregatornn.module-item-and-user-aggregator-for-aggregating-embeddings-of-neighbors-itemuser-aggreagator.-def-initself-v2e-r2e-u2e-embed_dim-cudacpu-uvtrue-...-def-forwardself-nodes-history_uv-history_r-create-a-container-for-result-shpe-of-embed_matrix-is-batchsizeembed_dim-embed_matrix-torch.emptylenhistory_uv-self.embed_dim-dtypetorch.float.toself.device-deal-with-each-single-item-nodes-neighbors-for-i-in-rangelenhistory_uv-history-history_uvi-num_histroy_item-lenhistory-tmp_label-history_ri-e_uv-turn-neighborsuser-node-id-to-embedding-uv_rep-turn-single-nodeitem-node-to-embedding-if-self.uv-true-user-component-e_uv-self.v2e.weighthistory-uv_rep-self.u2e.weightnodesi-else-item-component-e_uv-self.u2e.weighthistory-uv_rep-self.v2e.weightnodesi-get-rating-score-embedding-e_r-self.r2e.weighttmp_label-concatenated-rating-and-neighbor-and-than-through-two-layers-mlp-to-get-fjt-x-torch.cate_uv-e_r-1-x-f.reluself.w_r1x-o_history-f.reluself.w_r2x-calculate-neighbor-attention-and-fjtweight-to-finish-aggregation-att_w-self.atto_history-uv_rep-num_histroy_item-att_history-torch.mmo_history.t-att_w-att_history-att_history.t-embed_matrixi-att_history-result-batchsize-embed_dim-to_feats-embed_matrix-return-to_featspython">xxxxxxxxxx class
+UV_Aggregator(nn.Module):    """   item and user aggregator: for
+aggregating embeddings of neighbors (item/user aggreagator).   """​  
+ def <strong>init</strong>(self, v2e, r2e, u2e, embed_dim, cuda="cpu",
+uv=True):        ...​    def forward(self, nodes, history_uv, history_r):
+       # create a container for result, shpe of embed_matrix is
+(batchsize,embed_dim)        embed_matrix = torch.empty(len(history_uv),
+self.embed_dim, dtype=torch.float).to(self.device)​        # deal with
+each single item nodes' neighbors        for i in
+range(len(history_uv)):            history = history_uv[i]          
+ num_histroy_item = len(history)            tmp_label = history_r[i]​    
+       # e_uv : turn neighbors(user node) id to embedding            #
+uv_rep : turn single node(item node) to embedding            if self.uv
+== True:                # user component                e_uv =
+self.v2e.weight[history]                uv_rep =
+self.u2e.weight[nodes[i]]            else:                # item
+component                e_uv = self.u2e.weight[history]              
+ uv_rep = self.v2e.weight[nodes[i]]​            # get rating score
+embedding            e_r = self.r2e.weight[tmp_label]            #
+concatenated rating and neighbor, and than through two layers mlp to get
+fjt            x = torch.cat((e_uv, e_r), 1)            x =
+F.relu(self.w_r1(x))​            o_history = F.relu(self.w_r2(x))        
+   # calculate neighbor attention and fjt*weight to finish aggregation  
+         att_w = self.att(o_history, uv_rep, num_histroy_item)          
+ att_history = torch.mm(o_history.t(), att_w)            att_history =
+att_history.t()​            embed_matrix[i] = att_history        # result
+(batchsize, embed_dim)        to_feats = embed_matrix        return
+to_featspython</h3>
 <figure>
 <img
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223000834658.png"
@@ -304,6 +339,185 @@ alt="image-20230223010347815" />
 <figcaption aria-hidden="true">image-20230223010347815</figcaption>
 </figure></li>
 </ol>
+]]></content>
+      <categories>
+        <category>RecSys</category>
+        <category>KGRec</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>KGCN</title>
+    <url>/2023/03/02/KGCN/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="background">Background</h1>
+<h2 id="cf-questions">CF Questions</h2>
+<ol type="1">
+<li>sparsity</li>
+<li>cold start</li>
+</ol>
+<h2 id="kg-benefits">KG Benefits</h2>
+<ol type="1">
+<li>The rich semantic relatedness among items in a KG can help explore
+their latent connections and improve the <em>precision</em> of
+results;</li>
+<li>The various types of relations in a KG are helpful for extending a
+user’s interests reasonably and increasing the <em>diversity</em> of
+recommended items;</li>
+<li>KG connects a user’s historically-liked and recommended items,
+thereby bringing <em>explainability</em> to recommender systems.</li>
+</ol>
+<h2 id="previous-kg-method">Previous KG Method</h2>
+<h3 id="knowledge-graph-embedding">Knowledge graph embedding</h3>
+<p>Example: TransE [1] and TransR [12] assume <em>head</em> +
+<em>relation</em> = <em>tail</em>, which focus on modeling rigorous
+semantic relatedness</p>
+<p>Problem: KGE methods are more suitable for in-graph applications such
+as KG completion and link prediction rather than the recommendation
+system.</p>
+<h3 id="path-base-method">Path-base Method</h3>
+<p>Example: PER, FMG</p>
+<p>problem: Labor sensitivity</p>
+<h2 id="ripple-net">Ripple Net</h2>
+<p>problem:</p>
+<ol type="1">
+<li>the importance of relations is weakly characterized in RippleNet,
+because the relation <strong>R</strong> can hardly be trained to capture
+the sense of importance in the quadratic form <strong>v</strong>
+⊤<strong>Rh</strong> (<strong>v</strong> and <strong>h</strong> are
+embedding vectors of two entities).</li>
+<li>The size of ripple set may go unpredictably with the increase of the
+size of KG, which incurs heavy computation and storage overhead.</li>
+</ol>
+<h2 id="solution-kgcn">Solution: KGCN</h2>
+<ol type="1">
+<li>Propagation and aggregation mechanism.</li>
+<li>Attention mechanism.</li>
+<li>sample a fixed-size neighborhood to control compute cost.</li>
+</ol>
+<h1 id="model">Model</h1>
+<h2 id="single-layer">Single layer</h2>
+<p>Consider a pair(u,v)</p>
+<h3 id="overall-of-single-layer">Overall of single layer</h3>
+<p>!!!Propagation only use for updating of item's vector</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302114017500.png"
+alt="image-20230302114017500" />
+<figcaption aria-hidden="true">image-20230302114017500</figcaption>
+</figure>
+<h3 id="propagation">Propagation</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302111400335.png"
+alt="image-20230302111400335" />
+<figcaption aria-hidden="true">image-20230302111400335</figcaption>
+</figure>
+<p><span class="math inline">\(N(v)\)</span> is the neighbor set of
+v</p>
+<p>e$ is the embedding of entity(parameter to train)</p>
+<p><span class="math inline">\(\pi^u_{r_{v,e}}\)</span> is attention
+weight</p>
+<p><span class="math inline">\(r_{v,e}\)</span> represent the relation
+of v and e</p>
+<h3 id="attention">Attention</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302112401231.png"
+alt="image-20230302112401231" />
+<figcaption aria-hidden="true">image-20230302112401231</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302112315690.png"
+alt="image-20230302112315690" />
+<figcaption aria-hidden="true">image-20230302112315690</figcaption>
+</figure>
+<p><span class="math inline">\(g : R^d ×R^d → R\)</span> (e.g., inner
+product:内积能计算相似度)to compute the score between a user and a
+relation</p>
+<p><span class="math inline">\(u\in R\)</span>, <span
+class="math inline">\(r\in R\)</span> : embedding of user and
+relation(parameter to train)</p>
+<p><span class="math inline">\(\pi^u_{r_{v,e}}\)</span>characterizes the
+importance of relation <em>r</em> to user <em>u</em>. E.g. example, a
+user may have more interests in the movies that share the same “star"
+with his historically liked ones, while another user may be more
+concerned about the “genre" of movies.</p>
+<p>!!!!!!!!!!个性化！！！用户对不同关系重视程度不同！！</p>
+<p>所以KGCN不用propagation更新用户的原因是否是因为希望user的embedding能专注于提取个性化信息（提高用户和重要relation的相似度），但是这样是否会让user和item没那么好聚类？</p>
+<h3 id="sample-the-number-of-neighbors">Sample the number of
+neighbors</h3>
+<p>limit the neighbor number in K(can be config)</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302113734945.png"
+alt="image-20230302113734945" />
+<figcaption aria-hidden="true">image-20230302113734945</figcaption>
+</figure>
+<p>S(<em>v</em>) is also called the (single layer) <em>receptive
+field</em> of entity <em>v</em></p>
+<p>example K=2:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302113907523.png"
+alt="image-20230302113907523" />
+<figcaption aria-hidden="true">image-20230302113907523</figcaption>
+</figure>
+<h3 id="aggregation">aggregation</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302114047762.png"
+alt="image-20230302114047762" />
+<figcaption aria-hidden="true">image-20230302114047762</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302114057869.png"
+alt="image-20230302114057869" />
+<figcaption aria-hidden="true">image-20230302114057869</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302114106975.png"
+alt="image-20230302114106975" />
+<figcaption aria-hidden="true">image-20230302114106975</figcaption>
+</figure>
+<p><span class="math inline">\(\sigma\)</span> is ReLU</p>
+<h2 id="multi-layer">Multi layer</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/9C6A6E4346910DDDD43EBB55E1A2FE6C.png"
+alt="9C6A6E4346910DDDD43EBB55E1A2FE6C" />
+<figcaption
+aria-hidden="true">9C6A6E4346910DDDD43EBB55E1A2FE6C</figcaption>
+</figure>
+<p>First we consider the Receptive-Field:</p>
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/1739B546615C1AEDC69F7A3514E2E458.png" alt="1739B546615C1AEDC69F7A3514E2E458" style="zoom:67%;" /></p>
+<p>We first update eneities in M[0] by using propagation and aggregation
+to get the high-hop neighbor information.</p>
+<p>And then gradually narrow it down, and finally focus on v.</p>
+<p>Note that we have only one user in one pair, every relations will
+calculate the score with this user embedding</p>
+<h2 id="predict">Predict</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302114437063.png"
+alt="image-20230302114437063" />
+<figcaption aria-hidden="true">image-20230302114437063</figcaption>
+</figure>
+<h2 id="loss-function">Loss function</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302120154981.png"
+alt="image-20230302120154981" />
+<figcaption aria-hidden="true">image-20230302120154981</figcaption>
+</figure>
+<p><span class="math inline">\(J\)</span> is cross-entropy loss</p>
+<p><em>P</em> is a negative sampling distribution, and <span
+class="math inline">\(T_u\)</span> is the number of negative samples for
+user <em>u</em>. In this paper,</p>
+<h1 id="experiment">Experiment</h1>
 ]]></content>
       <categories>
         <category>RecSys</category>
@@ -883,8 +1097,33 @@ class="math inline">\(\frac{1}{\sqrt{N_n}}\)</span>,
 <p>②只做一次norm影响对称性，所以为了保持对称性在做一次<span
 class="math inline">\(\frac{1}{\sqrt{N_t}}\)</span>,可以理解为neighbor
 node有多少邻居对他给到每个邻居的权重有影响，是否能理解为邻居越多说明这个node能提供的信息更普通没价值（例如所有用户购买了水，对推荐系统来说，水能提供的信息就没那么有用）</p>
-<p>Then we calculate <span
-class="math inline">\(LE^{(l-1)}⊙E^{(l-1)}W_2^l\)</span>:</p>
+<p>xxxxxxxxxx class UV_Aggregator(nn.Module):    """   item and user
+aggregator: for aggregating embeddings of neighbors (item/user
+aggreagator).   """​    def <strong>init</strong>(self, v2e, r2e, u2e,
+embed_dim, cuda="cpu", uv=True):        ...​    def forward(self, nodes,
+history_uv, history_r):        # create a container for result, shpe of
+embed_matrix is (batchsize,embed_dim)        embed_matrix =
+torch.empty(len(history_uv), self.embed_dim,
+dtype=torch.float).to(self.device)​        # deal with each single item
+nodes' neighbors        for i in range(len(history_uv)):          
+ history = history_uv[i]            num_histroy_item = len(history)    
+       tmp_label = history_r[i]​            # e_uv : turn neighbors(user
+node) id to embedding            # uv_rep : turn single node(item node)
+to embedding            if self.uv == True:                # user
+component                e_uv = self.v2e.weight[history]              
+ uv_rep = self.u2e.weight[nodes[i]]            else:                #
+item component                e_uv = self.u2e.weight[history]          
+     uv_rep = self.v2e.weight[nodes[i]]​            # get rating score
+embedding            e_r = self.r2e.weight[tmp_label]            #
+concatenated rating and neighbor, and than through two layers mlp to get
+fjt            x = torch.cat((e_uv, e_r), 1)            x =
+F.relu(self.w_r1(x))​            o_history = F.relu(self.w_r2(x))        
+   # calculate neighbor attention and fjt*weight to finish aggregation  
+         att_w = self.att(o_history, uv_rep, num_histroy_item)          
+ att_history = torch.mm(o_history.t(), att_w)            att_history =
+att_history.t()​            embed_matrix[i] = att_history        # result
+(batchsize, embed_dim)        to_feats = embed_matrix        return
+to_featspython</p>
 <figure>
 <img
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/8EE43A6D961CA0F0145CD44C62B9F9BE.png"
@@ -1126,6 +1365,168 @@ Aggregation，本质上是Social Aggregation中的self-connection</p>
         <category>RecSys</category>
         <category>SocialRec</category>
       </categories>
+  </entry>
+  <entry>
+    <title>KGCN</title>
+    <url>/2023/03/02/RippleNet/</url>
+    <content><![CDATA[<h1 id="background">Background</h1>
+<p><strong>CF</strong>: sparsity, cold start</p>
+<p><strong>KG-benefit</strong>:</p>
+<ol type="1">
+<li>KG introduces semantic relatedness among items, which can help find
+their latent connections and improve the <em>precision</em> of
+recommended items;</li>
+<li>KG consists of relations with various types, which is helpful for
+extending a user’s interests reasonably and increasing the
+<em>diversity</em> of recommended items;</li>
+<li>KG connects a user’s historical records and the recommended ones,
+thereby bringing <em>explainability</em> to recommender systems.</li>
+</ol>
+<p><strong>Existing KG model</strong>:</p>
+<ol type="1">
+<li><strong>embedding-based method</strong>: DKN, CKE, SHINE, but more
+suitable for in-graph applications</li>
+<li><strong>path-based method</strong>: rely heavily on manually
+designed meta-paths</li>
+</ol>
+<p>so the author proposes RippleNet:</p>
+<ol type="1">
+<li>combine embedding-based and path-based() methods
+<ol type="1">
+<li>RippleNet incorporates the KGE methods into recommendation naturally
+by preference propagation;<br />
+</li>
+<li>RippleNet can automatically discover possible paths from an item in
+a user’s history to a candidate item.</li>
+</ol></li>
+</ol>
+<h1 id="method">Method</h1>
+<h2 id="input">Input</h2>
+<p>interaction matrix <strong>Y</strong> <em>and knowledge graph</em>
+<strong>G</strong></p>
+<h2 id="some-definition">Some definition</h2>
+<h3 id="relevant-entity">Relevant entity</h3>
+<p>the set of <strong>k</strong>-hop relevant entities for user
+<strong>u</strong> is defined as</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302155703683.png"
+alt="image-20230302155703683" />
+<figcaption aria-hidden="true">image-20230302155703683</figcaption>
+</figure>
+<p><span class="math inline">\(\varepsilon_u^0=V_u =
+\{v|y_{uv}=1\}\)</span> is the items which the user interacts with, and
+they can link with entities in knowledge graph</p>
+<p>can be seen as the seed set of user u in
+KG(就是user如何参与到KG中)</p>
+<h3 id="ripple-set">Ripple set</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302155653732.png"
+alt="image-20230302155653732" />
+<figcaption aria-hidden="true">image-20230302155653732</figcaption>
+</figure>
+<h2 id="model">Model</h2>
+<h3 id="first-layer-propagation">First layer propagation</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302163505799.png"
+alt="image-20230302163505799" />
+<figcaption aria-hidden="true">image-20230302163505799</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302165453023.png"
+alt="image-20230302165453023" />
+<figcaption aria-hidden="true">image-20230302165453023</figcaption>
+</figure>
+<p>v: embedding of item. Item embedding can incorporate one-hot ID ,
+attributes of an item, based on the application scenario.</p>
+<p>r: embedding of relation between head entity and tail entity.</p>
+<p>h: embedding of head entity.</p>
+<p>t: embedding of tail entity.</p>
+<p>attention weight <span class="math inline">\(p_i\)</span> can be
+regarded as the similarity of item <strong>v</strong> and the entity
+<span class="math inline">\(h_i\)</span> measured in the space of
+relation <span class="math inline">\(r_i\)</span>.</p>
+<p><span class="math inline">\(r_i\)</span> is important, since an
+item-entity pair may have different similarities when measured by
+different relations</p>
+<h3 id="multi-layer">Multi-layer</h3>
+<p>the second layer just replace v with <span
+class="math inline">\(o_u^1\)</span></p>
+<p><span class="math display">\[
+p_i = softmax(o_u^{1T}R_ih_i) =
+\frac{exp(o_u^{1T}T_ih_i)}{\sum_{(h,r,t)\in S_u^2}exp(o_u^{1T}Rh)}
+\]</span></p>
+<p><span class="math display">\[
+o_u^2 = \sum_{(h_i,r_i,t_i)\in S_u^2}p_it_i
+\]</span></p>
+<p>and third layer replace <span class="math inline">\(o_u^1\)</span>
+with <span class="math inline">\(o_u^2\)</span></p>
+<p>while</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302165932080.png"
+alt="image-20230302165932080" />
+<figcaption aria-hidden="true">image-20230302165932080</figcaption>
+</figure>
+<h3 id="predict">predict</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230302170052985.png"
+alt="image-20230302170052985" />
+<figcaption aria-hidden="true">image-20230302170052985</figcaption>
+</figure>
+<h3 id="whole-process">Whole process</h3>
+<p><strong>Propagation only used in KG-graph</strong></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/6C506EFAADC22D9AC38B07273F102601.png"
+alt="6C506EFAADC22D9AC38B07273F102601" />
+<figcaption
+aria-hidden="true">6C506EFAADC22D9AC38B07273F102601</figcaption>
+</figure>
+<p>模型不断扩散，不断获取更高层数neighbor的信息，最后通过加在一起汇总</p>
+<p>所以与曾经互动过的item有关系的实体信息（KG信息）汇总为user
+embedding，最后再与没互动过的item计算估计互动概率，</p>
+<p>所以是否能理解为user汇总的KG信息</p>
+<h3 id="loss-function还没想明白">Loss Function（还没想明白）</h3>
+<p>别人的笔记：：</p>
+<p>这里的分成三个部分：分别是预测分数的交叉熵损失，知识图谱特征表示的损失，参数正则化的损失：</p>
+<p>预测部分的损失很好理解，就是用户和该item之间的预测值和真实值的loss</p>
+<p>知识图谱特征表示的损失：我们在计算每个阶段的加权求和时上面说了，假设前提是hR=t，这是假设，所以我们需要设一个loss让模型学习，学习的内容就是hR和t之间计算相似度后，预测0,1是否相似</p>
+<p>l2正则化损失：每一个hop中h，r，t分别和自己相乘后，求和再求均值得到一个值，即为该loss（这里我理解的不是很深，有了解的可以评论区说说）</p>
+<h1 id="experiment">Experiment</h1>
+<h1 id="other">Other</h1>
+<ol type="1">
+<li><p>ripple set 可能太大，</p>
+<p>在RippleNet中，我们可以对固定大小的邻居集进行采样，而不是使用完整的纹波集来进一步减少计算开销。</p></li>
+</ol>
+]]></content>
+      <categories>
+        <category>RecSys</category>
+        <category>KGRec</category>
+      </categories>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2023/03/03/Unsolve_question/</url>
+    <content><![CDATA[<ol type="1">
+<li>KGCN Note</li>
+</ol>
+<p>about ripple net, why</p>
+<p>the relation <strong>R</strong> can hardly be trained to capture the
+sense of importance in the quadratic form <strong>v</strong>
+⊤<strong>Rh</strong> ??</p>
+<p>about attention：</p>
+<p>所以KGCN不用propagation更新用户的原因是否是因为希望user的embedding能专注于提取个性化信息，但是这样是否会让user和item没那么好聚类？</p>
+<ol start="2" type="1">
+<li><p>RippleNet</p>
+<p>然后将Rh和v相乘并删除上一步增加的维度得到样本v和实体h在关系R的空间中的相似度？？为啥是R空间</p>
+<p>为什么KGCN又不能</p></li>
+</ol>
+]]></content>
   </entry>
   <entry>
     <title>常见激活函数</title>
