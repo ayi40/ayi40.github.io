@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
+    <title>KG-review</title>
     <url>/2023/03/03/KG-Rec/</url>
-    <content><![CDATA[<iframe height="800" width="60%" src="https://xmind.works/share/JMcp4hCx" frameborder="0" allowfullscreen>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<iframe height="800" width="60%" src="https://xmind.works/share/JMcp4hCx" frameborder="0" allowfullscreen>
 </iframe>
 ]]></content>
+      <categories>
+        <category>RecSys</category>
+        <category>KGRec</category>
+      </categories>
   </entry>
   <entry>
     <title>KGAT</title>
