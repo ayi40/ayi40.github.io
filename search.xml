@@ -1373,9 +1373,11 @@ Aggregation，本质上是Social Aggregation中的self-connection</p>
       </categories>
   </entry>
   <entry>
-    <title>KGCN</title>
+    <title>RippleNet</title>
     <url>/2023/03/02/RippleNet/</url>
-    <content><![CDATA[<h1 id="background">Background</h1>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="background">Background</h1>
 <p><strong>CF</strong>: sparsity, cold start</p>
 <p><strong>KG-benefit</strong>:</p>
 <ol type="1">
@@ -1516,11 +1518,11 @@ embedding，最后再与没互动过的item计算估计互动概率，</p>
       </categories>
   </entry>
   <entry>
-    <title></title>
-    <url>/2023/03/03/Unsolve_question/</url>
-    <content><![CDATA[<ol type="1">
-<li>KGCN Note</li>
-</ol>
+    <title>Unsolve problem</title>
+    <url>/2023/03/02/Unsolve_question/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<p>KGCN Note</p>
 <p>about ripple net, why</p>
 <p>the relation <strong>R</strong> can hardly be trained to capture the
 sense of importance in the quadratic form <strong>v</strong>
@@ -1533,6 +1535,10 @@ sense of importance in the quadratic form <strong>v</strong>
 <p>为什么KGCN又不能</p></li>
 </ol>
 ]]></content>
+      <categories>
+        <category>RecSys</category>
+        <category>KGRec</category>
+      </categories>
   </entry>
   <entry>
     <title>常见激活函数</title>
