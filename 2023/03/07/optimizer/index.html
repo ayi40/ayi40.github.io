@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content=".">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见优化函数">
+<meta property="og:url" content="http://example.com/2023/03/07/optimizer/index.html">
+<meta property="og:site_name" content="Lory&#39;s Page">
+<meta property="og:description" content=".">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307205942585.png">
+<meta property="article:published_time" content="2023-03-07T20:46:25.000Z">
+<meta property="article:modified_time" content="2023-03-07T14:05:55.468Z">
+<meta property="article:author" content="Lory">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307205942585.png">
+
+
+<link rel="canonical" href="http://example.com/2023/03/07/optimizer/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/03/07/optimizer/","path":"2023/03/07/optimizer/","title":"常见优化函数"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>常见优化函数 | Lory's Page</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Lory's Page</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E4%BC%98%E5%8C%96%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">常见优化函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8Dgd"><span class="nav-number">1.1.</span> <span class="nav-text">梯度下降GD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%B9%E6%AC%A1%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8Dbgd"><span class="nav-number">1.1.1.</span> <span class="nav-text">批次梯度下降BGD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">1.1.2.</span> <span class="nav-text">随机梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#min-batch-%E5%B0%8F%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8Dmbgd"><span class="nav-number">1.1.3.</span> <span class="nav-text">min-batch 小批量梯度下降MBGD</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E9%87%8F%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">动量方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#momentum%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">1.2.1.</span> <span class="nav-text">Momentum随机梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nesterov%E5%8A%A8%E9%87%8F%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">Nesterov动量随机梯度下降法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E5%AD%A6%E4%B9%A0%E7%8E%87%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">更新学习率方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#adagrad"><span class="nav-number">1.3.1.</span> <span class="nav-text">Adagrad</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#adadelta%E4%B8%8D%E6%98%AF%E5%BE%88%E6%87%82"><span class="nav-number">1.3.2.</span> <span class="nav-text">Adadelta(不是很懂)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rmsprop"><span class="nav-number">1.3.3.</span> <span class="nav-text">RMSProp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#adam"><span class="nav-number">1.3.4.</span> <span class="nav-text">Adam</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lory</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/07/optimizer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lory">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lory's Page">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="常见优化函数 | Lory's Page">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          常见优化函数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-03-07 20:46:25 / Modified: 14:05:55" itemprop="dateCreated datePublished" datetime="2023-03-07T20:46:25+00:00">2023-03-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ML/Basic/" itemprop="url" rel="index"><span itemprop="name">Basic</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>.</p>
+<span id="more"></span>
+<h1 id="常见优化函数">常见优化函数</h1>
+<h2 id="梯度下降gd">梯度下降GD</h2>
+<p><strong>梯度下降的核心思想：负梯度方向是使函数值下降最快的方向</strong></p>
+<h3 id="批次梯度下降bgd">批次梯度下降BGD</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307202943629.png"
+alt="image-20230307202943629" />
+<figcaption aria-hidden="true">image-20230307202943629</figcaption>
+</figure>
+<p><strong>优点</strong>：在梯度下降法中，因为每次都遍历了完整的训练集，<strong>其能保证结果为全局最优</strong></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307204257470.png"
+alt="image-20230307204257470" />
+<figcaption aria-hidden="true">image-20230307204257470</figcaption>
+</figure>
+<p><strong>缺点</strong>：我们需要对于每个参数求偏导，且在对每个参数求偏导的过程中还需要对训练集遍历一次，当训练集（m）很大时，计算费时</p>
+<p><strong>解决方法</strong>：使用minibatch去更新</p>
+<h3 id="随机梯度下降">随机梯度下降</h3>
+<p>为了解决BGD耗时过长，它是利用单个样本的损失函数对θ求偏导得到对应的梯度，来更新θ，更新过程如下：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307204324179.png"
+alt="image-20230307204324179" />
+<figcaption aria-hidden="true">image-20230307204324179</figcaption>
+</figure>
+<p>速度快，但受抽样影响大，<strong>噪音较BGD要多，使得SGD并不是每次迭代都向着整体最优化方向。</strong></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307204553630.png"
+alt="image-20230307204553630" />
+<figcaption aria-hidden="true">image-20230307204553630</figcaption>
+</figure>
+<p>因为每一次迭代的梯度受抽样的影响比较大，学习率需要逐渐减少，否则模型很难收敛。在实际操作中，一般采用线性衰减：
+<span class="math display">\[
+\eta_k=(1-\alpha)\eta_0+\alpha\eta_{\tau}
+\]</span></p>
+<p><span class="math display">\[
+\alpha=\frac{k}{\tau}
+\]</span></p>
+<p><span class="math inline">\(\eta_0\)</span>:初始学习率</p>
+<p><span class="math inline">\(\eta_{\tau}\)</span>：
+最后一次迭代的学习率</p>
+<p><span class="math inline">\(\tau\)</span>：自然迭代次数</p>
+<p><span class="math inline">\(\eta_{\tau}\)</span>设为<span
+class="math inline">\(\eta_0\)</span>的1%，k一般设为100的倍数。</p>
+<p><strong>优点</strong>：收敛速度快</p>
+<p><strong>缺点</strong>：</p>
+<ol type="1">
+<li><p>训练不稳定：噪音较BGD要多，使得SGD并不是每次迭代都向着整体最优化方向。</p></li>
+<li><p>选择适当的学习率可能很困难。
+太小的学习率会导致收敛性缓慢，而学习速度太大可能会妨碍收敛，并导致损失函数在最小点波动。</p></li>
+<li><p>无法逃脱鞍点</p></li>
+</ol>
+<details>
+<p>在数学中，鞍点或极小值点是函数图形表面上的一个点，其正交方向上的斜率(导数)均为零(临界点)，但不是函数的局
+部极值。一句话概括就是：一个不是局部极值点的驻点称为鞍点。
+*驻点：函数在一点处的一阶导数为零。
+<img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307205942585.png"></p>
+<h3 id="min-batch-小批量梯度下降mbgd">min-batch 小批量梯度下降MBGD</h3>
+<p><strong>算法的训练过程比较快，而且也要保证最终参数训练的准确率</strong></p>
+<p>m表示一个批次的数据个数</p>
+<h2 id="动量方法">动量方法</h2>
+<h3 id="momentum随机梯度下降">Momentum随机梯度下降</h3>
+<p>核心思想：Momentum借用了物理中的<strong>动量</strong>概念,即前一次的梯度也会参与运算。为了表示动量，引入了<strong>一阶动量</strong>m。<img
+src="https://www.nowcoder.com/equation?tex=m&amp;preview=true"
+alt="img" />是之前的梯度的累加,但是每回合都有一定的衰减。公式如下：
+<span class="math display">\[
+m_t=\beta m_{t-1}+(1-\beta)\cdot g_t
+\]</span></p>
+<p><span class="math display">\[
+w_{t+1}=w_t-\eta \cdot m_t
+\]</span></p>
+<p><span class="math inline">\(g_t\)</span>：
+为第t次计算的梯度（就是现在要算这次）</p>
+<p><span class="math inline">\(m_{t-1}\)</span>: 为之前梯度的累加</p>
+<p><span class="math inline">\(\beta\)</span>: 动量因子</p>
+<p>所以当前权值的改变受上一次改变的影响，类似加上了<strong>惯性</strong>。</p>
+<p>优点：momentum能够加速SGD收敛，抑制震荡。并且动量有机会逃脱局部极小值(鞍点)。</p>
+<ol type="1">
+<li>在梯度方向改变时，momentum能够降低参数更新速度，从而减少震荡；</li>
+<li>在梯度方向相同时，momentum可以加速参数更新， 从而加速收敛。</li>
+</ol>
+<h3 id="nesterov动量随机梯度下降法">Nesterov动量随机梯度下降法</h3>
+<p>Nesterov是Momentum的变种。与Momentum唯一区别就是，计算梯度的不同。Nesterov动量中，先用当前的速度临时更新一遍参数，在用更新的临时参数计算梯度。</p>
+<p>在momentum更新梯度时加入对当前梯度的校正，让梯度“多走一步”，可能跳出局部最优解：
+<span class="math display">\[
+w_t^*=\beta m_{t-1}+w_t
+\]</span></p>
+<p><span class="math display">\[
+m_t=\beta m_{t-1}+(1-\beta)\cdot g_t
+\]</span></p>
+<p><span class="math display">\[
+w_{t+1}=w_t-\eta \cdot m_t
+\]</span></p>
+<p>这里的<span class="math inline">\(g_t\)</span>用临时点<span
+class="math inline">\(w_t^*\)</span>计算的</p>
+<h2 id="更新学习率方法">更新学习率方法</h2>
+<h3 id="adagrad">Adagrad</h3>
+<p>引入<strong>二阶动量</strong>，根据训练轮数的不同，对学习率进行了动态调整：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307213914026.png"
+alt="image-20230307213914026" />
+<figcaption aria-hidden="true">image-20230307213914026</figcaption>
+</figure>
+<p><strong>缺点</strong>：仍然需要人为指定一个合适的全局学习率，同时网络训练到一定轮次后，分母上梯度累加过大使得学习率为0而导致训练提前结束。</p>
+<h3 id="adadelta不是很懂">Adadelta(不是很懂)</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307215135905.png"
+alt="image-20230307215135905" />
+<figcaption aria-hidden="true">image-20230307215135905</figcaption>
+</figure>
+<h3 id="rmsprop">RMSProp</h3>
+<p>AdaGrad算法在迭代后期由于学习率过小，可能较难找到一个有用的解。为了解决这一问题，RMSprop算法对Adagrad算法做了一点小小的修改，RMSprop使用指数衰减只保留过去给定窗口大小的梯度，使其能够在找到凸碗状结构后快速收敛。RMSProp法可以视为Adadelta法的一个特例，即依然使用全局学习率替换掉Adadelta法中的<span
+class="math inline">\(s_t\)</span>:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307215341546.png"
+alt="image-20230307215341546" />
+<figcaption aria-hidden="true">image-20230307215341546</figcaption>
+</figure>
+<p>推荐<span
+class="math inline">\(\eta_{global}=1,\rho=0.9,\epsilon=10^{-6}\)</span></p>
+<p>缺点：依然使用了全局学习率，需要根据实际情况来设定 优点：</p>
+<ol type="1">
+<li>分母不再是一味的增加，它会重点考虑距离它较近的梯度（指数衰减的效果）</li>
+<li>只用了部分梯度加和而不是所有，这样避免了梯度累加过大使得学习率为0而导致训练提前结束。</li>
+</ol>
+<h3 id="adam">Adam</h3>
+<p>https://zhuanlan.zhihu.com/p/377968342</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/03/KG-Rec/" rel="prev" title="KG-review">
+                  <i class="fa fa-chevron-left"></i> KG-review
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lory</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -27,8 +27,13 @@
 <meta property="og:description" content=".">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228224935533.png">
+<meta property="og:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194241514.png">
+<meta property="og:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194352199.png">
+<meta property="og:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194457525.png">
+<meta property="og:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194659126.png">
+<meta property="og:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194824945.png">
 <meta property="article:published_time" content="2023-02-28T20:46:25.000Z">
-<meta property="article:modified_time" content="2023-03-03T03:23:25.988Z">
+<meta property="article:modified_time" content="2023-03-07T14:05:55.468Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228224935533.png">
@@ -140,7 +145,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">常见激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sigmoid"><span class="nav-number">1.1.</span> <span class="nav-text">Sigmoid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tanh"><span class="nav-number">1.2.</span> <span class="nav-text">tanh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#relu"><span class="nav-number">1.3.</span> <span class="nav-text">Relu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leakyrelu"><span class="nav-number">1.4.</span> <span class="nav-text">LeakyRelu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#p-relu-%E5%8F%82%E6%95%B0%E5%8C%96relu"><span class="nav-number">1.5.</span> <span class="nav-text">P-Relu 参数化Relu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#r-relu-%E9%9A%8F%E6%9C%BA%E5%8C%96relu"><span class="nav-number">1.6.</span> <span class="nav-text">R-Relu 随机化Relu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mish%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">1.7.</span> <span class="nav-text">Mish激活函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elu%E6%8C%87%E6%95%B0%E5%8C%96%E7%BA%BF%E6%80%A7%E5%8D%95%E5%85%83"><span class="nav-number">1.8.</span> <span class="nav-text">ELU指数化线性单元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#maxout"><span class="nav-number">1.9.</span> <span class="nav-text">Maxout</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">常见激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sigmoid"><span class="nav-number">1.1.</span> <span class="nav-text">Sigmoid</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E5%AF%BC%E5%85%AC%E5%BC%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">求导公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.1.2.</span> <span class="nav-text">梯度消失原因：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-number">1.1.3.</span> <span class="nav-text">缺点解决办法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tanh"><span class="nav-number">1.2.</span> <span class="nav-text">tanh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#relu"><span class="nav-number">1.3.</span> <span class="nav-text">Relu</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A80%E7%82%B9%E4%B8%8D%E5%8F%AF%E5%AF%BC"><span class="nav-number">1.3.1.</span> <span class="nav-text">在0点不可导</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#relu6"><span class="nav-number">1.4.</span> <span class="nav-text">Relu6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leakyrelu"><span class="nav-number">1.5.</span> <span class="nav-text">LeakyRelu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#p-relu-%E5%8F%82%E6%95%B0%E5%8C%96relu"><span class="nav-number">1.6.</span> <span class="nav-text">P-Relu 参数化Relu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#r-relu-%E9%9A%8F%E6%9C%BA%E5%8C%96relu"><span class="nav-number">1.7.</span> <span class="nav-text">R-Relu 随机化Relu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mish%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">1.8.</span> <span class="nav-text">Mish激活函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elu%E6%8C%87%E6%95%B0%E5%8C%96%E7%BA%BF%E6%80%A7%E5%8D%95%E5%85%83"><span class="nav-number">1.9.</span> <span class="nav-text">ELU指数化线性单元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#maxout"><span class="nav-number">1.10.</span> <span class="nav-text">Maxout</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#softmax%E6%B1%82%E5%AF%BC"><span class="nav-number">2.</span> <span class="nav-text">Softmax求导</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -153,7 +158,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -222,7 +227,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-03-03 03:23:25" itemprop="dateModified" datetime="2023-03-03T03:23:25+00:00">2023-03-03</time>
+      <time title="Modified: 2023-03-07 14:05:55" itemprop="dateModified" datetime="2023-03-07T14:05:55+00:00">2023-03-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -258,15 +263,30 @@
 \]</span></p>
 <p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228224935533.png" alt="image-20230228224935533" style="zoom:40%;" /></p>
 <p>输出的值范围在[0,1]之间。但是<code>sigmoid</code>型函数的输出存在<strong>均值不为0</strong>的情况，并且存在<strong>梯度消失的问题</strong>，在深层网络中被其他激活函数替代。在<strong>逻辑回归</strong>中使用的该激活函数用于输出<strong>分类</strong>。</p>
-<p>梯度消失原因： <span class="math display">\[
-\sigma&#39;(x) = \
+<h3 id="求导公式">求导公式</h3>
+<p>链式法则</p>
+<h3 id="梯度消失原因">梯度消失原因：</h3>
+<p><span class="math display">\[
+\sigma&#39;(x) = \sigma\space \cdot (1-\sigma)
 \]</span></p>
-<p>sigmoid函数两边的斜率趋向0，很难继续学习</p>
+<ol type="1">
+<li>sigmoid函数两边的斜率趋向0，很难继续学习</li>
+<li>sigmoid导数两个部分都小于1，在深层神经网络中，靠前layer参数会因为后面多层sigmoid导数叠加（链式法则）导致更新的特别慢。</li>
+</ol>
+<h3 id="缺点解决办法">缺点解决办法</h3>
+<ol type="1">
+<li>在深层网络中被其他激活函数替代。如<code>ReLU(x)</code>、<code>Leaky ReLU(x)</code>等</li>
+<li>在分类问题中，sigmoid做激活函数时，使用交叉熵损失函数替代均方误差损失函数。</li>
+<li>采用正确的权重初始化方法（让初始化的数据尽量不要落在梯度消失区域）</li>
+<li>加入BN层（同上，避免数据落入梯度消失区）</li>
+<li>分层训练权重</li>
+</ol>
 <h2 id="tanh">tanh</h2>
 <p><span class="math display">\[
 tanh(x) = \frac{e^x-e^{(-x)}}{e^x+e^{(-x)}} =\frac{e^{2x}-1}{e^{2x}+1}=
 2 \cdot sigmoid(2x)-1
 \]</span></p>
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194241514.png" alt="image-20230307194241514" style="zoom:67%;" /></p>
 <p><code>tanh(x)</code>型函数可以解决<code>sigmoid</code>型函数的<strong>期望（均值）不为0</strong>的情况。函数输出范围为(-1,+1)。但<code>tanh(x)</code>型函数依然存在<strong>梯度消失的问题</strong>。</p>
 <p>在LSTM中使用了<code>tanh(x)</code>型函数。</p>
 <h2 id="relu">Relu</h2>
@@ -277,9 +297,18 @@ src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228222815687.png
 alt="image-20230228222815687" />
 <figcaption aria-hidden="true">image-20230228222815687</figcaption>
 </figure>
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194352199.png" alt="image-20230307194352199" style="zoom:67%;" /></p>
 <p><code>ReLU(x)</code>型函数的缺点是<strong>负值成为“死区”</strong>，神经网络无法再对其进行响应。Alex-Net使用了<code>ReLU(x)</code>型函数。当我们训练深层神经网络时，最好使用<code>ReLU(x)</code>型函数而不是<code>sigmoid(x)</code>型函数。</p>
+<p>ReLU梯度稳定，值还比sigmoid大，所以<strong>可以加快网络训练</strong>。</p>
+<p>但是要注意，我们在输入图像时就要注意，应该使用Min-Max归一化，而不能使用Z-score归一化。（避免进入死区）</p>
+<h3 id="在0点不可导">在0点不可导</h3>
+<p>人为将梯度规定为0（源码就是这么写的）</p>
+<h2 id="relu6">Relu6</h2>
+<p>Relu的正值输出是[0，无穷大]，但计算机内存优先，所以限定relu最大值为6</p>
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194457525.png" alt="image-20230307194457525" style="zoom:67%;" /></p>
 <h2 id="leakyrelu">LeakyRelu</h2>
 <p>为<strong>负值增加了一个斜率</strong>，缓解了“死区”现象，公式如下：</p>
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194659126.png" alt="image-20230307194659126" style="zoom:67%;" /></p>
 <figure>
 <img
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228222900735.png"
@@ -292,11 +321,19 @@ alt="image-20230228222900735" />
 <h2 id="r-relu-随机化relu">R-Relu 随机化Relu</h2>
 <p>就是超参数a（阿尔法）随机化，<strong>让不同的层自己学习不同的超参数</strong>，但随机化的超参数的分布符合均值分布或高斯分布。</p>
 <h2 id="mish激活函数">Mish激活函数</h2>
-<p><span class="math display">\[
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194824945.png" alt="image-20230307194824945" style="zoom:67%;" />
+<span class="math display">\[
 Mish(x) = x\cdot tanh(log(1+e^x))
 \]</span></p>
+<p>在负值中，允许有一定的梯度流入。</p>
 <h2 id="elu指数化线性单元">ELU指数化线性单元</h2>
 <p>也是为了解决死区问题，公式如下：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194918301.png"
+alt="image-20230307194918301" />
+<figcaption aria-hidden="true">image-20230307194918301</figcaption>
+</figure>
 <figure>
 <img
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228224119801.png"
@@ -305,8 +342,57 @@ alt="image-20230228224119801" />
 </figure>
 <p>缺点是<strong>指数计算量大</strong>。</p>
 <h2 id="maxout">Maxout</h2>
+<p>就是用一个MLP层作为激活函数。</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307195003327.png"
+alt="image-20230307195003327" />
+<figcaption aria-hidden="true">image-20230307195003327</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307195013184.png"
+alt="image-20230307195013184" />
+<figcaption aria-hidden="true">image-20230307195013184</figcaption>
+</figure>
 <p>与常规的激活函数不同，<strong>Maxout</strong>是一个可以学习的<strong>分段线性函数</strong>。其原理是，任何ReLU及其变体等激活函数都可以看成分段的线性函数，而Maxout加入的一层神经元正是一个可以学习参数的分段线性函数。</p>
 <p>优点是其拟合能力很强，理论上可以拟合任意的凸函数。缺点是参数量激增！在Network-in-Network中使用的该激活函数。</p>
+<h1 id="softmax求导">Softmax求导</h1>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307195822249.png"
+alt="image-20230307195822249" />
+<figcaption aria-hidden="true">image-20230307195822249</figcaption>
+</figure>
+<p>要结合交叉熵loss函数考虑</p>
+<p><span class="math inline">\(\frac{dL}{dz}=\frac{dL}{da}\cdot
+\frac{da}{dz}\)</span></p>
+<p>假设第j个类别是正确的，<span
+class="math inline">\(y_j=1\)</span>,其它为0</p>
+<p><span class="math inline">\(L = -\sum_{i=1}^ny_iln(a_i)\)</span></p>
+<p><span class="math inline">\(\frac{dL}{da} =
+-y_iln(a_j)=-ln(a_j)\)</span></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307200559541.png"
+alt="image-20230307200559541" />
+<figcaption aria-hidden="true">image-20230307200559541</figcaption>
+</figure>
+<p>所以最终Loss只跟label类别有关</p>
+<p>所以当i=j：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307201705230.png"
+alt="image-20230307201705230" />
+<figcaption aria-hidden="true">image-20230307201705230</figcaption>
+</figure>
+<p>当i!=j:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307201737792.png"
+alt="image-20230307201737792" />
+<figcaption aria-hidden="true">image-20230307201737792</figcaption>
+</figure>
 
     </div>
 

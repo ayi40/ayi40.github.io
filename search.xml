@@ -531,6 +531,346 @@ user <em>u</em>. In this paper,</p>
       </categories>
   </entry>
   <entry>
+    <title>NGCF</title>
+    <url>/2023/02/24/NGCF/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="background">Background</h1>
+<p>question: example(the Laplacian)</p>
+<h2 id="some-definition">Some Definition</h2>
+<ol type="1">
+<li><p>Recommendation system: Estimate how likely a user will adopt an
+item based on the historical interaction like purchase and
+click.</p></li>
+<li><p>Collaborative filtering(CF): behaviorally similar users would
+exhibit similar preference on items.</p>
+<p>CF consists of</p>
+<ol type="1">
+<li><p>embedding: transforms users and items into vectorized
+representations. e.g. matrix factorization(MF),deep learning
+function...</p></li>
+<li><p>interaction modeling: reconstructs historical interactions based
+on the embeddings. e.g. inner product, neural function...</p></li>
+</ol></li>
+<li><p>collaborative signal: signal latent in user-item
+interactions</p></li>
+</ol>
+<h2 id="existing-problem">Existing Problem</h2>
+<p>The current embedding process of CF doesn't encode a collaborative
+signal. Most of them focus on the descriptive feature(e.g. user id,
+attributes). When the embeddings are insufficient in capturing CF, the
+methods have to rely on the interaction function to make up for the
+deficiency of suboptimal embeddings</p>
+<h2 id="main-contribute">Main contribute</h2>
+<ol type="1">
+<li><p>Highlight the critical importance of explicitly exploiting the
+collaborative signal in the embedding function of model-based CF
+methods.</p></li>
+<li><p>Propose NGCF, a new recommendation framework based on a graph
+neural network, which explicitly encodes the collaborative signal in the
+form of high-order connectivities by performing embedding
+propagation.</p></li>
+</ol>
+<h1 id="model">Model</h1>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230211111222966.png"
+alt="image-20230211111222966" />
+<figcaption aria-hidden="true">image-20230211111222966</figcaption>
+</figure>
+<p>There are three components in the framework:</p>
+<ol type="1">
+<li>Embedding layer: offers and initialization of user embeddings and
+item embeddings;</li>
+<li>Multiple embedding propagation layers: refine the embeddings by
+injecting high-order connectivity relations;</li>
+<li>Prediction layer: aggregates the refined embeddings from different
+propagation layers and outputs the affinity score of a user-item
+pair.</li>
+</ol>
+<h2 id="embedding-layer">Embedding layer</h2>
+<p>Just initializing user embeddings and item embeddings by using ID or
+other features.</p>
+<p>Get user embedding <span class="math inline">\(e_i\)</span> and item
+embedding <span class="math inline">\(e_u\)</span>.</p>
+<h2 id="multiple-embedding-propagation-layers">Multiple Embedding
+Propagation Layers</h2>
+<h3 id="one-layer-propagation">One layer propagation</h3>
+<p>It consists of two parts: Message Construction and Message
+aggregation.</p>
+<h4 id="message-construction">Message Construction</h4>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230211112521161.png"
+alt="image-20230211112521161" />
+<figcaption aria-hidden="true">image-20230211112521161</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230211111736136.png"
+alt="image-20230211111736136" />
+<figcaption aria-hidden="true">image-20230211111736136</figcaption>
+</figure>
+<p><span class="math inline">\(m_{u&lt;-i}\)</span>: the result of the
+message construction module. It is a message embedding that will be used
+to update the target node.</p>
+<p><span class="math inline">\(e_i\)</span>: Embedding of neighbor
+item.</p>
+<p><strong>meaning</strong> : encode neighbor item's feature.</p>
+<p><span class="math inline">\(e_i⊙e_u\)</span> : element-wise product
+of <span class="math inline">\(e_i\)</span> and <span
+class="math inline">\(e_u\)</span>.</p>
+<p><strong>meaning</strong>: encodes the interaction between <span
+class="math inline">\(e_i\)</span> and <span
+class="math inline">\(e_u\)</span> into the message and makes the
+message dependent on the affinity between <span
+class="math inline">\(e_i\)</span> and <span
+class="math inline">\(e_j\)</span>.</p>
+<p><span class="math inline">\(W_1\)</span>, <span
+class="math inline">\(W_2\)</span>: trainable weight matrices， the
+shape is (<span class="math inline">\(d&#39;\)</span>, <span
+class="math inline">\(d\)</span>), while <span
+class="math inline">\(d\)</span> is the size of the initial embedding,
+<span class="math inline">\(d&#39;\)</span> is the size of
+transformation size.</p>
+<p><span class="math inline">\(P_{ui}\)</span>: to control the decay
+factor on each propagation on edge (u, i). Here, we set <span
+class="math inline">\(P_{ui}\)</span> as <strong>Laplacian norm</strong>
+$ $, $ N_u$, $ N_i$ is the first-hot neighbors of user u and item i.
+(就是拉普拉斯矩阵归一化！！<span
+class="math inline">\(D^{-\frac{1}{2}}AD^{-\frac{1}{2}}\)</span>)</p>
+<p><strong>meaning</strong> -From the viewpoint of representation
+learning: <span class="math inline">\(P_{ui}\)</span> reflects how much
+the historical item contributes to the user preference.</p>
+<p>From the viewpoint of the message passing: <span
+class="math inline">\(P_{ui}\)</span> can be interpreted as a discount
+factor, considering the messages being propagated should decay with the
+path length.</p>
+<h4 id="message-aggregation">Message Aggregation</h4>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230211151741633.png"
+alt="image-20230211151741633" />
+<figcaption aria-hidden="true">image-20230211151741633</figcaption>
+</figure>
+<p><span class="math inline">\(e_u^{(1)}\)</span>: the representation of
+user u after 1 propagation layer.</p>
+<p><span class="math inline">\(m_{u&lt;-u}\)</span>: self-connection of
+u. Here is <span class="math inline">\(W1e_u\)</span>.</p>
+<p><strong>meaning</strong>: retain information of original feature.</p>
+<p><span class="math inline">\(m_{u&lt;-i}\)</span>： neighbor node
+propagation.</p>
+<h3 id="high-order-propagation">High-order propagation</h3>
+<h4 id="formulate-form">Formulate Form</h4>
+<p>By stacking l-embedding propagation layers, a user (and an item) is
+capable of receiving the messages propagated from its l-hop neighbors.
+The formulates are similar to one-layer propagation.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212105956664.png"
+alt="image-20230212105956664" />
+<figcaption aria-hidden="true">image-20230212105956664</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212110019741.png"
+alt="image-20230212110019741" />
+<figcaption aria-hidden="true">image-20230212110019741</figcaption>
+</figure>
+<h4 id="matrix-form">Matrix Form</h4>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212110725475.png"
+alt="image-20230212110725475" />
+<figcaption aria-hidden="true">image-20230212110725475</figcaption>
+</figure>
+<p><span class="math inline">\(E^{(l)}\)</span> : the representations
+for users and items obtained after l-layers propagation. Shape is
+(N+M,d)</p>
+<p>L: Laplacian matrix for the user-item graph.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212111719667.png"
+alt="image-20230212111719667" />
+<figcaption aria-hidden="true">image-20230212111719667</figcaption>
+</figure>
+<p>D is the diagonal degree matrix. where <span
+class="math inline">\(D_{tt}=\vert N_t\vert\)</span> meaning the
+<code>D[t][t]</code> is the number of neighbors' node. The shape is
+(N+M, N+M), because there are totally n+m node(including user and
+item)</p>
+<p>A is the adjacency matrix. The shape of R is (N, M), while the shape
+of A is (N+M, N+M).</p>
+<p>some extra knowledge: <a
+href="https://zhuanlan.zhihu.com/p/362416124/">理解拉普拉斯矩阵</a></p>
+<p>I: identity matrix</p>
+<h5 id="a-simple-example-for-matrix-form">A simple example for matrix
+form:</h5>
+<p>Suppose we have 2 users (A, B), 3 items(C, D, E), N=2 and M=3.</p>
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/D9B00E7DDF74FF18B83E42668335328A.png" alt="D9B00E7DDF74FF18B83E42668335328A" style="zoom: 25%;" /></p>
+<p>Let consider this part: <span
+class="math inline">\((L+I)E^{(l-1)}W^{(l)}\)</span></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/81DBE0096BF060771E3355F2E6A34151.png"
+alt="81DBE0096BF060771E3355F2E6A34151" />
+<figcaption
+aria-hidden="true">81DBE0096BF060771E3355F2E6A34151</figcaption>
+</figure>
+<p>After calculating <span
+class="math inline">\((L+I)E^{(l-1)}\)</span>, we get information on
+self-connection and neighbor-propagation (after the Laplacian norm), and
+then we can multiply the trainable parameter W1(MLP).</p>
+<p>拉普拉斯矩阵归一化的不成熟小理解：</p>
+<p>①target node由n个邻居点做贡献，为了避免邻居越多，target
+node的value越大的情况，首先除<span
+class="math inline">\(\frac{1}{\sqrt{N_n}}\)</span>,
+大概也可以理解为邻居越多，每个邻居对其造成的影响越小</p>
+<p>②只做一次norm影响对称性，所以为了保持对称性在做一次<span
+class="math inline">\(\frac{1}{\sqrt{N_t}}\)</span>,可以理解为neighbor
+node有多少邻居对他给到每个邻居的权重有影响，是否能理解为邻居越多说明这个node能提供的信息更普通没价值（例如所有用户购买了水，对推荐系统来说，水能提供的信息就没那么有用）</p>
+<p>x class UV_Aggregator(nn.Module):    """   item and user aggregator:
+for aggregating embeddings of neighbors (item/user aggreagator).   """​  
+ def <strong>init</strong>(self, v2e, r2e, u2e, embed_dim, cuda="cpu",
+uv=True):        ...​    def forward(self, nodes, history_uv, history_r):
+       # create a container for result, shpe of embed_matrix is
+(batchsize,embed_dim)        embed_matrix = torch.empty(len(history_uv),
+self.embed_dim, dtype=torch.float).to(self.device)​        # deal with
+each single item nodes' neighbors        for i in
+range(len(history_uv)):            history = history_uv[i]          
+ num_histroy_item = len(history)            tmp_label = history_r[i]​    
+       # e_uv : turn neighbors(user node) id to embedding            #
+uv_rep : turn single node(item node) to embedding            if self.uv
+== True:                # user component                e_uv =
+self.v2e.weight[history]                uv_rep =
+self.u2e.weight[nodes[i]]            else:                # item
+component                e_uv = self.u2e.weight[history]              
+ uv_rep = self.v2e.weight[nodes[i]]​            # get rating score
+embedding            e_r = self.r2e.weight[tmp_label]            #
+concatenated rating and neighbor, and than through two layers mlp to get
+fjt            x = torch.cat((e_uv, e_r), 1)            x =
+F.relu(self.w_r1(x))​            o_history = F.relu(self.w_r2(x))        
+   # calculate neighbor attention and fjt*weight to finish aggregation  
+         att_w = self.att(o_history, uv_rep, num_histroy_item)          
+ att_history = torch.mm(o_history.t(), att_w)            att_history =
+att_history.t()​            embed_matrix[i] = att_history        # result
+(batchsize, embed_dim)        to_feats = embed_matrix        return
+to_featspython</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/8EE43A6D961CA0F0145CD44C62B9F9BE.png"
+alt="8EE43A6D961CA0F0145CD44C62B9F9BE" />
+<figcaption
+aria-hidden="true">8EE43A6D961CA0F0145CD44C62B9F9BE</figcaption>
+</figure>
+<p>We get information on the interaction between <span
+class="math inline">\(e_i\)</span> and <span
+class="math inline">\(e_u\)</span> (after the Laplacian norm), and then
+we can multiply the trainable parameter W2(MLP).</p>
+<p>Add two parts and through LeakyRelu, we get user or item embedding
+after l-layers propagation.</p>
+<h2 id="model-prediction">Model Prediction</h2>
+<p>Just concatenate all propagation layers' output embedding, and use
+inner product to estimate the user's preference towards the target
+item.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212173756733.png"
+alt="image-20230212173756733" />
+<figcaption aria-hidden="true">image-20230212173756733</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212173813003.png"
+alt="image-20230212173813003" />
+<figcaption aria-hidden="true">image-20230212173813003</figcaption>
+</figure>
+<h1 id="optimization">Optimization</h1>
+<h2 id="loss">Loss</h2>
+<p>BPR Loss: assumes that the observed interactions, which are more
+reflective of a user’s preferences, should be assigned higher prediction
+values than unobserved ones.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212212248890.png"
+alt="image-20230212212248890" />
+<figcaption aria-hidden="true">image-20230212212248890</figcaption>
+</figure>
+<h2 id="optimizer-adam">Optimizer: Adam</h2>
+<h2 id="model-size">Model Size</h2>
+<p>In NGCF, only W1 and W2 in the propagation layer need to be trained,
+so has <span class="math inline">\(2Ld_ld_{l-1}\)</span> more
+parameters, while L is always smaller than 5 and <span
+class="math inline">\(d\)</span> is set as the embedding size(e.g. 64)
+which is also small.</p>
+<h2 id="message-and-node-dropout">Message and Node Dropout</h2>
+<ol type="1">
+<li><p><strong>Message dropout</strong>: randomly drops out the outgoing
+messages (equal to dropout edge).</p>
+<p><strong>meaning</strong>: endows the representations more robustness
+against the presence or absence of single connections between users and
+items.</p>
+<p><strong>example</strong>: For the <span
+class="math inline">\(l-th\)</span> propagation layer, we drop out the
+messages being propagated, with a probability <span
+class="math inline">\(p1\)</span>.</p></li>
+<li><p><strong>Node dropout</strong>: randomly blocks a particular node
+and discards all its outgoing messages.</p>
+<p><strong>meaning</strong>: focuses on reducing the influences of
+particular users or items.</p>
+<p><strong>example</strong>: For the <span
+class="math inline">\(l-th\)</span> propagation layer, we randomly drop
+<span class="math inline">\((M + N)p2\)</span> nodes of the Laplacian
+matrix, where <span class="math inline">\(p2\)</span> is the dropout
+ratio.</p></li>
+</ol>
+<p>区别：对于message
+dropout，计算时node的邻居数、拉普拉斯norm都是正常的，就是更新embedding的时候遗漏了信息，作用是提高一下鲁棒性和容错性；对于Node
+dropout，直接在拉普拉斯矩阵中屏蔽若干个node，可能影响临界点数、归一化数值等，在矩阵运算时候就有影响，作用是希望模型不要过于依赖某些特定邻接点，没了部分点依然能正常运行。</p>
+<h1 id="experiment">Experiment</h1>
+<h2 id="conclusions-from-comparing-with-other-models">Conclusions from
+comparing with other models</h2>
+<ol type="1">
+<li>The inner product is insufficient to capture the complex relations
+between users and items.</li>
+<li>Nonlinear feature interactions between users and items are
+important</li>
+<li>Neighbor information can improve embedding learning, and using the
+attention mechanism is better than using equal and heuristic
+weight.</li>
+<li>Considering high-order connectivity or neighbor is better than only
+considering first-order neighbor.</li>
+<li>that exploiting high-order connectivity greatly facilitates
+representation learning for inactive users, as the collaborative signal
+can be effectively captured. And the embedding propagation is beneficial
+to relatively inactive users.</li>
+</ol>
+<h2 id="study-for-ngcf">Study for NGCF</h2>
+<p>....</p>
+<h2 id="effect-of-high-order-connectivity">Effect of High-order
+Connectivity</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212225247958.png"
+alt="image-20230212225247958" />
+<figcaption aria-hidden="true">image-20230212225247958</figcaption>
+</figure>
+<ol type="1">
+<li>the representations of NGCF-3 exhibit discernible clustering,
+meaning that the points with the same colors (<em>i.e.,</em> the items
+consumed by the same users) tend to form the clusters.</li>
+<li>when stacking three embedding propagation layers, the embeddings of
+their historical items tend to be closer. It qualitatively verifies that
+the proposed embedding propagation layer is capable of injecting the
+explicit collaborative signal (via NGCF-3) into the
+representations.</li>
+</ol>
+]]></content>
+      <categories>
+        <category>RecSys</category>
+      </categories>
+  </entry>
+  <entry>
     <title>LightGCN</title>
     <url>/2023/02/24/LightGCN/</url>
     <content><![CDATA[<p>.</p>
@@ -905,346 +1245,6 @@ normal training and is not encouraged.</li>
       </categories>
   </entry>
   <entry>
-    <title>NGCF</title>
-    <url>/2023/02/24/NGCF/</url>
-    <content><![CDATA[<p>.</p>
-<span id="more"></span>
-<h1 id="background">Background</h1>
-<p>question: example(the Laplacian)</p>
-<h2 id="some-definition">Some Definition</h2>
-<ol type="1">
-<li><p>Recommendation system: Estimate how likely a user will adopt an
-item based on the historical interaction like purchase and
-click.</p></li>
-<li><p>Collaborative filtering(CF): behaviorally similar users would
-exhibit similar preference on items.</p>
-<p>CF consists of</p>
-<ol type="1">
-<li><p>embedding: transforms users and items into vectorized
-representations. e.g. matrix factorization(MF),deep learning
-function...</p></li>
-<li><p>interaction modeling: reconstructs historical interactions based
-on the embeddings. e.g. inner product, neural function...</p></li>
-</ol></li>
-<li><p>collaborative signal: signal latent in user-item
-interactions</p></li>
-</ol>
-<h2 id="existing-problem">Existing Problem</h2>
-<p>The current embedding process of CF doesn't encode a collaborative
-signal. Most of them focus on the descriptive feature(e.g. user id,
-attributes). When the embeddings are insufficient in capturing CF, the
-methods have to rely on the interaction function to make up for the
-deficiency of suboptimal embeddings</p>
-<h2 id="main-contribute">Main contribute</h2>
-<ol type="1">
-<li><p>Highlight the critical importance of explicitly exploiting the
-collaborative signal in the embedding function of model-based CF
-methods.</p></li>
-<li><p>Propose NGCF, a new recommendation framework based on a graph
-neural network, which explicitly encodes the collaborative signal in the
-form of high-order connectivities by performing embedding
-propagation.</p></li>
-</ol>
-<h1 id="model">Model</h1>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230211111222966.png"
-alt="image-20230211111222966" />
-<figcaption aria-hidden="true">image-20230211111222966</figcaption>
-</figure>
-<p>There are three components in the framework:</p>
-<ol type="1">
-<li>Embedding layer: offers and initialization of user embeddings and
-item embeddings;</li>
-<li>Multiple embedding propagation layers: refine the embeddings by
-injecting high-order connectivity relations;</li>
-<li>Prediction layer: aggregates the refined embeddings from different
-propagation layers and outputs the affinity score of a user-item
-pair.</li>
-</ol>
-<h2 id="embedding-layer">Embedding layer</h2>
-<p>Just initializing user embeddings and item embeddings by using ID or
-other features.</p>
-<p>Get user embedding <span class="math inline">\(e_i\)</span> and item
-embedding <span class="math inline">\(e_u\)</span>.</p>
-<h2 id="multiple-embedding-propagation-layers">Multiple Embedding
-Propagation Layers</h2>
-<h3 id="one-layer-propagation">One layer propagation</h3>
-<p>It consists of two parts: Message Construction and Message
-aggregation.</p>
-<h4 id="message-construction">Message Construction</h4>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230211112521161.png"
-alt="image-20230211112521161" />
-<figcaption aria-hidden="true">image-20230211112521161</figcaption>
-</figure>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230211111736136.png"
-alt="image-20230211111736136" />
-<figcaption aria-hidden="true">image-20230211111736136</figcaption>
-</figure>
-<p><span class="math inline">\(m_{u&lt;-i}\)</span>: the result of the
-message construction module. It is a message embedding that will be used
-to update the target node.</p>
-<p><span class="math inline">\(e_i\)</span>: Embedding of neighbor
-item.</p>
-<p><strong>meaning</strong> : encode neighbor item's feature.</p>
-<p><span class="math inline">\(e_i⊙e_u\)</span> : element-wise product
-of <span class="math inline">\(e_i\)</span> and <span
-class="math inline">\(e_u\)</span>.</p>
-<p><strong>meaning</strong>: encodes the interaction between <span
-class="math inline">\(e_i\)</span> and <span
-class="math inline">\(e_u\)</span> into the message and makes the
-message dependent on the affinity between <span
-class="math inline">\(e_i\)</span> and <span
-class="math inline">\(e_j\)</span>.</p>
-<p><span class="math inline">\(W_1\)</span>, <span
-class="math inline">\(W_2\)</span>: trainable weight matrices， the
-shape is (<span class="math inline">\(d&#39;\)</span>, <span
-class="math inline">\(d\)</span>), while <span
-class="math inline">\(d\)</span> is the size of the initial embedding,
-<span class="math inline">\(d&#39;\)</span> is the size of
-transformation size.</p>
-<p><span class="math inline">\(P_{ui}\)</span>: to control the decay
-factor on each propagation on edge (u, i). Here, we set <span
-class="math inline">\(P_{ui}\)</span> as <strong>Laplacian norm</strong>
-$ $, $ N_u$, $ N_i$ is the first-hot neighbors of user u and item i.
-(就是拉普拉斯矩阵归一化！！<span
-class="math inline">\(D^{-\frac{1}{2}}AD^{-\frac{1}{2}}\)</span>)</p>
-<p><strong>meaning</strong> -From the viewpoint of representation
-learning: <span class="math inline">\(P_{ui}\)</span> reflects how much
-the historical item contributes to the user preference.</p>
-<p>From the viewpoint of the message passing: <span
-class="math inline">\(P_{ui}\)</span> can be interpreted as a discount
-factor, considering the messages being propagated should decay with the
-path length.</p>
-<h4 id="message-aggregation">Message Aggregation</h4>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230211151741633.png"
-alt="image-20230211151741633" />
-<figcaption aria-hidden="true">image-20230211151741633</figcaption>
-</figure>
-<p><span class="math inline">\(e_u^{(1)}\)</span>: the representation of
-user u after 1 propagation layer.</p>
-<p><span class="math inline">\(m_{u&lt;-u}\)</span>: self-connection of
-u. Here is <span class="math inline">\(W1e_u\)</span>.</p>
-<p><strong>meaning</strong>: retain information of original feature.</p>
-<p><span class="math inline">\(m_{u&lt;-i}\)</span>： neighbor node
-propagation.</p>
-<h3 id="high-order-propagation">High-order propagation</h3>
-<h4 id="formulate-form">Formulate Form</h4>
-<p>By stacking l-embedding propagation layers, a user (and an item) is
-capable of receiving the messages propagated from its l-hop neighbors.
-The formulates are similar to one-layer propagation.</p>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212105956664.png"
-alt="image-20230212105956664" />
-<figcaption aria-hidden="true">image-20230212105956664</figcaption>
-</figure>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212110019741.png"
-alt="image-20230212110019741" />
-<figcaption aria-hidden="true">image-20230212110019741</figcaption>
-</figure>
-<h4 id="matrix-form">Matrix Form</h4>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212110725475.png"
-alt="image-20230212110725475" />
-<figcaption aria-hidden="true">image-20230212110725475</figcaption>
-</figure>
-<p><span class="math inline">\(E^{(l)}\)</span> : the representations
-for users and items obtained after l-layers propagation. Shape is
-(N+M,d)</p>
-<p>L: Laplacian matrix for the user-item graph.</p>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212111719667.png"
-alt="image-20230212111719667" />
-<figcaption aria-hidden="true">image-20230212111719667</figcaption>
-</figure>
-<p>D is the diagonal degree matrix. where <span
-class="math inline">\(D_{tt}=\vert N_t\vert\)</span> meaning the
-<code>D[t][t]</code> is the number of neighbors' node. The shape is
-(N+M, N+M), because there are totally n+m node(including user and
-item)</p>
-<p>A is the adjacency matrix. The shape of R is (N, M), while the shape
-of A is (N+M, N+M).</p>
-<p>some extra knowledge: <a
-href="https://zhuanlan.zhihu.com/p/362416124/">理解拉普拉斯矩阵</a></p>
-<p>I: identity matrix</p>
-<h5 id="a-simple-example-for-matrix-form">A simple example for matrix
-form:</h5>
-<p>Suppose we have 2 users (A, B), 3 items(C, D, E), N=2 and M=3.</p>
-<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/D9B00E7DDF74FF18B83E42668335328A.png" alt="D9B00E7DDF74FF18B83E42668335328A" style="zoom: 25%;" /></p>
-<p>Let consider this part: <span
-class="math inline">\((L+I)E^{(l-1)}W^{(l)}\)</span></p>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/81DBE0096BF060771E3355F2E6A34151.png"
-alt="81DBE0096BF060771E3355F2E6A34151" />
-<figcaption
-aria-hidden="true">81DBE0096BF060771E3355F2E6A34151</figcaption>
-</figure>
-<p>After calculating <span
-class="math inline">\((L+I)E^{(l-1)}\)</span>, we get information on
-self-connection and neighbor-propagation (after the Laplacian norm), and
-then we can multiply the trainable parameter W1(MLP).</p>
-<p>拉普拉斯矩阵归一化的不成熟小理解：</p>
-<p>①target node由n个邻居点做贡献，为了避免邻居越多，target
-node的value越大的情况，首先除<span
-class="math inline">\(\frac{1}{\sqrt{N_n}}\)</span>,
-大概也可以理解为邻居越多，每个邻居对其造成的影响越小</p>
-<p>②只做一次norm影响对称性，所以为了保持对称性在做一次<span
-class="math inline">\(\frac{1}{\sqrt{N_t}}\)</span>,可以理解为neighbor
-node有多少邻居对他给到每个邻居的权重有影响，是否能理解为邻居越多说明这个node能提供的信息更普通没价值（例如所有用户购买了水，对推荐系统来说，水能提供的信息就没那么有用）</p>
-<p>xxxxxxxxxx class UV_Aggregator(nn.Module):    """   item and user
-aggregator: for aggregating embeddings of neighbors (item/user
-aggreagator).   """​    def <strong>init</strong>(self, v2e, r2e, u2e,
-embed_dim, cuda="cpu", uv=True):        ...​    def forward(self, nodes,
-history_uv, history_r):        # create a container for result, shpe of
-embed_matrix is (batchsize,embed_dim)        embed_matrix =
-torch.empty(len(history_uv), self.embed_dim,
-dtype=torch.float).to(self.device)​        # deal with each single item
-nodes' neighbors        for i in range(len(history_uv)):          
- history = history_uv[i]            num_histroy_item = len(history)    
-       tmp_label = history_r[i]​            # e_uv : turn neighbors(user
-node) id to embedding            # uv_rep : turn single node(item node)
-to embedding            if self.uv == True:                # user
-component                e_uv = self.v2e.weight[history]              
- uv_rep = self.u2e.weight[nodes[i]]            else:                #
-item component                e_uv = self.u2e.weight[history]          
-     uv_rep = self.v2e.weight[nodes[i]]​            # get rating score
-embedding            e_r = self.r2e.weight[tmp_label]            #
-concatenated rating and neighbor, and than through two layers mlp to get
-fjt            x = torch.cat((e_uv, e_r), 1)            x =
-F.relu(self.w_r1(x))​            o_history = F.relu(self.w_r2(x))        
-   # calculate neighbor attention and fjt*weight to finish aggregation  
-         att_w = self.att(o_history, uv_rep, num_histroy_item)          
- att_history = torch.mm(o_history.t(), att_w)            att_history =
-att_history.t()​            embed_matrix[i] = att_history        # result
-(batchsize, embed_dim)        to_feats = embed_matrix        return
-to_featspython</p>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/8EE43A6D961CA0F0145CD44C62B9F9BE.png"
-alt="8EE43A6D961CA0F0145CD44C62B9F9BE" />
-<figcaption
-aria-hidden="true">8EE43A6D961CA0F0145CD44C62B9F9BE</figcaption>
-</figure>
-<p>We get information on the interaction between <span
-class="math inline">\(e_i\)</span> and <span
-class="math inline">\(e_u\)</span> (after the Laplacian norm), and then
-we can multiply the trainable parameter W2(MLP).</p>
-<p>Add two parts and through LeakyRelu, we get user or item embedding
-after l-layers propagation.</p>
-<h2 id="model-prediction">Model Prediction</h2>
-<p>Just concatenate all propagation layers' output embedding, and use
-inner product to estimate the user's preference towards the target
-item.</p>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212173756733.png"
-alt="image-20230212173756733" />
-<figcaption aria-hidden="true">image-20230212173756733</figcaption>
-</figure>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212173813003.png"
-alt="image-20230212173813003" />
-<figcaption aria-hidden="true">image-20230212173813003</figcaption>
-</figure>
-<h1 id="optimization">Optimization</h1>
-<h2 id="loss">Loss</h2>
-<p>BPR Loss: assumes that the observed interactions, which are more
-reflective of a user’s preferences, should be assigned higher prediction
-values than unobserved ones.</p>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212212248890.png"
-alt="image-20230212212248890" />
-<figcaption aria-hidden="true">image-20230212212248890</figcaption>
-</figure>
-<h2 id="optimizer-adam">Optimizer: Adam</h2>
-<h2 id="model-size">Model Size</h2>
-<p>In NGCF, only W1 and W2 in the propagation layer need to be trained,
-so has <span class="math inline">\(2Ld_ld_{l-1}\)</span> more
-parameters, while L is always smaller than 5 and <span
-class="math inline">\(d\)</span> is set as the embedding size(e.g. 64)
-which is also small.</p>
-<h2 id="message-and-node-dropout">Message and Node Dropout</h2>
-<ol type="1">
-<li><p><strong>Message dropout</strong>: randomly drops out the outgoing
-messages (equal to dropout edge).</p>
-<p><strong>meaning</strong>: endows the representations more robustness
-against the presence or absence of single connections between users and
-items.</p>
-<p><strong>example</strong>: For the <span
-class="math inline">\(l-th\)</span> propagation layer, we drop out the
-messages being propagated, with a probability <span
-class="math inline">\(p1\)</span>.</p></li>
-<li><p><strong>Node dropout</strong>: randomly blocks a particular node
-and discards all its outgoing messages.</p>
-<p><strong>meaning</strong>: focuses on reducing the influences of
-particular users or items.</p>
-<p><strong>example</strong>: For the <span
-class="math inline">\(l-th\)</span> propagation layer, we randomly drop
-<span class="math inline">\((M + N)p2\)</span> nodes of the Laplacian
-matrix, where <span class="math inline">\(p2\)</span> is the dropout
-ratio.</p></li>
-</ol>
-<p>区别：对于message
-dropout，计算时node的邻居数、拉普拉斯norm都是正常的，就是更新embedding的时候遗漏了信息，作用是提高一下鲁棒性和容错性；对于Node
-dropout，直接在拉普拉斯矩阵中屏蔽若干个node，可能影响临界点数、归一化数值等，在矩阵运算时候就有影响，作用是希望模型不要过于依赖某些特定邻接点，没了部分点依然能正常运行。</p>
-<h1 id="experiment">Experiment</h1>
-<h2 id="conclusions-from-comparing-with-other-models">Conclusions from
-comparing with other models</h2>
-<ol type="1">
-<li>The inner product is insufficient to capture the complex relations
-between users and items.</li>
-<li>Nonlinear feature interactions between users and items are
-important</li>
-<li>Neighbor information can improve embedding learning, and using the
-attention mechanism is better than using equal and heuristic
-weight.</li>
-<li>Considering high-order connectivity or neighbor is better than only
-considering first-order neighbor.</li>
-<li>that exploiting high-order connectivity greatly facilitates
-representation learning for inactive users, as the collaborative signal
-can be effectively captured. And the embedding propagation is beneficial
-to relatively inactive users.</li>
-</ol>
-<h2 id="study-for-ngcf">Study for NGCF</h2>
-<p>....</p>
-<h2 id="effect-of-high-order-connectivity">Effect of High-order
-Connectivity</h2>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230212225247958.png"
-alt="image-20230212225247958" />
-<figcaption aria-hidden="true">image-20230212225247958</figcaption>
-</figure>
-<ol type="1">
-<li>the representations of NGCF-3 exhibit discernible clustering,
-meaning that the points with the same colors (<em>i.e.,</em> the items
-consumed by the same users) tend to form the clusters.</li>
-<li>when stacking three embedding propagation layers, the embeddings of
-their historical items tend to be closer. It qualitatively verifies that
-the proposed embedding propagation layer is capable of injecting the
-explicit collaborative signal (via NGCF-3) into the
-representations.</li>
-</ol>
-]]></content>
-      <categories>
-        <category>RecSys</category>
-      </categories>
-  </entry>
-  <entry>
     <title>GraphRec</title>
     <url>/2023/02/24/Note_for_GraphRec/</url>
     <content><![CDATA[<p>.</p>
@@ -1553,15 +1553,30 @@ sense of importance in the quadratic form <strong>v</strong>
 \]</span></p>
 <p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228224935533.png" alt="image-20230228224935533" style="zoom:40%;" /></p>
 <p>输出的值范围在[0,1]之间。但是<code>sigmoid</code>型函数的输出存在<strong>均值不为0</strong>的情况，并且存在<strong>梯度消失的问题</strong>，在深层网络中被其他激活函数替代。在<strong>逻辑回归</strong>中使用的该激活函数用于输出<strong>分类</strong>。</p>
-<p>梯度消失原因： <span class="math display">\[
-\sigma&#39;(x) = \
+<h3 id="求导公式">求导公式</h3>
+<p>链式法则</p>
+<h3 id="梯度消失原因">梯度消失原因：</h3>
+<p><span class="math display">\[
+\sigma&#39;(x) = \sigma\space \cdot (1-\sigma)
 \]</span></p>
-<p>sigmoid函数两边的斜率趋向0，很难继续学习</p>
+<ol type="1">
+<li>sigmoid函数两边的斜率趋向0，很难继续学习</li>
+<li>sigmoid导数两个部分都小于1，在深层神经网络中，靠前layer参数会因为后面多层sigmoid导数叠加（链式法则）导致更新的特别慢。</li>
+</ol>
+<h3 id="缺点解决办法">缺点解决办法</h3>
+<ol type="1">
+<li>在深层网络中被其他激活函数替代。如<code>ReLU(x)</code>、<code>Leaky ReLU(x)</code>等</li>
+<li>在分类问题中，sigmoid做激活函数时，使用交叉熵损失函数替代均方误差损失函数。</li>
+<li>采用正确的权重初始化方法（让初始化的数据尽量不要落在梯度消失区域）</li>
+<li>加入BN层（同上，避免数据落入梯度消失区）</li>
+<li>分层训练权重</li>
+</ol>
 <h2 id="tanh">tanh</h2>
 <p><span class="math display">\[
 tanh(x) = \frac{e^x-e^{(-x)}}{e^x+e^{(-x)}} =\frac{e^{2x}-1}{e^{2x}+1}=
 2 \cdot sigmoid(2x)-1
 \]</span></p>
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194241514.png" alt="image-20230307194241514" style="zoom:67%;" /></p>
 <p><code>tanh(x)</code>型函数可以解决<code>sigmoid</code>型函数的<strong>期望（均值）不为0</strong>的情况。函数输出范围为(-1,+1)。但<code>tanh(x)</code>型函数依然存在<strong>梯度消失的问题</strong>。</p>
 <p>在LSTM中使用了<code>tanh(x)</code>型函数。</p>
 <h2 id="relu">Relu</h2>
@@ -1572,9 +1587,18 @@ src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228222815687.png
 alt="image-20230228222815687" />
 <figcaption aria-hidden="true">image-20230228222815687</figcaption>
 </figure>
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194352199.png" alt="image-20230307194352199" style="zoom:67%;" /></p>
 <p><code>ReLU(x)</code>型函数的缺点是<strong>负值成为“死区”</strong>，神经网络无法再对其进行响应。Alex-Net使用了<code>ReLU(x)</code>型函数。当我们训练深层神经网络时，最好使用<code>ReLU(x)</code>型函数而不是<code>sigmoid(x)</code>型函数。</p>
+<p>ReLU梯度稳定，值还比sigmoid大，所以<strong>可以加快网络训练</strong>。</p>
+<p>但是要注意，我们在输入图像时就要注意，应该使用Min-Max归一化，而不能使用Z-score归一化。（避免进入死区）</p>
+<h3 id="在0点不可导">在0点不可导</h3>
+<p>人为将梯度规定为0（源码就是这么写的）</p>
+<h2 id="relu6">Relu6</h2>
+<p>Relu的正值输出是[0，无穷大]，但计算机内存优先，所以限定relu最大值为6</p>
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194457525.png" alt="image-20230307194457525" style="zoom:67%;" /></p>
 <h2 id="leakyrelu">LeakyRelu</h2>
 <p>为<strong>负值增加了一个斜率</strong>，缓解了“死区”现象，公式如下：</p>
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194659126.png" alt="image-20230307194659126" style="zoom:67%;" /></p>
 <figure>
 <img
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228222900735.png"
@@ -1587,11 +1611,19 @@ alt="image-20230228222900735" />
 <h2 id="r-relu-随机化relu">R-Relu 随机化Relu</h2>
 <p>就是超参数a（阿尔法）随机化，<strong>让不同的层自己学习不同的超参数</strong>，但随机化的超参数的分布符合均值分布或高斯分布。</p>
 <h2 id="mish激活函数">Mish激活函数</h2>
-<p><span class="math display">\[
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194824945.png" alt="image-20230307194824945" style="zoom:67%;" />
+<span class="math display">\[
 Mish(x) = x\cdot tanh(log(1+e^x))
 \]</span></p>
+<p>在负值中，允许有一定的梯度流入。</p>
 <h2 id="elu指数化线性单元">ELU指数化线性单元</h2>
 <p>也是为了解决死区问题，公式如下：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307194918301.png"
+alt="image-20230307194918301" />
+<figcaption aria-hidden="true">image-20230307194918301</figcaption>
+</figure>
 <figure>
 <img
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230228224119801.png"
@@ -1600,8 +1632,57 @@ alt="image-20230228224119801" />
 </figure>
 <p>缺点是<strong>指数计算量大</strong>。</p>
 <h2 id="maxout">Maxout</h2>
+<p>就是用一个MLP层作为激活函数。</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307195003327.png"
+alt="image-20230307195003327" />
+<figcaption aria-hidden="true">image-20230307195003327</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307195013184.png"
+alt="image-20230307195013184" />
+<figcaption aria-hidden="true">image-20230307195013184</figcaption>
+</figure>
 <p>与常规的激活函数不同，<strong>Maxout</strong>是一个可以学习的<strong>分段线性函数</strong>。其原理是，任何ReLU及其变体等激活函数都可以看成分段的线性函数，而Maxout加入的一层神经元正是一个可以学习参数的分段线性函数。</p>
 <p>优点是其拟合能力很强，理论上可以拟合任意的凸函数。缺点是参数量激增！在Network-in-Network中使用的该激活函数。</p>
+<h1 id="softmax求导">Softmax求导</h1>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307195822249.png"
+alt="image-20230307195822249" />
+<figcaption aria-hidden="true">image-20230307195822249</figcaption>
+</figure>
+<p>要结合交叉熵loss函数考虑</p>
+<p><span class="math inline">\(\frac{dL}{dz}=\frac{dL}{da}\cdot
+\frac{da}{dz}\)</span></p>
+<p>假设第j个类别是正确的，<span
+class="math inline">\(y_j=1\)</span>,其它为0</p>
+<p><span class="math inline">\(L = -\sum_{i=1}^ny_iln(a_i)\)</span></p>
+<p><span class="math inline">\(\frac{dL}{da} =
+-y_iln(a_j)=-ln(a_j)\)</span></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307200559541.png"
+alt="image-20230307200559541" />
+<figcaption aria-hidden="true">image-20230307200559541</figcaption>
+</figure>
+<p>所以最终Loss只跟label类别有关</p>
+<p>所以当i=j：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307201705230.png"
+alt="image-20230307201705230" />
+<figcaption aria-hidden="true">image-20230307201705230</figcaption>
+</figure>
+<p>当i!=j:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307201737792.png"
+alt="image-20230307201737792" />
+<figcaption aria-hidden="true">image-20230307201737792</figcaption>
+</figure>
 ]]></content>
       <categories>
         <category>ML</category>
@@ -1866,6 +1947,150 @@ src="https://www.nowcoder.com/equation?tex=Q(x)&amp;preview=true"
 alt="img" />为<strong>理论概率分布</strong>，<img
 src="https://www.nowcoder.com/equation?tex=P(x)&amp;preview=true"
 alt="img" />为模型<strong>预测概率分布</strong>，而KL就是度量这两个分布的差异性，当然差异越小越好，所以KL也可以用作损失函数。</p>
+]]></content>
+      <categories>
+        <category>ML</category>
+        <category>Basic</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>常见优化函数</title>
+    <url>/2023/03/07/optimizer/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="常见优化函数">常见优化函数</h1>
+<h2 id="梯度下降gd">梯度下降GD</h2>
+<p><strong>梯度下降的核心思想：负梯度方向是使函数值下降最快的方向</strong></p>
+<h3 id="批次梯度下降bgd">批次梯度下降BGD</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307202943629.png"
+alt="image-20230307202943629" />
+<figcaption aria-hidden="true">image-20230307202943629</figcaption>
+</figure>
+<p><strong>优点</strong>：在梯度下降法中，因为每次都遍历了完整的训练集，<strong>其能保证结果为全局最优</strong></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307204257470.png"
+alt="image-20230307204257470" />
+<figcaption aria-hidden="true">image-20230307204257470</figcaption>
+</figure>
+<p><strong>缺点</strong>：我们需要对于每个参数求偏导，且在对每个参数求偏导的过程中还需要对训练集遍历一次，当训练集（m）很大时，计算费时</p>
+<p><strong>解决方法</strong>：使用minibatch去更新</p>
+<h3 id="随机梯度下降">随机梯度下降</h3>
+<p>为了解决BGD耗时过长，它是利用单个样本的损失函数对θ求偏导得到对应的梯度，来更新θ，更新过程如下：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307204324179.png"
+alt="image-20230307204324179" />
+<figcaption aria-hidden="true">image-20230307204324179</figcaption>
+</figure>
+<p>速度快，但受抽样影响大，<strong>噪音较BGD要多，使得SGD并不是每次迭代都向着整体最优化方向。</strong></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307204553630.png"
+alt="image-20230307204553630" />
+<figcaption aria-hidden="true">image-20230307204553630</figcaption>
+</figure>
+<p>因为每一次迭代的梯度受抽样的影响比较大，学习率需要逐渐减少，否则模型很难收敛。在实际操作中，一般采用线性衰减：
+<span class="math display">\[
+\eta_k=(1-\alpha)\eta_0+\alpha\eta_{\tau}
+\]</span></p>
+<p><span class="math display">\[
+\alpha=\frac{k}{\tau}
+\]</span></p>
+<p><span class="math inline">\(\eta_0\)</span>:初始学习率</p>
+<p><span class="math inline">\(\eta_{\tau}\)</span>：
+最后一次迭代的学习率</p>
+<p><span class="math inline">\(\tau\)</span>：自然迭代次数</p>
+<p><span class="math inline">\(\eta_{\tau}\)</span>设为<span
+class="math inline">\(\eta_0\)</span>的1%，k一般设为100的倍数。</p>
+<p><strong>优点</strong>：收敛速度快</p>
+<p><strong>缺点</strong>：</p>
+<ol type="1">
+<li><p>训练不稳定：噪音较BGD要多，使得SGD并不是每次迭代都向着整体最优化方向。</p></li>
+<li><p>选择适当的学习率可能很困难。
+太小的学习率会导致收敛性缓慢，而学习速度太大可能会妨碍收敛，并导致损失函数在最小点波动。</p></li>
+<li><p>无法逃脱鞍点</p></li>
+</ol>
+<details>
+<p>在数学中，鞍点或极小值点是函数图形表面上的一个点，其正交方向上的斜率(导数)均为零(临界点)，但不是函数的局
+部极值。一句话概括就是：一个不是局部极值点的驻点称为鞍点。
+*驻点：函数在一点处的一阶导数为零。
+<img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307205942585.png"></p>
+<h3 id="min-batch-小批量梯度下降mbgd">min-batch 小批量梯度下降MBGD</h3>
+<p><strong>算法的训练过程比较快，而且也要保证最终参数训练的准确率</strong></p>
+<p>m表示一个批次的数据个数</p>
+<h2 id="动量方法">动量方法</h2>
+<h3 id="momentum随机梯度下降">Momentum随机梯度下降</h3>
+<p>核心思想：Momentum借用了物理中的<strong>动量</strong>概念,即前一次的梯度也会参与运算。为了表示动量，引入了<strong>一阶动量</strong>m。<img
+src="https://www.nowcoder.com/equation?tex=m&amp;preview=true"
+alt="img" />是之前的梯度的累加,但是每回合都有一定的衰减。公式如下：
+<span class="math display">\[
+m_t=\beta m_{t-1}+(1-\beta)\cdot g_t
+\]</span></p>
+<p><span class="math display">\[
+w_{t+1}=w_t-\eta \cdot m_t
+\]</span></p>
+<p><span class="math inline">\(g_t\)</span>：
+为第t次计算的梯度（就是现在要算这次）</p>
+<p><span class="math inline">\(m_{t-1}\)</span>: 为之前梯度的累加</p>
+<p><span class="math inline">\(\beta\)</span>: 动量因子</p>
+<p>所以当前权值的改变受上一次改变的影响，类似加上了<strong>惯性</strong>。</p>
+<p>优点：momentum能够加速SGD收敛，抑制震荡。并且动量有机会逃脱局部极小值(鞍点)。</p>
+<ol type="1">
+<li>在梯度方向改变时，momentum能够降低参数更新速度，从而减少震荡；</li>
+<li>在梯度方向相同时，momentum可以加速参数更新， 从而加速收敛。</li>
+</ol>
+<h3 id="nesterov动量随机梯度下降法">Nesterov动量随机梯度下降法</h3>
+<p>Nesterov是Momentum的变种。与Momentum唯一区别就是，计算梯度的不同。Nesterov动量中，先用当前的速度临时更新一遍参数，在用更新的临时参数计算梯度。</p>
+<p>在momentum更新梯度时加入对当前梯度的校正，让梯度“多走一步”，可能跳出局部最优解：
+<span class="math display">\[
+w_t^*=\beta m_{t-1}+w_t
+\]</span></p>
+<p><span class="math display">\[
+m_t=\beta m_{t-1}+(1-\beta)\cdot g_t
+\]</span></p>
+<p><span class="math display">\[
+w_{t+1}=w_t-\eta \cdot m_t
+\]</span></p>
+<p>这里的<span class="math inline">\(g_t\)</span>用临时点<span
+class="math inline">\(w_t^*\)</span>计算的</p>
+<h2 id="更新学习率方法">更新学习率方法</h2>
+<h3 id="adagrad">Adagrad</h3>
+<p>引入<strong>二阶动量</strong>，根据训练轮数的不同，对学习率进行了动态调整：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307213914026.png"
+alt="image-20230307213914026" />
+<figcaption aria-hidden="true">image-20230307213914026</figcaption>
+</figure>
+<p><strong>缺点</strong>：仍然需要人为指定一个合适的全局学习率，同时网络训练到一定轮次后，分母上梯度累加过大使得学习率为0而导致训练提前结束。</p>
+<h3 id="adadelta不是很懂">Adadelta(不是很懂)</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307215135905.png"
+alt="image-20230307215135905" />
+<figcaption aria-hidden="true">image-20230307215135905</figcaption>
+</figure>
+<h3 id="rmsprop">RMSProp</h3>
+<p>AdaGrad算法在迭代后期由于学习率过小，可能较难找到一个有用的解。为了解决这一问题，RMSprop算法对Adagrad算法做了一点小小的修改，RMSprop使用指数衰减只保留过去给定窗口大小的梯度，使其能够在找到凸碗状结构后快速收敛。RMSProp法可以视为Adadelta法的一个特例，即依然使用全局学习率替换掉Adadelta法中的<span
+class="math inline">\(s_t\)</span>:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307215341546.png"
+alt="image-20230307215341546" />
+<figcaption aria-hidden="true">image-20230307215341546</figcaption>
+</figure>
+<p>推荐<span
+class="math inline">\(\eta_{global}=1,\rho=0.9,\epsilon=10^{-6}\)</span></p>
+<p>缺点：依然使用了全局学习率，需要根据实际情况来设定 优点：</p>
+<ol type="1">
+<li>分母不再是一味的增加，它会重点考虑距离它较近的梯度（指数衰减的效果）</li>
+<li>只用了部分梯度加和而不是所有，这样避免了梯度累加过大使得学习率为0而导致训练提前结束。</li>
+</ol>
+<h3 id="adam">Adam</h3>
+<p>https://zhuanlan.zhihu.com/p/377968342</p>
 ]]></content>
       <categories>
         <category>ML</category>
