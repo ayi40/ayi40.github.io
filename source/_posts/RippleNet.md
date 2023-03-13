@@ -36,6 +36,8 @@ so the author proposes RippleNet:
 
 # Method
 
+专注于挖掘KG中用户感兴趣的实体！！
+
 ## Input
 
 interaction matrix **Y** *and knowledge graph* **G**
