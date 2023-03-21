@@ -19,27 +19,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content=".">
+    <meta name="description" content="DHT, which transforms the edges of a graph into the nodes of a hypergraph. ENGNN, use hypergraph after DHT to propagation">
 <meta property="og:type" content="article">
-<meta property="og:title" content="KG-review">
-<meta property="og:url" content="http://example.com/2023/03/03/KG-Rec/index.html">
+<meta property="og:title" content="DHT">
+<meta property="og:url" content="http://example.com/2023/03/20/DHT/index.html">
 <meta property="og:site_name" content="Lory&#39;s Page">
-<meta property="og:description" content=".">
+<meta property="og:description" content="DHT, which transforms the edges of a graph into the nodes of a hypergraph. ENGNN, use hypergraph after DHT to propagation">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-03-03T20:46:26.000Z">
+<meta property="article:published_time" content="2023-03-20T20:46:25.000Z">
 <meta property="article:modified_time" content="2023-03-21T04:50:44.820Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2023/03/03/KG-Rec/">
+<link rel="canonical" href="http://example.com/2023/03/20/DHT/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/03/03/KG-Rec/","path":"2023/03/03/KG-Rec/","title":"KG-review"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/03/20/DHT/","path":"2023/03/20/DHT/","title":"DHT"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>KG-review | Lory's Page</title>
+<title>DHT | Lory's Page</title>
   
 
 
@@ -125,7 +125,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -138,6 +138,11 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#contribute"><span class="nav-number">2.</span> <span class="nav-text">Contribute</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#method"><span class="nav-number">3.</span> <span class="nav-text">Method</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dht-how-to-transfer-graph-to-hypergraph"><span class="nav-number">3.1.</span> <span class="nav-text">DHT： how to transfer
+graph to hypergraph</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#step1-get-origin-graph-representation"><span class="nav-number">3.1.1.</span> <span class="nav-text">Step1: Get origin graph
+representation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step-2-use-dht-to-get-hypergraph-g"><span class="nav-number">3.1.2.</span> <span class="nav-text">Step 2: Use DHT to get
+hypergraph \(G^*\)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ehgnn-an-edge-representation-learning-framework-using-dht"><span class="nav-number">3.2.</span> <span class="nav-text">EHGNN: an
+edge representation learning framework using DHT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pooling"><span class="nav-number">3.3.</span> <span class="nav-text">Pooling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#advantage"><span class="nav-number">4.</span> <span class="nav-text">Advantage</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dht"><span class="nav-number">4.1.</span> <span class="nav-text">DHT</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -183,7 +188,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/03/KG-Rec/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/20/DHT/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -196,12 +201,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="KG-review | Lory's Page">
+      <meta itemprop="name" content="DHT | Lory's Page">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          KG-review
+          DHT
         </h1>
 
         <div class="post-meta-container">
@@ -212,7 +217,7 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-03-03 20:46:26" itemprop="dateCreated datePublished" datetime="2023-03-03T20:46:26+00:00">2023-03-03</time>
+      <time title="Created: 2023-03-20 20:46:25" itemprop="dateCreated datePublished" datetime="2023-03-20T20:46:25+00:00">2023-03-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -227,11 +232,11 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/RecSys/" itemprop="url" rel="index"><span itemprop="name">RecSys</span></a>
+          <a href="/categories/GNN/" itemprop="url" rel="index"><span itemprop="name">GNN</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/RecSys/KGRec/" itemprop="url" rel="index"><span itemprop="name">KGRec</span></a>
+          <a href="/categories/GNN/EdgeLearning/" itemprop="url" rel="index"><span itemprop="name">EdgeLearning</span></a>
         </span>
     </span>
 
@@ -245,10 +250,90 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>.</p>
+        <p>DHT, which transforms the edges of a graph into the nodes of a
+hypergraph.</p>
+<p>ENGNN, use hypergraph after DHT to propagation</p>
 <span id="more"></span>
-<iframe height="800" width="60%" src="https://xmind.works/share/JMcp4hCx" frameborder="0" allowfullscreen>
-</iframe>
+<h1 id="background">Background</h1>
+<p>Before methods only capture edge information implicitly, e.g. used as
+weight.</p>
+<h1 id="contribute">Contribute</h1>
+<ol type="1">
+<li>propose DHT, Dual Hypergraph Transformation</li>
+<li>propose a novel edge representation learning scheme ENGNN by using
+DHT.</li>
+<li>propose novel edge pooling methods.</li>
+</ol>
+<h1 id="method">Method</h1>
+<h2 id="dht-how-to-transfer-graph-to-hypergraph">DHT： how to transfer
+graph to hypergraph</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230320171020430.png"
+alt="image-20230320171020430" />
+<figcaption aria-hidden="true">image-20230320171020430</figcaption>
+</figure>
+<h3 id="step1-get-origin-graph-representation">Step1: Get origin graph
+representation</h3>
+<p>Firstly, we get the initial node feature and edge feature. <span
+class="math display">\[
+node \space  feature: X\in R^{n\times d}
+\]</span></p>
+<p><span class="math display">\[
+edge\space feature: E\in R^{m\times d&#39;}
+\]</span></p>
+<p>Than we use an incidence matrix M rather than an adjacency matrix to
+represent graph structure. <span class="math display">\[
+incidence\space matrix: M\in \{0,1\}^{n\times m}
+\]</span> So the origin graph is <span class="math display">\[
+G=(X,M,E)
+\]</span></p>
+<h3 id="step-2-use-dht-to-get-hypergraph-g">Step 2: Use DHT to get
+hypergraph <span class="math inline">\(G^*\)</span></h3>
+<p>The hypergraph represent <span class="math display">\[
+G^*=(X^*,M^*,E^*)
+\]</span></p>
+<p><span class="math display">\[
+X^*=E
+\]</span></p>
+<p><span class="math display">\[
+M^*=M^T
+\]</span></p>
+<p><span class="math display">\[
+E^*=X
+\]</span></p>
+<p><span class="math display">\[
+DHT:G=(X,M,E)-&gt;G^*=(E,M^T,X)
+\]</span></p>
+<p>While DHT is a bijective transformation: <span
+class="math display">\[
+DHT:G^*=(E,M^T,X)-&gt;G=(X,M,E)
+\]</span></p>
+<h2
+id="ehgnn-an-edge-representation-learning-framework-using-dht">EHGNN: an
+edge representation learning framework using DHT</h2>
+<p><span class="math display">\[
+E^{(l+1)}=ENGNN(X^{(l)},M,E^{(l)})=GNN(DHT(X^{(l)},M,E^{(l)}))
+\]</span></p>
+<p>So ENGNN consists of DHT and GNN, while GNN can be any GNN
+function.</p>
+<p>After ENGNN, EHGNN, <span class="math inline">\(E^{(L)}\)</span> is
+returned to the original graph by applying DHT to dual hypergraph <span
+class="math inline">\(G^∗\)</span>. Then, the remaining step is how to
+make use of these edge-wise representations to finish the task.</p>
+<h2 id="pooling">Pooling</h2>
+<p>To be continue...</p>
+<h1 id="advantage">Advantage</h1>
+<h2 id="dht">DHT</h2>
+<ol type="1">
+<li>low time complexity</li>
+</ol>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230320165122363.png"
+alt="image-20230320165122363" />
+<figcaption aria-hidden="true">image-20230320165122363</figcaption>
+</figure>
 
     </div>
 
@@ -262,14 +347,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/03/02/RippleNet/" rel="prev" title="RippleNet">
-                  <i class="fa fa-chevron-left"></i> RippleNet
+                <a href="/2023/03/14/%E6%AD%A3%E5%88%99%E5%8C%96/" rel="prev" title="Regularization">
+                  <i class="fa fa-chevron-left"></i> Regularization
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/03/07/optimizer/" rel="next" title="常见优化函数">
-                  常见优化函数 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>

@@ -1,6 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>算法</title>
+    <url>/2023/02/14/Algorithm_example/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="动态规划">动态规划</h1>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">有一排深渊法师，他们的护盾值用数组 a 表示；</span><br><span class="line">你可以对深渊法师这样破盾：</span><br><span class="line">1) 用重击破盾，每消耗1MP破1点护盾</span><br><span class="line">2) 如果有两个相邻的深渊法师他们的元素不同，且护盾都不为0，你可以对他们俩使用高天之歌，消耗xMP破所有护盾</span><br><span class="line">问最少消耗的MP？</span><br><span class="line">下面输入的 els 表示深渊法师的元素，I 表示冰，W 表示水，F 表示火</span><br><span class="line"></span><br><span class="line">输入：</span><br><span class="line">a = [4, 8, 10, 2, 15, 2]</span><br><span class="line">x = 9</span><br><span class="line">els = WIFFII</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>DHT</title>
+    <url>/2023/03/20/DHT/</url>
+    <content><![CDATA[<p>DHT, which transforms the edges of a graph into the nodes of a
+hypergraph.</p>
+<p>ENGNN, use hypergraph after DHT to propagation</p>
+<span id="more"></span>
+<h1 id="background">Background</h1>
+<p>Before methods only capture edge information implicitly, e.g. used as
+weight.</p>
+<h1 id="contribute">Contribute</h1>
+<ol type="1">
+<li>propose DHT, Dual Hypergraph Transformation</li>
+<li>propose a novel edge representation learning scheme ENGNN by using
+DHT.</li>
+<li>propose novel edge pooling methods.</li>
+</ol>
+<h1 id="method">Method</h1>
+<h2 id="dht-how-to-transfer-graph-to-hypergraph">DHT： how to transfer
+graph to hypergraph</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230320171020430.png"
+alt="image-20230320171020430" />
+<figcaption aria-hidden="true">image-20230320171020430</figcaption>
+</figure>
+<h3 id="step1-get-origin-graph-representation">Step1: Get origin graph
+representation</h3>
+<p>Firstly, we get the initial node feature and edge feature. <span
+class="math display">\[
+node \space  feature: X\in R^{n\times d}
+\]</span></p>
+<p><span class="math display">\[
+edge\space feature: E\in R^{m\times d&#39;}
+\]</span></p>
+<p>Than we use an incidence matrix M rather than an adjacency matrix to
+represent graph structure. <span class="math display">\[
+incidence\space matrix: M\in \{0,1\}^{n\times m}
+\]</span> So the origin graph is <span class="math display">\[
+G=(X,M,E)
+\]</span></p>
+<h3 id="step-2-use-dht-to-get-hypergraph-g">Step 2: Use DHT to get
+hypergraph <span class="math inline">\(G^*\)</span></h3>
+<p>The hypergraph represent <span class="math display">\[
+G^*=(X^*,M^*,E^*)
+\]</span></p>
+<p><span class="math display">\[
+X^*=E
+\]</span></p>
+<p><span class="math display">\[
+M^*=M^T
+\]</span></p>
+<p><span class="math display">\[
+E^*=X
+\]</span></p>
+<p><span class="math display">\[
+DHT:G=(X,M,E)-&gt;G^*=(E,M^T,X)
+\]</span></p>
+<p>While DHT is a bijective transformation: <span
+class="math display">\[
+DHT:G^*=(E,M^T,X)-&gt;G=(X,M,E)
+\]</span></p>
+<h2
+id="ehgnn-an-edge-representation-learning-framework-using-dht">EHGNN: an
+edge representation learning framework using DHT</h2>
+<p><span class="math display">\[
+E^{(l+1)}=ENGNN(X^{(l)},M,E^{(l)})=GNN(DHT(X^{(l)},M,E^{(l)}))
+\]</span></p>
+<p>So ENGNN consists of DHT and GNN, while GNN can be any GNN
+function.</p>
+<p>After ENGNN, EHGNN, <span class="math inline">\(E^{(L)}\)</span> is
+returned to the original graph by applying DHT to dual hypergraph <span
+class="math inline">\(G^∗\)</span>. Then, the remaining step is how to
+make use of these edge-wise representations to finish the task.</p>
+<h2 id="pooling">Pooling</h2>
+<p>To be continue...</p>
+<h1 id="advantage">Advantage</h1>
+<h2 id="dht">DHT</h2>
+<ol type="1">
+<li>low time complexity</li>
+</ol>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230320165122363.png"
+alt="image-20230320165122363" />
+<figcaption aria-hidden="true">image-20230320165122363</figcaption>
+</figure>
+]]></content>
+      <categories>
+        <category>GNN</category>
+        <category>EdgeLearning</category>
+      </categories>
+  </entry>
+  <entry>
     <title>KG-review</title>
     <url>/2023/03/03/KG-Rec/</url>
     <content><![CDATA[<p>.</p>
@@ -1779,6 +1884,27 @@ alt="image-20230307201737792" />
       </categories>
   </entry>
   <entry>
+    <title>算法</title>
+    <url>/2023/02/13/algorithm/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="二叉树">二叉树</h1>
+<h2 id="完全二叉树">完全二叉树</h2>
+<ol type="1">
+<li>树的深度=一直遍历最左节点的长度</li>
+<li>左子树深度==右子树深度，左子树是全满的完全二叉树，如果左子树深度大于右子树深度，右子树是全满的完全二叉树</li>
+</ol>
+<h2 id="平衡二叉树">平衡二叉树</h2>
+<p>所有节点左右子树高度不大于1</p>
+<h1 id="字典序">字典序</h1>
+<p>就是按照字典排列顺序，英文字母按下面方式排列：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ABCDEFG HIJKLMN OPQRST UVWXYZ</span><br><span class="line">abcdefg hijklmn opqrst uvwxyz</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+  </entry>
+  <entry>
     <title>常见损失函数</title>
     <url>/2023/02/28/loss_function/</url>
     <content><![CDATA[<p>常见损失函数及常见问题</p>
@@ -2048,7 +2174,7 @@ alt="img" />为模型<strong>预测概率分布</strong>，而KL就是度量这�
     <content><![CDATA[<p>.</p>
 <span id="more"></span>
 <h1 id="常见优化函数">常见优化函数</h1>
-<h2 id="梯度下降gd">梯度下降GD</h2>
+<h2 id="梯度下降gd决定优化方向">梯度下降GD(决定优化方向)</h2>
 <p><strong>梯度下降的核心思想：负梯度方向是使函数值下降最快的方向</strong></p>
 <h3 id="批次梯度下降bgd">批次梯度下降BGD</h3>
 <figure>
@@ -2103,10 +2229,11 @@ class="math inline">\(\eta_0\)</span>的1%，k一般设为100的倍数。</p>
 <li><p>无法逃脱鞍点</p></li>
 </ol>
 <details>
-<p>在数学中，鞍点或极小值点是函数图形表面上的一个点，其正交方向上的斜率(导数)均为零(临界点)，但不是函数的局
+在数学中，鞍点或极小值点是函数图形表面上的一个点，其正交方向上的斜率(导数)均为零(临界点)，但不是函数的局
 部极值。一句话概括就是：一个不是局部极值点的驻点称为鞍点。
 *驻点：函数在一点处的一阶导数为零。
-<img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307205942585.png"></p>
+<img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307205942585.png">
+<details>
 <h3 id="min-batch-小批量梯度下降mbgd">min-batch 小批量梯度下降MBGD</h3>
 <p><strong>算法的训练过程比较快，而且也要保证最终参数训练的准确率</strong></p>
 <p>m表示一个批次的数据个数</p>
@@ -2180,6 +2307,135 @@ class="math inline">\(\eta_{global}=1,\rho=0.9,\epsilon=10^{-6}\)</span></p>
 </ol>
 <h3 id="adam">Adam</h3>
 <p>https://zhuanlan.zhihu.com/p/377968342</p>
+<p>Adam公式如下： <span class="math display">\[
+m_t:=beta_1*m_{t-1}+(1-beta_1)*g
+\]</span></p>
+<p><span class="math display">\[
+v_t:=beta_2*v_{t-1}+(1-beta_2)*g*g
+\]</span></p>
+<p><span class="math display">\[
+variable:=variable-lr_t*\frac{m_t}{\sqrt{v_t+\epsilon}}
+\]</span></p>
+<p><span
+class="math inline">\(m_t\)</span>可以理解为求历史梯度加强平均，思想来自动量方法，防止震荡。</p>
+<p><span class="math inline">\(v_t\)</span>则是用于调整lr的，即是<span
+class="math inline">\(\frac{lr}{\sqrt{v_t+\epsilon}}\)</span>,</p>
+<p>在迭代过程中，如果某一维度一直以很小的梯度进行更新，证明此方向梯度变换较为稳定，因此可以加大学习率，以较大的学习率在此维度更新，体现在公式上就是：对历史梯度平方进行一阶指数平滑后，公式2会得到一个很小的值，公式3中的自适应学习率会相对较大</p>
+<p>相反，某一维度在迭代过程中一直以很大的梯度进行更新，明此方向梯度变换较为剧烈（不稳定），因此可减小学习率，以较小的学习率在此维度更新
+体现在公式上就是：对历史梯度平方进行一阶指数平滑后，公式2则会得到一个很大的值，公式3中的自适应学习率会相对较小</p>
+<p><span
+class="math inline">\(v_t\)</span>也可以解决<strong>梯度稀疏</strong>的问题；频繁更新的梯度将会被赋予一个较小的学习率，而稀疏的梯度则会被赋予一个较大的学习率，通过上述机制，在数据分布稀疏的场景，能更好利用稀疏梯度的信息，比标准的SGD算法更有效地收敛。</p>
+<h1 id="常见优化函数问题">常见优化函数问题</h1>
+<h2
+id="sgd和adam谁收敛的比较快谁能达到全局最优解">SGD和Adam谁收敛的比较快？谁能达到全局最优解？</h2>
+<p>SGD算法没有动量的概念，SGD和Adam相比，缺点是下降速度慢，对学习率要求严格。</p>
+<p>而Adam引入了一阶动量和二阶动量，下降速度比SGD快，Adam可以自适应学习率，所以初始学习率可以很大。</p>
+<p>SGD相比Adam，更容易达到全局最优解。主要是后期Adam的学习率太低，影响了有效的收敛。</p>
+<p>我们可以前期使用Adam，后期使用SGD进一步调优。</p>
+<h2 id="adam用到二阶矩的原理是什么">adam用到二阶矩的原理是什么</h2>
+<p>引入二阶动量，根据训练轮数不同对学习率进行调整。</p>
+<p>可以看出来，公式将前面的训练梯度平方加和，在网络训练的前期，由于分母中梯度的累加（<span
+class="math inline">\(v_t\)</span>）较小，所以一开始的学习率<span
+class="math inline">\(\eta_t\)</span>比较大；随着训练后期梯度累加较大时，<span
+class="math inline">\(\eta_t\)</span>逐渐减小，而且是自适应地减小。</p>
+<p>而且如果某个维度频繁震荡梯度大，学习率就降低；如果梯度小而稳定，学习率就大。</p>
+<h2
+id="batch的大小如何选择过大的batch和过小的batch分别有什么影响">Batch的大小如何选择，过大的batch和过小的batch分别有什么影响</h2>
+<p><strong>Batch选择时尽量采用2的幂次，如8、16、32等</strong></p>
+<p>在合理范围内，增大Batch_size的<strong>好处</strong>：</p>
+<ol type="1">
+<li>提高了<strong>内存利用率</strong>以及大矩阵乘法的并行化效率。</li>
+<li>减少了跑完一次epoch(全数据集）所需要的迭代次数，加快了对于相同数据量的处理速度。</li>
+</ol>
+<p>盲目增大Batch_size的<strong>坏处</strong>：</p>
+<ol type="1">
+<li>提高了内存利用率，但是内存容量可能不足。</li>
+<li>跑完一次epoch(全数据集)所需的迭代次数减少，要想达到相同的精度，其所花费的时间大大增加，从而对参数的修正也就显得更加缓慢。</li>
+<li>Batch_size增大到一定程度，其确定的下降方向已经基本不再变化。</li>
+</ol>
+<p>Batch_size过小的<strong>影响</strong>：</p>
+<ol type="1">
+<li>训练时不稳定，可能不收敛</li>
+<li>精度可能更高。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>ML</category>
+        <category>Basic</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Regularization</title>
+    <url>/2023/03/14/%E6%AD%A3%E5%88%99%E5%8C%96/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="什么是正则化">什么是正则化</h1>
+<p>目的：防止模型过拟合</p>
+<p>原理：在损失函数上加上某些规则（限制），缩小解空间，从而减少求出过拟合解的可能性</p>
+<p>https://www.zhihu.com/question/20924039</p>
+<p>最直接的防止过拟合的方法就是减少特征数量，就是减少0范数（向量中非零元素的个数），但是0范数很难求，所以就有了1范数，2范数。</p>
+<h1 id="常见正则化">常见正则化</h1>
+<h2 id="l1正则化">l1正则化</h2>
+<p><span class="math display">\[
+l1=\lambda||\vec{w}||_1=\sum_i|w_i|
+\]</span></p>
+<p><span class="math inline">\(\lambda\)</span>控制约束程度</p>
+<p>l1不仅可以<strong>约束参数量</strong>，还可以使<strong>参数更稀疏</strong>。因为对目标函数经过优化后，一部分参数会变为0，另一部分参数为非零实值。<strong>非零实值说明这部分参数是最重要的特征</strong>。</p>
+<h3 id="稀疏原因">稀疏原因</h3>
+<p>https://blog.csdn.net/b876144622/article/details/81276818</p>
+<p>https://www.zhihu.com/question/37096933/answer/70426653</p>
+<p>0处导数突变，如果此时0+导数为正，优化时放负方向跑，0-导数为负数，优化时往正方向跑，就很容易落入0</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230314211808962.png"
+alt="image-20230314211808962" />
+<figcaption aria-hidden="true">image-20230314211808962</figcaption>
+</figure>
+<h3 id="缺点">缺点</h3>
+<p>L1正则要算绝对值，算绝对值比较麻烦；直接平方要比算绝对值来得简单，这一点上<strong>L2正则</strong>计算更加简便<strong>（优化时求导方便）</strong>。</p>
+<h2 id="l2正则化">l2正则化</h2>
+<p><span class="math display">\[
+l2=\frac{1}{2}\lambda||\vec{w}||_2^2=\sum_i|w_i|^2
+\]</span></p>
+<p>l2正则化会使部分特征<strong>趋近于0</strong>，也就达到正则化的目的了。</p>
+<p>此外，l1正则化和l2正则化也可以联合使用，这种形式也被称为“<strong>Elastic网络正则化</strong>”。</p>
+<h2 id="dropout">Dropout</h2>
+<p>在训练的时候让一定量的神经元失活，在该epoch中不参与网络训练</p>
+<h2 id="早停">早停</h2>
+<p>每一个epoch训练结束后使用<strong>验证集</strong>验证模型效果，画出训练曲线，这样就可以判断是否过拟合了。当发现网络有点过拟合了，当然就是“<strong>早停</strong>”了，可以直接停止训练了。</p>
+<h2 id="扩充数据集">扩充数据集</h2>
+<p>Augmentation，增加变化增加多样性</p>
+<h2 id="bnbatch-normalization">BN（Batch Normalization）</h2>
+<p>目的：用于解决深度网络<strong>梯度消失</strong>和<strong>梯度爆炸</strong>的问题，加速网络收敛速度。</p>
+<p>批规范化，即在模型每次随机梯度下降训练时，通过mini-batch来对每一层的输出做<strong>规范化操作</strong>，使得结果（各个维度）的<strong>均值为0</strong>，<strong>方差为1</strong>，然后在进行尺度变换和偏移。</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230316191341497.png"
+alt="image-20230316191341497" />
+<figcaption aria-hidden="true">image-20230316191341497</figcaption>
+</figure>
+<p>m是mini-batch中的数据个数。前面的散步是对input数据进行白化操作（线性），<strong>最后的“尺度变换和偏移”操作是为了让BN能够在线性和非线性之间做一个权衡</strong>，而这个偏移的参数是神经网络在训练时学出来的。</p>
+<p>经过BN操作，网络每一层的输出小值被“拉大”，大值被“缩小”，所以就有效避免了梯度消失和梯度爆炸。<strong>总而言之，BN是一个可学习、有参数（γ、β）的网络层</strong>。</p>
+<h3 id="尺度变换和偏移的作用">尺度变换和偏移的作用：</h3>
+<p>归一会影响到本层网络A所学习到的特征（比如网络中间某一层学习到特征数据本身就分布在S型激活函数的两侧，如果强制把它给归一化处理、标准差也限制在了1，把数据变换成分布于s函数的中间部分，这样就相当于这一层网络所学习到的特征分布<strong>被搞坏</strong>了）</p>
+<p>于是<strong>BN</strong>最后的“<strong>尺度变换和偏移</strong>”操作，让我们的网络可以学习恢复出原始网络所要学习的特征分布（衡量线性和非线性）</p>
+<h3 id="bn训练和测试有什么不同">BN训练和测试有什么不同</h3>
+<p>训练时，均值和方差针对一个<strong>Batch</strong>。</p>
+<p>测试时，均值和方差针对<strong>整个数据集</strong>而言。因此，在训练过程中除了正常的前向传播和反向求导之外，我们还要记录<strong>每一个Batch的均值和方差</strong>。</p>
+<h3 id="bn和ln的差别">BN和LN的差别</h3>
+<p>LN：Layer
+Normalization，LN是“横”着来的，<strong>对一个样本，经过同一层的所有神经元</strong>做<strong>归一化</strong>。LN中同层神经元输入拥有相同的均值和方差，不同的输入样本有不同的均值和方差；LN不依赖于batch的大小和输入sequence的深度，因此可以用于<strong>batchsize为1</strong>和RNN中对边长的输入sequence的normalize操作。</p>
+<p>BN：Batch
+Normalization，BN是“竖”着来的，<strong>经过一个神经元的所有样本</strong>做<strong>归一化</strong>，所以与<strong>batch
+size</strong>有关系。</p>
+<p>二者提出的目的都是为了加快模型收敛，减少训练时间。</p>
+<h2 id="bagging-和bootstrap">Bagging 和Bootstrap？</h2>
+<p><strong>Bootstrap</strong>是一种抽样方法，即随机抽取数据并将其放回。如一次抽取一个样本，然后放回样本集中，下次可能再抽取这个样本。接着将每轮未抽取的数据合并形成<strong>袋外数据集</strong>（Out
+of Bag, OOB），用于模型中的测试集。</p>
+<p><strong>Bagging算法</strong>使用<strong>Bootstrap方法</strong>从原始样本集中随机抽取样本。共提取K个轮次，得到K个独立的训练集，元素可以重复。用K个训练集训练K个模型。分类问题以结果中的多个值投票作为最终结果，回归问题以平均值作为最终结果。结果采用投票法，避免了决策树的过拟合问题。</p>
+<p><strong>Boosting</strong>是为每个训练样本设置一个权重，在下一轮分类中，误分类的样本权重较大，即每轮样本相同，但样本权重不同；对于分类器来说，分类误差小的分类器权重较大，反之则小。</p>
+<p><strong>采用模型融合的方式也可以避免过拟合</strong>。</p>
+<h1 id="常见正则化问题">常见正则化问题</h1>
 ]]></content>
       <categories>
         <category>ML</category>

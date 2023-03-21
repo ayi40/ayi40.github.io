@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307205942585.png">
 <meta property="article:published_time" content="2023-03-07T20:46:25.000Z">
-<meta property="article:modified_time" content="2023-03-13T15:35:36.464Z">
+<meta property="article:modified_time" content="2023-03-21T04:50:44.820Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307205942585.png">
@@ -140,7 +140,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E4%BC%98%E5%8C%96%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">常见优化函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8Dgd"><span class="nav-number">1.1.</span> <span class="nav-text">梯度下降GD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%B9%E6%AC%A1%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8Dbgd"><span class="nav-number">1.1.1.</span> <span class="nav-text">批次梯度下降BGD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">1.1.2.</span> <span class="nav-text">随机梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#min-batch-%E5%B0%8F%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8Dmbgd"><span class="nav-number">1.1.3.</span> <span class="nav-text">min-batch 小批量梯度下降MBGD</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E9%87%8F%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">动量方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#momentum%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">1.2.1.</span> <span class="nav-text">Momentum随机梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nesterov%E5%8A%A8%E9%87%8F%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">Nesterov动量随机梯度下降法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E5%AD%A6%E4%B9%A0%E7%8E%87%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">更新学习率方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#adagrad"><span class="nav-number">1.3.1.</span> <span class="nav-text">Adagrad</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#adadelta%E4%B8%8D%E6%98%AF%E5%BE%88%E6%87%82"><span class="nav-number">1.3.2.</span> <span class="nav-text">Adadelta(不是很懂)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rmsprop"><span class="nav-number">1.3.3.</span> <span class="nav-text">RMSProp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#adam"><span class="nav-number">1.3.4.</span> <span class="nav-text">Adam</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E4%BC%98%E5%8C%96%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">常见优化函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8Dgd%E5%86%B3%E5%AE%9A%E4%BC%98%E5%8C%96%E6%96%B9%E5%90%91"><span class="nav-number">1.1.</span> <span class="nav-text">梯度下降GD(决定优化方向)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%B9%E6%AC%A1%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8Dbgd"><span class="nav-number">1.1.1.</span> <span class="nav-text">批次梯度下降BGD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">1.1.2.</span> <span class="nav-text">随机梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#min-batch-%E5%B0%8F%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8Dmbgd"><span class="nav-number">1.1.3.</span> <span class="nav-text">min-batch 小批量梯度下降MBGD</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E9%87%8F%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">动量方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#momentum%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">1.2.1.</span> <span class="nav-text">Momentum随机梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nesterov%E5%8A%A8%E9%87%8F%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">Nesterov动量随机梯度下降法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E5%AD%A6%E4%B9%A0%E7%8E%87%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">更新学习率方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#adagrad"><span class="nav-number">1.3.1.</span> <span class="nav-text">Adagrad</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#adadelta%E4%B8%8D%E6%98%AF%E5%BE%88%E6%87%82"><span class="nav-number">1.3.2.</span> <span class="nav-text">Adadelta(不是很懂)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rmsprop"><span class="nav-number">1.3.3.</span> <span class="nav-text">RMSProp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#adam"><span class="nav-number">1.3.4.</span> <span class="nav-text">Adam</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E4%BC%98%E5%8C%96%E5%87%BD%E6%95%B0%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">常见优化函数问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sgd%E5%92%8Cadam%E8%B0%81%E6%94%B6%E6%95%9B%E7%9A%84%E6%AF%94%E8%BE%83%E5%BF%AB%E8%B0%81%E8%83%BD%E8%BE%BE%E5%88%B0%E5%85%A8%E5%B1%80%E6%9C%80%E4%BC%98%E8%A7%A3"><span class="nav-number">2.1.</span> <span class="nav-text">SGD和Adam谁收敛的比较快？谁能达到全局最优解？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adam%E7%94%A8%E5%88%B0%E4%BA%8C%E9%98%B6%E7%9F%A9%E7%9A%84%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.2.</span> <span class="nav-text">adam用到二阶矩的原理是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#batch%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E8%BF%87%E5%A4%A7%E7%9A%84batch%E5%92%8C%E8%BF%87%E5%B0%8F%E7%9A%84batch%E5%88%86%E5%88%AB%E6%9C%89%E4%BB%80%E4%B9%88%E5%BD%B1%E5%93%8D"><span class="nav-number">2.3.</span> <span class="nav-text">Batch的大小如何选择，过大的batch和过小的batch分别有什么影响</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -153,13 +153,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -222,7 +222,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-03-13 15:35:36" itemprop="dateModified" datetime="2023-03-13T15:35:36+00:00">2023-03-13</time>
+      <time title="Modified: 2023-03-21 04:50:44" itemprop="dateModified" datetime="2023-03-21T04:50:44+00:00">2023-03-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -251,7 +251,7 @@
         <p>.</p>
 <span id="more"></span>
 <h1 id="常见优化函数">常见优化函数</h1>
-<h2 id="梯度下降gd">梯度下降GD</h2>
+<h2 id="梯度下降gd决定优化方向">梯度下降GD(决定优化方向)</h2>
 <p><strong>梯度下降的核心思想：负梯度方向是使函数值下降最快的方向</strong></p>
 <h3 id="批次梯度下降bgd">批次梯度下降BGD</h3>
 <figure>
@@ -306,10 +306,11 @@ class="math inline">\(\eta_0\)</span>的1%，k一般设为100的倍数。</p>
 <li><p>无法逃脱鞍点</p></li>
 </ol>
 <details>
-<p>在数学中，鞍点或极小值点是函数图形表面上的一个点，其正交方向上的斜率(导数)均为零(临界点)，但不是函数的局
+在数学中，鞍点或极小值点是函数图形表面上的一个点，其正交方向上的斜率(导数)均为零(临界点)，但不是函数的局
 部极值。一句话概括就是：一个不是局部极值点的驻点称为鞍点。
 *驻点：函数在一点处的一阶导数为零。
-<img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307205942585.png"></p>
+<img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307205942585.png">
+<details>
 <h3 id="min-batch-小批量梯度下降mbgd">min-batch 小批量梯度下降MBGD</h3>
 <p><strong>算法的训练过程比较快，而且也要保证最终参数训练的准确率</strong></p>
 <p>m表示一个批次的数据个数</p>
@@ -383,6 +384,57 @@ class="math inline">\(\eta_{global}=1,\rho=0.9,\epsilon=10^{-6}\)</span></p>
 </ol>
 <h3 id="adam">Adam</h3>
 <p>https://zhuanlan.zhihu.com/p/377968342</p>
+<p>Adam公式如下： <span class="math display">\[
+m_t:=beta_1*m_{t-1}+(1-beta_1)*g
+\]</span></p>
+<p><span class="math display">\[
+v_t:=beta_2*v_{t-1}+(1-beta_2)*g*g
+\]</span></p>
+<p><span class="math display">\[
+variable:=variable-lr_t*\frac{m_t}{\sqrt{v_t+\epsilon}}
+\]</span></p>
+<p><span
+class="math inline">\(m_t\)</span>可以理解为求历史梯度加强平均，思想来自动量方法，防止震荡。</p>
+<p><span class="math inline">\(v_t\)</span>则是用于调整lr的，即是<span
+class="math inline">\(\frac{lr}{\sqrt{v_t+\epsilon}}\)</span>,</p>
+<p>在迭代过程中，如果某一维度一直以很小的梯度进行更新，证明此方向梯度变换较为稳定，因此可以加大学习率，以较大的学习率在此维度更新，体现在公式上就是：对历史梯度平方进行一阶指数平滑后，公式2会得到一个很小的值，公式3中的自适应学习率会相对较大</p>
+<p>相反，某一维度在迭代过程中一直以很大的梯度进行更新，明此方向梯度变换较为剧烈（不稳定），因此可减小学习率，以较小的学习率在此维度更新
+体现在公式上就是：对历史梯度平方进行一阶指数平滑后，公式2则会得到一个很大的值，公式3中的自适应学习率会相对较小</p>
+<p><span
+class="math inline">\(v_t\)</span>也可以解决<strong>梯度稀疏</strong>的问题；频繁更新的梯度将会被赋予一个较小的学习率，而稀疏的梯度则会被赋予一个较大的学习率，通过上述机制，在数据分布稀疏的场景，能更好利用稀疏梯度的信息，比标准的SGD算法更有效地收敛。</p>
+<h1 id="常见优化函数问题">常见优化函数问题</h1>
+<h2
+id="sgd和adam谁收敛的比较快谁能达到全局最优解">SGD和Adam谁收敛的比较快？谁能达到全局最优解？</h2>
+<p>SGD算法没有动量的概念，SGD和Adam相比，缺点是下降速度慢，对学习率要求严格。</p>
+<p>而Adam引入了一阶动量和二阶动量，下降速度比SGD快，Adam可以自适应学习率，所以初始学习率可以很大。</p>
+<p>SGD相比Adam，更容易达到全局最优解。主要是后期Adam的学习率太低，影响了有效的收敛。</p>
+<p>我们可以前期使用Adam，后期使用SGD进一步调优。</p>
+<h2 id="adam用到二阶矩的原理是什么">adam用到二阶矩的原理是什么</h2>
+<p>引入二阶动量，根据训练轮数不同对学习率进行调整。</p>
+<p>可以看出来，公式将前面的训练梯度平方加和，在网络训练的前期，由于分母中梯度的累加（<span
+class="math inline">\(v_t\)</span>）较小，所以一开始的学习率<span
+class="math inline">\(\eta_t\)</span>比较大；随着训练后期梯度累加较大时，<span
+class="math inline">\(\eta_t\)</span>逐渐减小，而且是自适应地减小。</p>
+<p>而且如果某个维度频繁震荡梯度大，学习率就降低；如果梯度小而稳定，学习率就大。</p>
+<h2
+id="batch的大小如何选择过大的batch和过小的batch分别有什么影响">Batch的大小如何选择，过大的batch和过小的batch分别有什么影响</h2>
+<p><strong>Batch选择时尽量采用2的幂次，如8、16、32等</strong></p>
+<p>在合理范围内，增大Batch_size的<strong>好处</strong>：</p>
+<ol type="1">
+<li>提高了<strong>内存利用率</strong>以及大矩阵乘法的并行化效率。</li>
+<li>减少了跑完一次epoch(全数据集）所需要的迭代次数，加快了对于相同数据量的处理速度。</li>
+</ol>
+<p>盲目增大Batch_size的<strong>坏处</strong>：</p>
+<ol type="1">
+<li>提高了内存利用率，但是内存容量可能不足。</li>
+<li>跑完一次epoch(全数据集)所需的迭代次数减少，要想达到相同的精度，其所花费的时间大大增加，从而对参数的修正也就显得更加缓慢。</li>
+<li>Batch_size增大到一定程度，其确定的下降方向已经基本不再变化。</li>
+</ol>
+<p>Batch_size过小的<strong>影响</strong>：</p>
+<ol type="1">
+<li>训练时不稳定，可能不收敛</li>
+<li>精度可能更高。</li>
+</ol>
 
     </div>
 
