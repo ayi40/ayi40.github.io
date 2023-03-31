@@ -27,7 +27,7 @@
 <meta property="og:description" content=".">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-02-14T20:46:26.000Z">
-<meta property="article:modified_time" content="2023-03-21T04:50:44.820Z">
+<meta property="article:modified_time" content="2023-03-31T09:14:02.619Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
 
@@ -138,7 +138,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-number">1.</span> <span class="nav-text">动态规划</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-number">1.</span> <span class="nav-text">动态规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%BE%E8%A7%84%E5%BE%8B%E9%A2%98%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">找规律题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%BE%E8%A7%84%E5%BE%8B%E5%90%8E%E6%8B%BC%E6%8E%A5"><span class="nav-number">2.1.</span> <span class="nav-text">找规律后拼接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%95%BF%E5%BA%A6%E4%B8%BAn%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">2.1.1.</span> <span class="nav-text">构建长度为n的字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%BC%E6%8E%A5mhy%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">2.1.2.</span> <span class="nav-text">拼接mhy字符串</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%BE%E8%A7%84%E5%BE%8B%E5%90%8E%E8%AE%A1%E7%AE%97"><span class="nav-number">2.2.</span> <span class="nav-text">找规律后计算</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%A1%E9%A2%98%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">审题题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E5%AD%97%E6%AF%8D%E4%BD%BF%E5%AD%97%E5%85%B8%E5%BA%8F%E5%B0%BD%E5%8F%AF%E8%83%BD%E5%A4%A7"><span class="nav-number">3.1.</span> <span class="nav-text">交换字母使字典序尽可能大</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E7%94%A8%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">寻找用例</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -151,7 +151,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -220,7 +220,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-03-21 04:50:44" itemprop="dateModified" datetime="2023-03-21T04:50:44+00:00">2023-03-21</time>
+      <time title="Modified: 2023-03-31 09:14:02" itemprop="dateModified" datetime="2023-03-31T09:14:02+00:00">2023-03-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -246,6 +246,37 @@
 <span id="more"></span>
 <h1 id="动态规划">动态规划</h1>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">有一排深渊法师，他们的护盾值用数组 a 表示；</span><br><span class="line">你可以对深渊法师这样破盾：</span><br><span class="line">1) 用重击破盾，每消耗1MP破1点护盾</span><br><span class="line">2) 如果有两个相邻的深渊法师他们的元素不同，且护盾都不为0，你可以对他们俩使用高天之歌，消耗xMP破所有护盾</span><br><span class="line">问最少消耗的MP？</span><br><span class="line">下面输入的 els 表示深渊法师的元素，I 表示冰，W 表示水，F 表示火</span><br><span class="line"></span><br><span class="line">输入：</span><br><span class="line">a = [4, 8, 10, 2, 15, 2]</span><br><span class="line">x = 9</span><br><span class="line">els = WIFFII</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dp[i]=min(dp[i-1]+a[i],dp[i-2]+x) if 能使用高天之歌 else dp[i-1]+a[i]</span><br></pre></td></tr></table></figure>
+<h1 id="找规律题目">找规律题目</h1>
+<h2 id="找规律后拼接">找规律后拼接</h2>
+<h3 id="构建长度为n的字符串">构建长度为n的字符串</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">A希望你构造一个长度为n的数组，满足以下条件：</span><br><span class="line">1. 所有元素绝对值不大于3</span><br><span class="line">2. 相邻两个元素乘积小于0，且和不为0</span><br><span class="line">3. 所有元素之和=0</span><br><span class="line">input: 2 output:no answer</span><br><span class="line">input: 3 output: -1 2 -1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">根据题目信息：</span><br><span class="line">1. 数组的元素在&#123;1,2,3&#125;里挑选</span><br><span class="line">2. 数组相邻元素一个为正一个为负，且互不相等，正号组和负号组可以互换。</span><br><span class="line">3. 正负号数值和相同，且可拼接！！！因为0+0=0</span><br><span class="line"></span><br><span class="line">考虑拼接条件：只要首尾元素不相同就可以拼接！！</span><br><span class="line"></span><br><span class="line">开始找规律以及能用于拼接的元素：</span><br><span class="line">input: 2 output:no answer</span><br><span class="line">input: 3 output: -1 3 -2（这个可以用于拼接，首位元素不同） -1 2 -1（这个不可以）</span><br><span class="line">input: 4 output: -1 2 -3 2（这个可以用于拼接，首位元素不同）</span><br><span class="line">input: 5 output: no answer</span><br><span class="line">我们发现所以大于5的数都可以由若干个3和若干个4相加得到，且3、4中有答案可以随意拼接，所以我们能利用3、4的答案拼接出n&gt;5的满足条件的数组</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="拼接mhy字符串">拼接mhy字符串</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">如果不能定义：字符串的“权重”是字符串中出现的字符种类数量，比如 mmm 权重为1，mmh 为 2，mhy 为 3</span><br><span class="line">输入：x, y, z 三个变量</span><br><span class="line">输出：一个长度为 x + y + z + 2 的字符串，这个字符串只能由 m h y 三种字符组成，这个字符串一共有 x + y + z 个长度为 3 的子串，其中有 x 个权重为 1 的子串，y 个权重为 2 的子串，z 个权重为 3 的子串。</span><br><span class="line">只用输出一种情况，若无法组成，输出-1</span><br><span class="line"></span><br><span class="line">范例输入：x = 2, y = 1, z = 1</span><br><span class="line">范例输出：mmmmhy</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 找规律，发现权重3字符串后只能接权重2或权重3的字符串，不能跟权重1；所以如果x,z&gt;0,y=0这种情况无解</span><br><span class="line">2. 我们可以先拼接权重3字符串（若有）mhymhy...</span><br><span class="line">3. 然后拼接权重2，mhymhyhyhy...；如果无权重三直接拼接权重2,hyhyh....</span><br><span class="line">4. 只剩下一个权重2没拼时，拼一个可以接权重1的权重2，mhymhyhyhyy</span><br><span class="line">5. 拼接权重1：mhymhyhyhyyyyyyy</span><br></pre></td></tr></table></figure>
+<h2 id="找规律后计算">找规律后计算</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A拿到了3元无限长字符串&#123;1,2,3；4,5,6；7,8,9；....&#125;</span><br><span class="line">其中3的倍数后用；分割，其他用逗号</span><br><span class="line">求l个字符到r个字符之间有几个逗号和分号。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 求l到r字符之间有几个逗号分号——》r前逗号分号-l前逗号分号</span><br><span class="line">2. 难点：数字为1-9时，每个数字只占1个字符，为10-99，每个数字就占两个字符了。</span><br><span class="line">	开始找规律！</span><br><span class="line">	1-9			每6个字符为一组&#123;1,2,3;&#125;			这样的组有3个</span><br><span class="line">	10-99		每9个字符为一组&#123;10,11,12;&#125;			这样的组有30个</span><br><span class="line">	100-999		每12个字符为一组&#123;100,111,112;&#125;		这样的组有300个</span><br><span class="line">	以此类推</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+<h1 id="审题题">审题题</h1>
+<h2 id="交换字母使字典序尽可能大">交换字母使字典序尽可能大</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A拿到一个仅有小写字母组成的字符串，她准备进行恰好一次操作：交换连个相邻字母，在操作结束后使字符串的字典序尽可能大。</span><br><span class="line"></span><br><span class="line">input: ba</span><br><span class="line">output: ab</span><br><span class="line">2&lt;=len(input)&lt;=200000</span><br></pre></td></tr></table></figure>
+<p>知识点：</p>
+<ol type="1">
+<li><p>字典序，就是按照字典排列顺序，英文字母按下面方式排列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ABCDEFG HIJKLMN OPQRST UVWXYZ</span><br><span class="line">abcdefg hijklmn opqrst uvwxyz</span><br></pre></td></tr></table></figure></li>
+<li><p>题目说的是<strong>恰好一次</strong>操作！！！！就算交换之后会让原来字符串字典序减小也需要进行操作！</p></li>
+</ol>
+<h1 id="寻找用例">寻找用例</h1>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。</span><br><span class="line"></span><br><span class="line">计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回 -1 。</span><br><span class="line"></span><br><span class="line">你可以认为每种硬币的数量是无限的。</span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li><p>找正例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：coins = [1, 2, 5], amount = 11</span><br><span class="line">输出：3 </span><br></pre></td></tr></table></figure></li>
+<li><p>找负例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：coins = [2], amount = 3</span><br><span class="line">输出：-1</span><br></pre></td></tr></table></figure></li>
+<li><p>找边界条件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：coins = [1], amount = 0</span><br><span class="line">输出：0</span><br></pre></td></tr></table></figure></li>
+</ol>
 
     </div>
 
