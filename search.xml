@@ -139,7 +139,7 @@ alt="image-20230320165122363" />
   <entry>
     <title>GeneralReading</title>
     <url>/2023/03/29/GeneralReading/</url>
-    <content><![CDATA[<p>MKR,RKGE,HAGERec,entity2rec</p>
+    <content><![CDATA[<p>MKR,RKGE,HAGERec,entity2rec,HAKG</p>
 <span id="more"></span>
 <h1 id="mkr">MKR</h1>
 <h2 id="framework">Framework</h2>
@@ -341,6 +341,81 @@ alt="image-20230331171032188" />
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230331171139039.png"
 alt="image-20230331171139039" />
 <figcaption aria-hidden="true">image-20230331171139039</figcaption>
+</figure>
+<h1 id="hakg">HAKG</h1>
+<h2 id="framework-4">Framework</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401160018626.png"
+alt="image-20230401160018626" />
+<figcaption aria-hidden="true">image-20230401160018626</figcaption>
+</figure>
+<ol type="1">
+<li>Subgraph Construction ：it automatically constructs the expressive
+subgraph that links the user-item pair to represent their
+connectivity;</li>
+<li>Hierarchical Attentive Subgraph Encoding ： the subgraph is further
+encoded via a hierarchical attentive embedding learning procedure, which
+first learns embeddings for entities in the subgraph with a layer-wise
+propagation mechanism, and then attentively aggregates the entity
+embeddings to derive the holistic subgraph embedding;</li>
+<li>Preference Prediction ： with the well-learned embeddings of the
+user-item pair and their subgraph connectivity, it uses non-linear
+layers to predict the user’s preference towards the item.</li>
+</ol>
+<h3 id="subgraph-construction">Subgraph Construction</h3>
+<p>path sampling and then reconstructs the subgraphs by assembling the
+sampled paths between user-item pairs</p>
+<h4 id="path-sampling">path sampling</h4>
+<p>use random walk get path from u to i and length&lt;=6, uniformly
+sample K paths</p>
+<h4 id="path-assembling">Path Assembling</h4>
+<p>just assemb the K paths</p>
+<h3 id="hierarchical-attentive-subgraph-encoding">Hierarchical attentive
+subgraph encoding</h3>
+<h4 id="entity-embedding-learning">entity embedding learning</h4>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401173559684.png"
+alt="image-20230401173559684" />
+<figcaption aria-hidden="true">image-20230401173559684</figcaption>
+</figure>
+<h5 id="embedding-initialization">Embedding Initialization</h5>
+<ol type="1">
+<li>initial</li>
+<li><span class="math inline">\(e_h^{(0)}=MLP(e_h \space concatenation
+\space t_h)\)</span></li>
+</ol>
+<h5 id="semantics-propagation">Semantics Propagation</h5>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401173656033.png"
+alt="image-20230401173656033" />
+<figcaption aria-hidden="true">image-20230401173656033</figcaption>
+</figure>
+<h5 id="semantics-aggregation">Semantics Aggregation</h5>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401173801411.png"
+alt="image-20230401173801411" />
+<figcaption aria-hidden="true">image-20230401173801411</figcaption>
+</figure>
+<p>final entity embedding is <span
+class="math inline">\(e_h^{(L)}\)</span></p>
+<p>constitute an entity embedding matrix H(u,i) for the whole subgraph
+:</p>
+<p><span
+class="math inline">\(H_{(u,i)}=[e_1,e_2,\cdots,e_n]\)</span></p>
+<h4 id="sub-graph-embedding-learning">sub-graph embedding learning</h4>
+<p>use self-attention mechanism optimize the entities embeding of
+subgraph</p>
+<p>Than use pooling method to get subgraph embedding</p>
+<h3 id="prediction">Prediction</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401175552413.png"
+alt="image-20230401175552413" />
+<figcaption aria-hidden="true">image-20230401175552413</figcaption>
 </figure>
 ]]></content>
       <categories>
@@ -665,6 +740,9 @@ alt="image-20230223010347815" />
 <figcaption aria-hidden="true">image-20230223010347815</figcaption>
 </figure></li>
 </ol>
+<h1 id="source-code">Source code</h1>
+<h2 id="data-format">Data format</h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train_data:[[u1,interacted_item1],[u1,interacted_item2],[u2,interacted_item1]]</span><br><span class="line">train_user_dict:&#123;</span><br><span class="line">    user_id1:[interacted_item1,interacted_item2,...],</span><br><span class="line">    user_id2:[...]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>RecSys</category>
@@ -1805,6 +1883,18 @@ W_1}like^2(u_1,i_1)}\sqrt[2]{\sum_{u_2\in W_2}like^2(u_2,i_2)}}
       </categories>
   </entry>
   <entry>
+    <title>深度学习推荐系统</title>
+    <url>/2023/04/04/Recommendation-wangji/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="传统推荐技术">传统推荐技术</h1>
+]]></content>
+      <categories>
+        <category>RecSys</category>
+        <category>BasicTurtorial</category>
+      </categories>
+  </entry>
+  <entry>
     <title>RippleNet</title>
     <url>/2023/03/02/RippleNet/</url>
     <content><![CDATA[<p>.</p>
@@ -1978,27 +2068,6 @@ sense of importance in the quadratic form <strong>v</strong>
       </categories>
   </entry>
   <entry>
-    <title>算法</title>
-    <url>/2023/02/13/algorithm/</url>
-    <content><![CDATA[<p>.</p>
-<span id="more"></span>
-<h1 id="二叉树">二叉树</h1>
-<h2 id="完全二叉树">完全二叉树</h2>
-<ol type="1">
-<li>树的深度=一直遍历最左节点的长度</li>
-<li>左子树深度==右子树深度，左子树是全满的完全二叉树，如果左子树深度大于右子树深度，右子树是全满的完全二叉树</li>
-</ol>
-<h2 id="平衡二叉树">平衡二叉树</h2>
-<p>所有节点左右子树高度不大于1</p>
-<h1 id="字典序">字典序</h1>
-<p>就是按照字典排列顺序，英文字母按下面方式排列：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ABCDEFG HIJKLMN OPQRST UVWXYZ</span><br><span class="line">abcdefg hijklmn opqrst uvwxyz</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Algorithm</category>
-      </categories>
-  </entry>
-  <entry>
     <title>常见激活函数</title>
     <url>/2023/02/28/activate_function/</url>
     <content><![CDATA[<p>.</p>
@@ -2145,6 +2214,27 @@ alt="image-20230307201737792" />
       <categories>
         <category>ML</category>
         <category>Basic</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>算法</title>
+    <url>/2023/02/13/algorithm/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="二叉树">二叉树</h1>
+<h2 id="完全二叉树">完全二叉树</h2>
+<ol type="1">
+<li>树的深度=一直遍历最左节点的长度</li>
+<li>左子树深度==右子树深度，左子树是全满的完全二叉树，如果左子树深度大于右子树深度，右子树是全满的完全二叉树</li>
+</ol>
+<h2 id="平衡二叉树">平衡二叉树</h2>
+<p>所有节点左右子树高度不大于1</p>
+<h1 id="字典序">字典序</h1>
+<p>就是按照字典排列顺序，英文字母按下面方式排列：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ABCDEFG HIJKLMN OPQRST UVWXYZ</span><br><span class="line">abcdefg hijklmn opqrst uvwxyz</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
       </categories>
   </entry>
   <entry>
@@ -2609,7 +2699,7 @@ id="batch的大小如何选择过大的batch和过小的batch分别有什么影�
   </entry>
   <entry>
     <title>Regularization</title>
-    <url>/2023/03/14/%E6%AD%A3%E5%88%99%E5%8C%96/</url>
+    <url>/2023/03/14/regularization/</url>
     <content><![CDATA[<p>.</p>
 <span id="more"></span>
 <h1 id="什么是正则化">什么是正则化</h1>
@@ -2624,6 +2714,7 @@ l1=\lambda||\vec{w}||_1=\sum_i|w_i|
 \]</span></p>
 <p><span class="math inline">\(\lambda\)</span>控制约束程度</p>
 <p>l1不仅可以<strong>约束参数量</strong>，还可以使<strong>参数更稀疏</strong>。因为对目标函数经过优化后，一部分参数会变为0，另一部分参数为非零实值。<strong>非零实值说明这部分参数是最重要的特征</strong>。</p>
+<p>假设参数分布是Laplace分布。</p>
 <h3 id="稀疏原因">稀疏原因</h3>
 <p>https://blog.csdn.net/b876144622/article/details/81276818</p>
 <p>https://www.zhihu.com/question/37096933/answer/70426653</p>
@@ -2642,12 +2733,22 @@ l2=\frac{1}{2}\lambda||\vec{w}||_2^2=\sum_i|w_i|^2
 \]</span></p>
 <p>l2正则化会使部分特征<strong>趋近于0</strong>，也就达到正则化的目的了。</p>
 <p>此外，l1正则化和l2正则化也可以联合使用，这种形式也被称为“<strong>Elastic网络正则化</strong>”。</p>
+<p>假设参数分布是正态分布</p>
 <h2 id="dropout">Dropout</h2>
 <p>在训练的时候让一定量的神经元失活，在该epoch中不参与网络训练</p>
+<h3
+id="dropout训练出的参数需要乘以keep-prib使用">dropout训练出的参数需要乘以keep-prib使用</h3>
+<p>因为神经元预测的时候就不应该随机丢弃，一种”补偿“的方案就是每个dropout训练出的神经元的权重都乘以一个<strong>p</strong>，这样在“总体上”使得<strong>测试数据</strong>和<strong>训练数据</strong>是大致一样的。保证<strong>测试</strong>的时候把这个神经元的权重乘以<strong>p</strong>可以得到<strong>同样的期望</strong>。比如一个神经元的输出是<strong>x</strong>，那么在训练的时候它有<strong>p</strong>的概率参与训练，<strong>(1-p)</strong>的概率丢弃，那么它输出的期望是<img
+src="https://www.nowcoder.com/equation?tex=p%20%5Ctimes%20x%2B(1-p)%20%5Ctimes%200%20%3D%20p%20%5Ctimes%20x&amp;preview=true"
+alt="img" />。因此<strong>测试</strong>的时候把这个神经元的权重乘以<strong>p</strong>可以得到<strong>同样的期望</strong>。</p>
+<p>注：目前主流是采用inverted dropout替代dropout，inverted
+dropout不需要乘以keep-prib。它的做法是在训练阶段对执行了dropout操作的层，其输出激活值要<strong>除以keep_prob</strong>，而测试的模型不用再做任何改动。除以（1-p），让期望与不dropout相同。</p>
 <h2 id="早停">早停</h2>
 <p>每一个epoch训练结束后使用<strong>验证集</strong>验证模型效果，画出训练曲线，这样就可以判断是否过拟合了。当发现网络有点过拟合了，当然就是“<strong>早停</strong>”了，可以直接停止训练了。</p>
 <h2 id="扩充数据集">扩充数据集</h2>
 <p>Augmentation，增加变化增加多样性</p>
+<h3 id="数据增强方法">数据增强方法</h3>
+<p>数据集越大，网络泛化性能越好，所以努力扩充数据集，通过平移、翻转、旋转、放缩、随机截取、加噪声、色彩抖动等等方式。</p>
 <h2 id="bnbatch-normalization">BN（Batch Normalization）</h2>
 <p>目的：用于解决深度网络<strong>梯度消失</strong>和<strong>梯度爆炸</strong>的问题，加速网络收敛速度。</p>
 <p>批规范化，即在模型每次随机梯度下降训练时，通过mini-batch来对每一层的输出做<strong>规范化操作</strong>，使得结果（各个维度）的<strong>均值为0</strong>，<strong>方差为1</strong>，然后在进行尺度变换和偏移。</p>
@@ -2672,13 +2773,22 @@ Normalization，LN是“横”着来的，<strong>对一个样本，经过同一
 Normalization，BN是“竖”着来的，<strong>经过一个神经元的所有样本</strong>做<strong>归一化</strong>，所以与<strong>batch
 size</strong>有关系。</p>
 <p>二者提出的目的都是为了加快模型收敛，减少训练时间。</p>
+<h3 id="如何同时使用bn和dropout">如何同时使用BN和dropout</h3>
+<p>同时使用BN和Dropout会出现方差偏移的现象，原因：</p>
+<p>使用Dropout：训练的时候以<strong>概率p</strong>
+drop了一些节点，比如dropout设置为0.5，隐藏层共有6个节点，那训练的时候有3个节点的值被丢弃，而测试的时候这6个节点都被保留下来，这就导致了<strong>训练</strong>和<strong>测试</strong>的时候以该层节点为输入的下一层的神经网络节点获取的<strong>期望</strong>会有量级上的差异。为了解决这个问题，在训练时对当前dropout层的输出数据<strong>除以（1-p）</strong>，之后再输入到下一层的神经元节点，以作为失活神经元的补偿，以使得在训练时和测试时每一层的输入有大致相同的期望。</p>
+<p>但是这样使得神经元输入期望大致相同，但是方差不一样，而BN是通过均值方差计算的，所以会导致输出不正确。</p>
+<p>解决方法：</p>
+<ol type="1">
+<li>只<strong>在所有BN层的后面采用dropout层</strong>。</li>
+<li>dropout原文提出了一种高斯dropout，论文再进一步对高斯dropout进行扩展，提出了一个<strong>均匀分布Dropout</strong>，这样做带来了一个好处就是这个形式的Dropout（又称为“Uout”）对方差的偏移的敏感度降低了</li>
+</ol>
 <h2 id="bagging-和bootstrap">Bagging 和Bootstrap？</h2>
 <p><strong>Bootstrap</strong>是一种抽样方法，即随机抽取数据并将其放回。如一次抽取一个样本，然后放回样本集中，下次可能再抽取这个样本。接着将每轮未抽取的数据合并形成<strong>袋外数据集</strong>（Out
 of Bag, OOB），用于模型中的测试集。</p>
 <p><strong>Bagging算法</strong>使用<strong>Bootstrap方法</strong>从原始样本集中随机抽取样本。共提取K个轮次，得到K个独立的训练集，元素可以重复。用K个训练集训练K个模型。分类问题以结果中的多个值投票作为最终结果，回归问题以平均值作为最终结果。结果采用投票法，避免了决策树的过拟合问题。</p>
 <p><strong>Boosting</strong>是为每个训练样本设置一个权重，在下一轮分类中，误分类的样本权重较大，即每轮样本相同，但样本权重不同；对于分类器来说，分类误差小的分类器权重较大，反之则小。</p>
 <p><strong>采用模型融合的方式也可以避免过拟合</strong>。</p>
-<h1 id="常见正则化问题">常见正则化问题</h1>
 ]]></content>
       <categories>
         <category>ML</category>

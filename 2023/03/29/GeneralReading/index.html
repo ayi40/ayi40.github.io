@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="MKR,RKGE,HAGERec,entity2rec">
+    <meta name="description" content="MKR,RKGE,HAGERec,entity2rec,HAKG">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GeneralReading">
 <meta property="og:url" content="http://example.com/2023/03/29/GeneralReading/index.html">
 <meta property="og:site_name" content="Lory&#39;s Page">
-<meta property="og:description" content="MKR,RKGE,HAGERec,entity2rec">
+<meta property="og:description" content="MKR,RKGE,HAGERec,entity2rec,HAKG">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-03-29T20:46:26.000Z">
-<meta property="article:modified_time" content="2023-03-31T09:14:02.623Z">
+<meta property="article:modified_time" content="2023-04-05T04:20:07.438Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
 
@@ -140,7 +140,8 @@
         <div class="post-toc-wrap sidebar-panel">
             <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mkr"><span class="nav-number">1.</span> <span class="nav-text">MKR</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#framework"><span class="nav-number">1.1.</span> <span class="nav-text">Framework</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#loss-function"><span class="nav-number">1.2.</span> <span class="nav-text">Loss function</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rkge"><span class="nav-number">2.</span> <span class="nav-text">RKGE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#framework-1"><span class="nav-number">2.1.</span> <span class="nav-text">framework</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#semantic-path-mining"><span class="nav-number">2.1.1.</span> <span class="nav-text">Semantic Path Mining</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#encode-path"><span class="nav-number">2.1.2.</span> <span class="nav-text">Encode path</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#embedding-layer"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">Embedding layer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#attention-gated-hidden-layer"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">Attention-Gated Hidden Layer</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hagerec"><span class="nav-number">3.</span> <span class="nav-text">HAGERec</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#framework-2"><span class="nav-number">3.1.</span> <span class="nav-text">Framework</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flatten-and-embedding"><span class="nav-number">3.1.1.</span> <span class="nav-text">Flatten and embedding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gcn-learning-unit"><span class="nav-number">3.1.2.</span> <span class="nav-text">GCN learning unit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#interaction-signals-unit"><span class="nav-number">3.1.3.</span> <span class="nav-text">Interaction signals unit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#predict"><span class="nav-number">3.1.4.</span> <span class="nav-text">Predict</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#entity2rec"><span class="nav-number">4.</span> <span class="nav-text">Entity2rec</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#framework-3"><span class="nav-number">4.1.</span> <span class="nav-text">Framework</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#node2vec"><span class="nav-number">4.1.1.</span> <span class="nav-text">node2vec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#property-specific-knowledge-graph-embedding"><span class="nav-number">4.1.2.</span> <span class="nav-text">Property-specific
 knowledge graph embedding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#subgraph"><span class="nav-number">4.1.3.</span> <span class="nav-text">subgraph</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#collaborative-content-subgraphs"><span class="nav-number">4.1.3.1.</span> <span class="nav-text">Collaborative-content
-subgraphs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hybrid-subgraphs"><span class="nav-number">4.1.3.2.</span> <span class="nav-text">Hybrid subgraphs</span></a></li></ol></li></ol></li></ol></li></ol></div>
+subgraphs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hybrid-subgraphs"><span class="nav-number">4.1.3.2.</span> <span class="nav-text">Hybrid subgraphs</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hakg"><span class="nav-number">5.</span> <span class="nav-text">HAKG</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#framework-4"><span class="nav-number">5.1.</span> <span class="nav-text">Framework</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#subgraph-construction"><span class="nav-number">5.1.1.</span> <span class="nav-text">Subgraph Construction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#path-sampling"><span class="nav-number">5.1.1.1.</span> <span class="nav-text">path sampling</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#path-assembling"><span class="nav-number">5.1.1.2.</span> <span class="nav-text">Path Assembling</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hierarchical-attentive-subgraph-encoding"><span class="nav-number">5.1.2.</span> <span class="nav-text">Hierarchical attentive
+subgraph encoding</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#entity-embedding-learning"><span class="nav-number">5.1.2.1.</span> <span class="nav-text">entity embedding learning</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#embedding-initialization"><span class="nav-number">5.1.2.1.1.</span> <span class="nav-text">Embedding Initialization</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#semantics-propagation"><span class="nav-number">5.1.2.1.2.</span> <span class="nav-text">Semantics Propagation</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#semantics-aggregation"><span class="nav-number">5.1.2.1.3.</span> <span class="nav-text">Semantics Aggregation</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sub-graph-embedding-learning"><span class="nav-number">5.1.2.2.</span> <span class="nav-text">sub-graph embedding learning</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#prediction"><span class="nav-number">5.1.3.</span> <span class="nav-text">Prediction</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -153,7 +154,7 @@ subgraphs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" hr
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -222,7 +223,7 @@ subgraphs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" hr
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-03-31 09:14:02" itemprop="dateModified" datetime="2023-03-31T09:14:02+00:00">2023-03-31</time>
+      <time title="Modified: 2023-04-05 04:20:07" itemprop="dateModified" datetime="2023-04-05T04:20:07+00:00">2023-04-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -248,7 +249,7 @@ subgraphs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" hr
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>MKR,RKGE,HAGERec,entity2rec</p>
+        <p>MKR,RKGE,HAGERec,entity2rec,HAKG</p>
 <span id="more"></span>
 <h1 id="mkr">MKR</h1>
 <h2 id="framework">Framework</h2>
@@ -451,6 +452,81 @@ src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230331171139039.png
 alt="image-20230331171139039" />
 <figcaption aria-hidden="true">image-20230331171139039</figcaption>
 </figure>
+<h1 id="hakg">HAKG</h1>
+<h2 id="framework-4">Framework</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401160018626.png"
+alt="image-20230401160018626" />
+<figcaption aria-hidden="true">image-20230401160018626</figcaption>
+</figure>
+<ol type="1">
+<li>Subgraph Construction ：it automatically constructs the expressive
+subgraph that links the user-item pair to represent their
+connectivity;</li>
+<li>Hierarchical Attentive Subgraph Encoding ： the subgraph is further
+encoded via a hierarchical attentive embedding learning procedure, which
+first learns embeddings for entities in the subgraph with a layer-wise
+propagation mechanism, and then attentively aggregates the entity
+embeddings to derive the holistic subgraph embedding;</li>
+<li>Preference Prediction ： with the well-learned embeddings of the
+user-item pair and their subgraph connectivity, it uses non-linear
+layers to predict the user’s preference towards the item.</li>
+</ol>
+<h3 id="subgraph-construction">Subgraph Construction</h3>
+<p>path sampling and then reconstructs the subgraphs by assembling the
+sampled paths between user-item pairs</p>
+<h4 id="path-sampling">path sampling</h4>
+<p>use random walk get path from u to i and length&lt;=6, uniformly
+sample K paths</p>
+<h4 id="path-assembling">Path Assembling</h4>
+<p>just assemb the K paths</p>
+<h3 id="hierarchical-attentive-subgraph-encoding">Hierarchical attentive
+subgraph encoding</h3>
+<h4 id="entity-embedding-learning">entity embedding learning</h4>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401173559684.png"
+alt="image-20230401173559684" />
+<figcaption aria-hidden="true">image-20230401173559684</figcaption>
+</figure>
+<h5 id="embedding-initialization">Embedding Initialization</h5>
+<ol type="1">
+<li>initial</li>
+<li><span class="math inline">\(e_h^{(0)}=MLP(e_h \space concatenation
+\space t_h)\)</span></li>
+</ol>
+<h5 id="semantics-propagation">Semantics Propagation</h5>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401173656033.png"
+alt="image-20230401173656033" />
+<figcaption aria-hidden="true">image-20230401173656033</figcaption>
+</figure>
+<h5 id="semantics-aggregation">Semantics Aggregation</h5>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401173801411.png"
+alt="image-20230401173801411" />
+<figcaption aria-hidden="true">image-20230401173801411</figcaption>
+</figure>
+<p>final entity embedding is <span
+class="math inline">\(e_h^{(L)}\)</span></p>
+<p>constitute an entity embedding matrix H(u,i) for the whole subgraph
+:</p>
+<p><span
+class="math inline">\(H_{(u,i)}=[e_1,e_2,\cdots,e_n]\)</span></p>
+<h4 id="sub-graph-embedding-learning">sub-graph embedding learning</h4>
+<p>use self-attention mechanism optimize the entities embeding of
+subgraph</p>
+<p>Than use pooling method to get subgraph embedding</p>
+<h3 id="prediction">Prediction</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401175552413.png"
+alt="image-20230401175552413" />
+<figcaption aria-hidden="true">image-20230401175552413</figcaption>
+</figure>
 
     </div>
 
@@ -469,6 +545,9 @@ alt="image-20230331171139039" />
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2023/04/04/Recommendation-wangji/" rel="next" title="深度学习推荐系统">
+                  深度学习推荐系统 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
