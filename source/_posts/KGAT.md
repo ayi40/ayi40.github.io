@@ -238,3 +238,16 @@ KGAT outperforms the other models in most cases, especially on the two sparsest 
 2. cut attention layer and TransR layer
 
    ![image-20230223010347815](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230223010347815.png)
+
+# Source code
+
+## Data format
+
+```python
+train_data:[[u1,interacted_item1],[u1,interacted_item2],[u2,interacted_item1]]
+train_user_dict:{
+    user_id1:[interacted_item1,interacted_item2,...],
+    user_id2:[...]
+}
+```
+

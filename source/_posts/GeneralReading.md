@@ -5,7 +5,7 @@ categories:
   - [RecSys, KGRec]
 ---
 
-MKR,RKGE,HAGERec,entity2rec
+MKR,RKGE,HAGERec,entity2rec,HAKG
 
 <!-- more -->
 
@@ -172,3 +172,69 @@ $K_p^+=K_p \cup(u,feedback,i)$
 ![image-20230331171032188](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230331171032188.png)
 
 ![image-20230331171139039](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230331171139039.png)
+
+# HAKG
+
+## Framework
+
+![image-20230401160018626](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401160018626.png)
+
+1. Subgraph Construction ：it automatically constructs the expressive subgraph that links the user-item pair to represent their connectivity;
+2. Hierarchical Attentive Subgraph Encoding ： the subgraph is further encoded via a hierarchical attentive embedding learning procedure, which first learns embeddings for entities in the subgraph with a layer-wise propagation mechanism, and then attentively aggregates the entity embeddings to derive the holistic subgraph embedding; 
+3.  Preference Prediction ： with the well-learned embeddings of the user-item pair and their subgraph connectivity, it uses non-linear layers to predict the user’s preference towards the item. 
+
+### Subgraph Construction
+
+path sampling and then reconstructs the subgraphs by assembling the sampled paths between user-item pairs
+
+#### path sampling
+
+use random walk get path from u to i and length<=6, uniformly sample K paths
+
+#### Path Assembling
+
+just assemb the K paths
+
+### Hierarchical attentive subgraph encoding
+
+#### entity embedding learning
+
+![image-20230401173559684](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401173559684.png)
+
+##### Embedding Initialization
+
+1. initial
+2. $e_h^{(0)}=MLP(e_h \space concatenation \space t_h)$
+
+##### Semantics Propagation
+
+![image-20230401173656033](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401173656033.png)
+
+##### Semantics Aggregation
+
+![image-20230401173801411](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401173801411.png)
+
+final entity embedding is $e_h^{(L)}$
+
+constitute an entity embedding matrix H(u,i) for the whole subgraph :
+
+$H_{(u,i)}=[e_1,e_2,\cdots,e_n]$
+
+#### sub-graph embedding learning
+
+use self-attention mechanism optimize the entities embeding of subgraph
+
+Than use pooling method to get subgraph embedding
+
+### Prediction
+
+![image-20230401175552413](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401175552413.png)
+
+
+
+
+
+
+
+
+
