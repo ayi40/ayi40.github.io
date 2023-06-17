@@ -241,13 +241,97 @@ KGAT outperforms the other models in most cases, especially on the two sparsest 
 
 # Source code
 
-## Data format
+## DataProcess
+
+### Load data
 
 ```python
 train_data:[[u1,interacted_item1],[u1,interacted_item2],[u2,interacted_item1]]
+
 train_user_dict:{
     user_id1:[interacted_item1,interacted_item2,...],
     user_id2:[...]
 }
+
+kg_data:[[head_e,relation,tail_e],[head_e,relation,tail_e]]
+
+kg_dict:{
+    head:[(tail,relation), (tail,relation),...]
+}
+
+relation_dict:{
+    relation:[(head,tail),(head,tail),...]
+}
+```
+
+### generate the adjacency matrices and matrices after Laplacian
+
+1. regard interacted as relation 0, now the number of relations is $self.n\_relations+1$ 
+
+2. every relation $(idx)$  convert to 2 adjacency matrix (by inversing cols and rows), which representate as  2 new relations $(idx, self.n\_relations+idx)$：
+
+   ![643ED74EDA6A241DF772EA9C9435EFBD](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/643ED74EDA6A241DF772EA9C9435EFBD.png)
+
+As a result: we get adj_list, adj_r_list
+
+```
+adj_list: [adjancy matrix1, adjancy matrix2,adjancy matrix3,...]
+adj_r_list: The relation adjancy matrix Correspondento to
+			e.g.[0,self.n_relations+0,1,self.n_relations+1,2,self.n_relations+2,...]
+```
+
+Than, genarate adjancy matrix after laplacian normalization and save in self.lap_list.
+
+### Update kg dict
+
+according to the change of relation, update kg dict
+
+### Generate batch data
+
+
+
+## build_model
+
+### Placeholder definition
+
+```python
+def _build_inputs(self):
+    tf.compat.v1.disable_eager_execution()
+    # placeholder definition
+    self.users = tf.placeholder(tf.int32, shape=(None,))
+    self.pos_items = tf.placeholder(tf.int32, shape=(None,))
+    self.neg_items = tf.placeholder(tf.int32, shape=(None,))
+
+    # for knowledge graph modeling (TransD)
+    self.A_values = tf.placeholder(tf.float32, shape=[len(self.all_v_list)],
+                                   name='A_values')
+
+    self.h = tf.placeholder(tf.int32, shape=[None], name='h')
+    self.r = tf.placeholder(tf.int32, shape=[None], name='r')
+    self.pos_t = tf.placeholder(tf.int32, shape=[None], name='pos_t')
+    self.neg_t = tf.placeholder(tf.int32, shape=[None], name='neg_t')
+```
+
+
+
+### trainable weight definition
+
+```python
+def _build_weights(self):
+    all_weights = dict()
+    initializer = tf.keras.initializers.glorot_normal()
+
+    all_weights['user_embed'] = tf.Variable(initializer([self.n_users, self.emb_dim]),
+                                            name='user_embed')
+    all_weights['entity_embed'] = tf.Variable(initializer([self.n_entities,
+                                                           self.emb_dim]),
+                                                           name='entity_embed')
+
+    all_weights['relation_embed'] = tf.Variable(initializer([self.n_relations,
+                                             self.kge_dim]),name='relation_embed')
+    # E_h, E_t to E_r space
+    all_weights['trans_W'] = tf.Variable(initializer([self.n_relations, 
+                                                      self.emb_dim, self.kge_dim]))
+    self.weight_size_list = [self.emb_dim] + self.weight_size
 ```
 
