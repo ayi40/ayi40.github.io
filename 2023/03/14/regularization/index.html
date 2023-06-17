@@ -27,7 +27,7 @@
 <meta property="og:description" content=".">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-03-14T20:46:25.000Z">
-<meta property="article:modified_time" content="2023-04-05T04:20:07.442Z">
+<meta property="article:modified_time" content="2023-06-17T07:41:46.271Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
 
@@ -138,7 +138,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">什么是正则化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">常见正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#l1%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">l1正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%80%E7%96%8F%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.1.1.</span> <span class="nav-text">稀疏原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">2.1.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#l2%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-number">2.2.</span> <span class="nav-text">l2正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dropout"><span class="nav-number">2.3.</span> <span class="nav-text">Dropout</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dropout%E8%AE%AD%E7%BB%83%E5%87%BA%E7%9A%84%E5%8F%82%E6%95%B0%E9%9C%80%E8%A6%81%E4%B9%98%E4%BB%A5keep-prib%E4%BD%BF%E7%94%A8"><span class="nav-number">2.3.1.</span> <span class="nav-text">dropout训练出的参数需要乘以keep-prib使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A9%E5%81%9C"><span class="nav-number">2.4.</span> <span class="nav-text">早停</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%85%85%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">2.5.</span> <span class="nav-text">扩充数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA%E6%96%B9%E6%B3%95"><span class="nav-number">2.5.1.</span> <span class="nav-text">数据增强方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bnbatch-normalization"><span class="nav-number">2.6.</span> <span class="nav-text">BN（Batch Normalization）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%BA%E5%BA%A6%E5%8F%98%E6%8D%A2%E5%92%8C%E5%81%8F%E7%A7%BB%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">2.6.1.</span> <span class="nav-text">尺度变换和偏移的作用：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bn%E8%AE%AD%E7%BB%83%E5%92%8C%E6%B5%8B%E8%AF%95%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C"><span class="nav-number">2.6.2.</span> <span class="nav-text">BN训练和测试有什么不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bn%E5%92%8Cln%E7%9A%84%E5%B7%AE%E5%88%AB"><span class="nav-number">2.6.3.</span> <span class="nav-text">BN和LN的差别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8bn%E5%92%8Cdropout"><span class="nav-number">2.6.4.</span> <span class="nav-text">如何同时使用BN和dropout</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bagging-%E5%92%8Cbootstrap"><span class="nav-number">2.7.</span> <span class="nav-text">Bagging 和Bootstrap？</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">什么是正则化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">常见正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#l1%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">l1正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%80%E7%96%8F%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.1.1.</span> <span class="nav-text">稀疏原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">2.1.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#l2%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-number">2.2.</span> <span class="nav-text">l2正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dropout"><span class="nav-number">2.3.</span> <span class="nav-text">Dropout</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dropout%E8%AE%AD%E7%BB%83%E5%87%BA%E7%9A%84%E5%8F%82%E6%95%B0%E9%9C%80%E8%A6%81%E4%B9%98%E4%BB%A5keep-prib%E4%BD%BF%E7%94%A8"><span class="nav-number">2.3.1.</span> <span class="nav-text">dropout训练出的参数需要乘以keep-prib使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A9%E5%81%9C"><span class="nav-number">2.4.</span> <span class="nav-text">早停</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%85%85%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">2.5.</span> <span class="nav-text">扩充数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA%E6%96%B9%E6%B3%95"><span class="nav-number">2.5.1.</span> <span class="nav-text">数据增强方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bnbatch-normalization"><span class="nav-number">2.6.</span> <span class="nav-text">BN（Batch Normalization）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%BA%E5%BA%A6%E5%8F%98%E6%8D%A2%E5%92%8C%E5%81%8F%E7%A7%BB%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">2.6.1.</span> <span class="nav-text">尺度变换和偏移的作用：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bn%E8%AE%AD%E7%BB%83%E5%92%8C%E6%B5%8B%E8%AF%95%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C"><span class="nav-number">2.6.2.</span> <span class="nav-text">BN训练和测试有什么不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bn%E5%92%8Cln%E7%9A%84%E5%B7%AE%E5%88%AB"><span class="nav-number">2.6.3.</span> <span class="nav-text">BN和LN的差别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8bn%E5%92%8Cdropout"><span class="nav-number">2.6.4.</span> <span class="nav-text">如何同时使用BN和dropout</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bagging-%E5%92%8Cbootstrap"><span class="nav-number">2.7.</span> <span class="nav-text">Bagging 和Bootstrap？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%85%B1%E4%BA%AB"><span class="nav-number">2.8.</span> <span class="nav-text">参数共享</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%A0%87%E5%87%86%E5%8C%96"><span class="nav-number">2.9.</span> <span class="nav-text">数据标准化</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -151,13 +151,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -220,7 +220,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-04-05 04:20:07" itemprop="dateModified" datetime="2023-04-05T04:20:07+00:00">2023-04-05</time>
+      <time title="Modified: 2023-06-17 07:41:46" itemprop="dateModified" datetime="2023-06-17T07:41:46+00:00">2023-06-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -250,9 +250,15 @@
 <span id="more"></span>
 <h1 id="什么是正则化">什么是正则化</h1>
 <p>目的：防止模型过拟合</p>
-<p>原理：在损失函数上加上某些规则（限制），缩小解空间，从而减少求出过拟合解的可能性</p>
+<p>原理：正则化通过在损失函数中<strong>引入惩罚项来限制模型的复杂度</strong>，以防止模型过度拟合训练数据。惩罚项会在优化过程中对模型的参数进行调整，以平衡模型的拟合能力和泛化能力。</p>
 <p>https://www.zhihu.com/question/20924039</p>
 <p>最直接的防止过拟合的方法就是减少特征数量，就是减少0范数（向量中非零元素的个数），但是0范数很难求，所以就有了1范数，2范数。</p>
+<p>作用：</p>
+<ol type="1">
+<li>防止过拟合</li>
+<li>特征选择：l1正则化</li>
+<li>改善模型稳定性</li>
+</ol>
 <h1 id="常见正则化">常见正则化</h1>
 <h2 id="l1正则化">l1正则化</h2>
 <p><span class="math display">\[
@@ -272,7 +278,16 @@ alt="image-20230314211808962" />
 <figcaption aria-hidden="true">image-20230314211808962</figcaption>
 </figure>
 <h3 id="缺点">缺点</h3>
-<p>L1正则要算绝对值，算绝对值比较麻烦；直接平方要比算绝对值来得简单，这一点上<strong>L2正则</strong>计算更加简便<strong>（优化时求导方便）</strong>。</p>
+<ul>
+<li>非光滑性：L1
+正则化的正则化项是参数的绝对值之和，这导致目标函数在参数为零时不可导。这使得优化过程变得更加困难，特别是在使用梯度下降等基于梯度的优化算法时。在参数为零附近，梯度不连续，可能导致优化过程出现问题。</li>
+<li>多重共线性：当特征之间存在高度相关性（多重共线性）时，L1
+正则化倾向于选择其中一个特征，而忽略其他相关特征。这可能导致模型的解释性下降，因为被忽略的相关特征可能包含有用的信息。相比之下，L2
+正则化对相关特征的惩罚更均衡，可以保留更多相关特征的权重。</li>
+<li>不适用于高维问题：在高维问题中，特征数量远远大于样本数量时，L1
+正则化可能不太适用。由于参数空间的维度过高，L1
+正则化可能无法准确地选择特征，导致过拟合或选择不稳定的特征子集。</li>
+</ul>
 <h2 id="l2正则化">l2正则化</h2>
 <p><span class="math display">\[
 l2=\frac{1}{2}\lambda||\vec{w}||_2^2=\sum_i|w_i|^2
@@ -288,7 +303,7 @@ id="dropout训练出的参数需要乘以keep-prib使用">dropout训练出的参
 src="https://www.nowcoder.com/equation?tex=p%20%5Ctimes%20x%2B(1-p)%20%5Ctimes%200%20%3D%20p%20%5Ctimes%20x&amp;preview=true"
 alt="img" />。因此<strong>测试</strong>的时候把这个神经元的权重乘以<strong>p</strong>可以得到<strong>同样的期望</strong>。</p>
 <p>注：目前主流是采用inverted dropout替代dropout，inverted
-dropout不需要乘以keep-prib。它的做法是在训练阶段对执行了dropout操作的层，其输出激活值要<strong>除以keep_prob</strong>，而测试的模型不用再做任何改动。除以（1-p），让期望与不dropout相同。</p>
+dropout不需要乘以keep-prib。它的做法是在训练阶段对执行了dropout操作的层，其输出激活值要<strong>除以keep_prib</strong>，而测试的模型不用再做任何改动。除以（1-p），让期望与不dropout相同。</p>
 <h2 id="早停">早停</h2>
 <p>每一个epoch训练结束后使用<strong>验证集</strong>验证模型效果，画出训练曲线，这样就可以判断是否过拟合了。当发现网络有点过拟合了，当然就是“<strong>早停</strong>”了，可以直接停止训练了。</p>
 <h2 id="扩充数据集">扩充数据集</h2>
@@ -335,6 +350,16 @@ of Bag, OOB），用于模型中的测试集。</p>
 <p><strong>Bagging算法</strong>使用<strong>Bootstrap方法</strong>从原始样本集中随机抽取样本。共提取K个轮次，得到K个独立的训练集，元素可以重复。用K个训练集训练K个模型。分类问题以结果中的多个值投票作为最终结果，回归问题以平均值作为最终结果。结果采用投票法，避免了决策树的过拟合问题。</p>
 <p><strong>Boosting</strong>是为每个训练样本设置一个权重，在下一轮分类中，误分类的样本权重较大，即每轮样本相同，但样本权重不同；对于分类器来说，分类误差小的分类器权重较大，反之则小。</p>
 <p><strong>采用模型融合的方式也可以避免过拟合</strong>。</p>
+<h2 id="参数共享">参数共享</h2>
+<p>参数共享是一种在神经网络中常用的正则化方法，特别适用于卷积神经网络（CNN）。通过在神经网络的不同层之间共享参数，可以减少模型的参数数量，提高模型的效率和泛化能力。</p>
+<h2 id="数据标准化">数据标准化</h2>
+<p>数据标准化是对数据进行预处理的一种方式，将数据按特征进行缩放，使得每个特征的均值为
+0，标准差为
+1。这有助于使不同特征之间的尺度一致，提高模型的收敛速度和性能。</p>
+<ul>
+<li>z-score</li>
+<li>min-max</li>
+</ul>
 
     </div>
 

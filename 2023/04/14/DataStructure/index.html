@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Complexity Linear structures Tree structures Other common data structures Search algorithms Sorting algorithms">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Data Structure and algorithms">
+<meta property="og:url" content="http://example.com/2023/04/14/DataStructure/index.html">
+<meta property="og:site_name" content="Lory&#39;s Page">
+<meta property="og:description" content="Complexity Linear structures Tree structures Other common data structures Search algorithms Sorting algorithms">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-14T20:46:25.000Z">
+<meta property="article:modified_time" content="2023-06-17T07:41:46.271Z">
+<meta property="article:author" content="Lory">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/04/14/DataStructure/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/04/14/DataStructure/","path":"2023/04/14/DataStructure/","title":"Data Structure and algorithms"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Data Structure and algorithms | Lory's Page</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Lory's Page</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#complexity"><span class="nav-number">1.</span> <span class="nav-text">Complexity</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#array"><span class="nav-number">2.</span> <span class="nav-text">Array</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#array-operation"><span class="nav-number">2.1.</span> <span class="nav-text">Array Operation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#insertion-on"><span class="nav-number">2.1.1.</span> <span class="nav-text">Insertion O(n)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deletion-on"><span class="nav-number">2.1.2.</span> <span class="nav-text">Deletion O(n)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#searching-in-a-sorted-array"><span class="nav-number">2.1.3.</span> <span class="nav-text">Searching in a sorted array</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#linear-search"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">Linear search</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#binary-search-ologn"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">Binary search O(logn)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sorting-array"><span class="nav-number">2.1.4.</span> <span class="nav-text">Sorting array</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stack"><span class="nav-number">3.</span> <span class="nav-text">Stack</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#stack-operation"><span class="nav-number">3.1.</span> <span class="nav-text">Stack Operation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#implementation"><span class="nav-number">3.2.</span> <span class="nav-text">Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#array-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">Array</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#push-o1"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">Push() O(1)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pop-o1"><span class="nav-number">3.2.1.2.</span> <span class="nav-text">Pop() O(1)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#top-o1"><span class="nav-number">3.2.1.3.</span> <span class="nav-text">Top() O(1)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isempty-o1"><span class="nav-number">3.2.1.4.</span> <span class="nav-text">isEmpty() O(1)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#search-on"><span class="nav-number">3.2.1.5.</span> <span class="nav-text">Search O(n)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#use-stack-implements-a-simple-calculator"><span class="nav-number">3.3.</span> <span class="nav-text">Use stack implements a
+simple calculator</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#queue"><span class="nav-number">4.</span> <span class="nav-text">Queue</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#operation"><span class="nav-number">4.1.</span> <span class="nav-text">Operation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#implementation-1"><span class="nav-number">4.2.</span> <span class="nav-text">Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#array-1-1"><span class="nav-number">4.2.1.</span> <span class="nav-text">Array 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#array-2"><span class="nav-number">4.2.2.</span> <span class="nav-text">Array 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#array-3--circular-queue"><span class="nav-number">4.2.3.</span> <span class="nav-text">Array 3 -Circular queue</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#algorithm-implement"><span class="nav-number">4.2.3.1.</span> <span class="nav-text">algorithm implement</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#enqueue"><span class="nav-number">4.2.3.1.1.</span> <span class="nav-text">Enqueue</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dequeue"><span class="nav-number">4.2.3.1.2.</span> <span class="nav-text">Dequeue</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#isfull-and-isempty"><span class="nav-number">4.2.3.1.3.</span> <span class="nav-text">isFull and isEmpty</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linked-list"><span class="nav-number">5.</span> <span class="nav-text">Linked List</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#initial"><span class="nav-number">5.1.</span> <span class="nav-text">Initial</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#operation-1"><span class="nav-number">5.2.</span> <span class="nav-text">Operation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hash-table"><span class="nav-number">6.</span> <span class="nav-text">Hash table</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#implement-of-adt"><span class="nav-number">6.1.</span> <span class="nav-text">implement of ADT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#array-3"><span class="nav-number">6.1.1.</span> <span class="nav-text">array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#large-array"><span class="nav-number">6.1.2.</span> <span class="nav-text">Large array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hash-table-1"><span class="nav-number">6.1.3.</span> <span class="nav-text">Hash table</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#collision-solution"><span class="nav-number">6.1.3.1.</span> <span class="nav-text">Collision solution</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#chaining"><span class="nav-number">6.1.3.1.1.</span> <span class="nav-text">Chaining</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#use-a-linked-list"><span class="nav-number">6.1.3.1.1.1.</span> <span class="nav-text">use a linked list</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#load-factor"><span class="nav-number">6.1.3.1.1.2.</span> <span class="nav-text">load factor</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#cost"><span class="nav-number">6.1.3.1.1.3.</span> <span class="nav-text">cost</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#opening-addressing-probing"><span class="nav-number">6.1.3.1.2.</span> <span class="nav-text">Opening addressing: probing</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#insert"><span class="nav-number">6.1.3.1.2.1.</span> <span class="nav-text">Insert</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#search"><span class="nav-number">6.1.3.1.2.2.</span> <span class="nav-text">Search</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#delete"><span class="nav-number">6.1.3.1.2.3.</span> <span class="nav-text">Delete</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#load-factor-1"><span class="nav-number">6.1.3.1.2.4.</span> <span class="nav-text">Load factor</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#probing-type"><span class="nav-number">6.1.3.1.2.5.</span> <span class="nav-text">probing type</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#string-key"><span class="nav-number">6.1.4.</span> <span class="nav-text">string key</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tree"><span class="nav-number">7.</span> <span class="nav-text">Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#definition"><span class="nav-number">7.1.</span> <span class="nav-text">Definition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#binary-tree"><span class="nav-number">7.2.</span> <span class="nav-text">Binary Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#full-binary-tree"><span class="nav-number">7.2.1.</span> <span class="nav-text">Full Binary Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#complete-binary-tree"><span class="nav-number">7.2.2.</span> <span class="nav-text">Complete Binary Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#perfect-binary-tree"><span class="nav-number">7.2.3.</span> <span class="nav-text">Perfect Binary Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#binary-search-tree"><span class="nav-number">7.2.4.</span> <span class="nav-text">Binary Search Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#search-operation"><span class="nav-number">7.2.4.1.</span> <span class="nav-text">Search Operation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#insert-1"><span class="nav-number">7.2.4.2.</span> <span class="nav-text">Insert</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find-minimun"><span class="nav-number">7.2.4.3.</span> <span class="nav-text">find minimun</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deletion-in-bst"><span class="nav-number">7.2.4.4.</span> <span class="nav-text">Deletion in BST</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tree-traversal"><span class="nav-number">7.2.5.</span> <span class="nav-text">Tree Traversal</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#depth-first-tree-traversal"><span class="nav-number">7.2.5.1.</span> <span class="nav-text">Depth-first Tree Traversal</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#implement-stack"><span class="nav-number">7.2.5.1.1.</span> <span class="nav-text">implement: stack</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#preorder-%E5%89%8D%E5%BA%8F"><span class="nav-number">7.2.5.1.1.1.</span> <span class="nav-text">preorder 前序</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#postorder-%E5%90%8E%E5%BA%8F"><span class="nav-number">7.2.5.1.1.2.</span> <span class="nav-text">postorder 后序</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#inorder-%E4%B8%AD%E5%BA%8F"><span class="nav-number">7.2.5.1.1.3.</span> <span class="nav-text">inorder 中序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#breadth-first-tree-traversal"><span class="nav-number">7.2.5.2.</span> <span class="nav-text">Breadth-first Tree Traversal</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#implement-queue"><span class="nav-number">7.2.5.2.1.</span> <span class="nav-text">implement: queue</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sorting"><span class="nav-number">8.</span> <span class="nav-text">Sorting</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#selection-sort"><span class="nav-number">8.1.</span> <span class="nav-text">Selection sort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#insertion-sort"><span class="nav-number">8.2.</span> <span class="nav-text">Insertion Sort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#merge-sort"><span class="nav-number">8.3.</span> <span class="nav-text">Merge Sort</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#merge-function---on"><span class="nav-number">8.3.1.</span> <span class="nav-text">Merge function - O(n)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#quick-sort"><span class="nav-number">8.4.</span> <span class="nav-text">Quick Sort</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lory</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/14/DataStructure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lory">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lory's Page">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Data Structure and algorithms | Lory's Page">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Data Structure and algorithms
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-14 20:46:25" itemprop="dateCreated datePublished" datetime="2023-04-14T20:46:25+00:00">2023-04-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-06-17 07:41:46" itemprop="dateModified" datetime="2023-06-17T07:41:46+00:00">2023-06-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/DS/" itemprop="url" rel="index"><span itemprop="name">DS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <ol type="1">
+<li>Complexity</li>
+<li>Linear structures</li>
+<li>Tree structures</li>
+<li>Other common data structures</li>
+<li>Search algorithms</li>
+<li>Sorting algorithms</li>
+</ol>
+<span id="more"></span>
+<h1 id="complexity">Complexity</h1>
+<h1 id="array">Array</h1>
+<p>fixed length, indexable, should shift after insertions and
+deletions</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230419185630699.png"
+alt="image-20230419185630699" />
+<figcaption aria-hidden="true">image-20230419185630699</figcaption>
+</figure>
+<h2 id="array-operation">Array Operation</h2>
+<h3 id="insertion-on">Insertion O(n)</h3>
+<ol type="1">
+<li>insert an element in the specified index</li>
+<li>shift the subsequent item to the right</li>
+</ol>
+<h3 id="deletion-on">Deletion O(n)</h3>
+<ol type="1">
+<li>delete the specified element</li>
+<li>shift the subsequent item to the left</li>
+</ol>
+<h3 id="searching-in-a-sorted-array">Searching in a sorted array</h3>
+<h4 id="linear-search">Linear search</h4>
+<p>Best case-O(1)</p>
+<p>Worst case-O(n)</p>
+<p>Average case-O(n/2)-&gt;O(n)</p>
+<h4 id="binary-search-ologn">Binary search O(logn)</h4>
+<h3 id="sorting-array">Sorting array</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230419191311851.png"
+alt="image-20230419191311851" />
+<figcaption aria-hidden="true">image-20230419191311851</figcaption>
+</figure>
+<h1 id="stack">Stack</h1>
+<p>Last In First Out</p>
+<h2 id="stack-operation">Stack Operation</h2>
+<p>Push(S,x): insert x to the top of the stack S</p>
+<p>Pop(S): extract the top of the stack S</p>
+<p>Top(s): return the topmost element of stack S without removing it</p>
+<p>isEmpty(s): return whether the stack S is empty</p>
+<h2 id="implementation">Implementation</h2>
+<h3 id="array-1">Array</h3>
+<h4 id="push-o1">Push() O(1)</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if s.top=s.len</span><br><span class="line">	error &#x27;full&#x27;</span><br><span class="line">else</span><br><span class="line">	s.top=s.top+1</span><br><span class="line">	s[s.top]=x</span><br></pre></td></tr></table></figure>
+<h4 id="pop-o1">Pop() O(1)</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if isEmpty(s)</span><br><span class="line">	error &#x27;empty&#x27;</span><br><span class="line">else</span><br><span class="line">	s.top=s.top-1</span><br><span class="line">	return s[s.top+1]</span><br></pre></td></tr></table></figure>
+<h4 id="top-o1">Top() O(1)</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if isEmpty(s)</span><br><span class="line">	error &#x27;empty&#x27;</span><br><span class="line">else</span><br><span class="line">	return s[s.top]</span><br></pre></td></tr></table></figure>
+<h4 id="isempty-o1">isEmpty() O(1)</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if s.len=0</span><br><span class="line">	return true</span><br><span class="line">else</span><br><span class="line">	return false</span><br></pre></td></tr></table></figure>
+<h4 id="search-on">Search O(n)</h4>
+<h2 id="use-stack-implements-a-simple-calculator">Use stack implements a
+simple calculator</h2>
+<ol type="1">
+<li>transfer to postfix notation</li>
+</ol>
+<p>3-2-1&gt;&gt;32-1-</p>
+<p>3-2*1&gt;&gt;321*-</p>
+<ol start="2" type="1">
+<li>use stack to calculate</li>
+</ol>
+<p>3-2-1&gt;&gt;32-1-</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">push(3)</span><br><span class="line">push(2)</span><br><span class="line">Meet(-);Pop;Pop;Push(3-2=1)</span><br><span class="line">Push(1)</span><br><span class="line">Meet(-);Pop;Pop;Push(1-1=0)</span><br></pre></td></tr></table></figure>
+<ol start="3" type="1">
+<li>exercise</li>
+</ol>
+<p>10 + (44 − 1) * 3 + 9 / 2</p>
+<p>((1 - 2) - 5) + (6 / 5)</p>
+<p>(((22 / 7) + 4) * (6 - 2))</p>
+<h1 id="queue">Queue</h1>
+<p>First In First Out</p>
+<h2 id="operation">Operation</h2>
+<p>Enqueue(Q,x): put an element x at the end of queue Q</p>
+<p>Dequeue(Q): extract the first element from queue Q</p>
+<h2 id="implementation-1">Implementation</h2>
+<h3 id="array-1-1">Array 1</h3>
+<p>Enqueue in the tail -O(1)</p>
+<p>Dequeue in the position0 -O(n)</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230419194745117.png"
+alt="image-20230419194745117" />
+<figcaption aria-hidden="true">image-20230419194745117</figcaption>
+</figure>
+<h3 id="array-2">Array 2</h3>
+<p>Enqueue in the position0 -O(n)</p>
+<p>Dequeue in the tail -O(1)</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230419195104009.png"
+alt="image-20230419195104009" />
+<figcaption aria-hidden="true">image-20230419195104009</figcaption>
+</figure>
+<h3 id="array-3--circular-queue">Array 3 -Circular queue</h3>
+<p>Enqueue: O(1)</p>
+<p>Dequeue: O(1)</p>
+<p>Peeking (get the front item without removing it) O(1)</p>
+<p>isFull: O(1)</p>
+<p>isEmpty: O(1)</p>
+<p>search: O(n)</p>
+<h4 id="algorithm-implement">algorithm implement</h4>
+<p>Data members:</p>
+<p>• Q: an array of items • Q.len: length of array • Q.front: position
+of the front item • Q.rear: rear item position + 1 (not an item)</p>
+<h5 id="enqueue">Enqueue</h5>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if isFull(Q)</span><br><span class="line">	error &#x27;full&#x27;</span><br><span class="line">else</span><br><span class="line">	Q[Q.rear] = x</span><br><span class="line">	if Q.rear==Q.len:</span><br><span class="line">		Q.rear=1</span><br><span class="line">	else</span><br><span class="line">		Q.rear=Q.rear+1</span><br></pre></td></tr></table></figure>
+<h5 id="dequeue">Dequeue</h5>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if isEmpty(W)</span><br><span class="line">	error &#x27;Empty&#x27;</span><br><span class="line">else</span><br><span class="line">	x=Q[Q.front]</span><br><span class="line">	if Q.front==Q.len</span><br><span class="line">		Q.front=1</span><br><span class="line">	else</span><br><span class="line">		Q.front=Q.front+1</span><br></pre></td></tr></table></figure>
+<h5 id="isfull-and-isempty">isFull and isEmpty</h5>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230419201711632.png"
+alt="image-20230419201711632" />
+<figcaption aria-hidden="true">image-20230419201711632</figcaption>
+</figure>
+<h1 id="linked-list">Linked List</h1>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230420110345241.png"
+alt="image-20230420110345241" />
+<figcaption aria-hidden="true">image-20230420110345241</figcaption>
+</figure>
+<p>Node: An object containing data and pointer(s) Pointer: Reference to
+another node Head: The first node in a linked list Tail: The last node
+in a linked list</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230420112447328.png"
+alt="image-20230420112447328" />
+<figcaption aria-hidden="true">image-20230420112447328</figcaption>
+</figure>
+<p>No limited to size</p>
+<p>require more space per element</p>
+<h2 id="initial">Initial</h2>
+<p>...</p>
+<h2 id="operation-1">Operation</h2>
+<ol type="1">
+<li><p>print</p></li>
+<li><p>insert</p></li>
+<li><p>Delete</p></li>
+</ol>
+<h1 id="hash-table">Hash table</h1>
+<p>Dictionary ADT</p>
+<p>key:value</p>
+<h2 id="implement-of-adt">implement of ADT</h2>
+<h3 id="array-3">array</h3>
+<p>Space usage: O(n)</p>
+<p>Search usage: O(n)</p>
+<table>
+<thead>
+<tr class="header">
+<th>Array index</th>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>3</td>
+<td>Coffee</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>15</td>
+<td>Bread</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>8</td>
+<td>Tea</td>
+</tr>
+</tbody>
+</table>
+<h3 id="large-array">Large array</h3>
+<p>Space usage: O(U)-max key</p>
+<p>Search usage: O(1)</p>
+<table>
+<thead>
+<tr class="header">
+<th>Array index</th>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>3</td>
+<td>Coffee</td>
+</tr>
+<tr class="odd">
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>8</td>
+<td>Tea</td>
+</tr>
+<tr class="odd">
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="even">
+<td>15</td>
+<td>15</td>
+<td>Bread</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hash-table-1">Hash table</h3>
+<p>Converts a key (of a large range) to a hash value (of a small range).
+e.g. k mod m</p>
+<p>Space usage: O(n)</p>
+<p>Search usage: O(1)</p>
+<h4 id="collision-solution">Collision solution</h4>
+<p>collision: different keys have the same hash value</p>
+<h5 id="chaining">Chaining</h5>
+<h6 id="use-a-linked-list">use a linked list</h6>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230422183421651.png"
+alt="image-20230422183421651" />
+<figcaption aria-hidden="true">image-20230422183421651</figcaption>
+</figure>
+<h6 id="load-factor">load factor</h6>
+<p><span class="math display">\[
+\lambda = \frac{n}{m}
+\]</span></p>
+<p>n is the number of keys, m is the total number of buckets.</p>
+<p>Measures how full the hash table is</p>
+<p>it is suggested to keep <span class="math inline">\(\lambda\)</span>
+&lt; 1</p>
+<h6 id="cost">cost</h6>
+<ol type="1">
+<li><p>time</p>
+<p>cost of search: O(1)+O(l), l is the length of the linked list</p>
+<p>worst case: O(1)+O(n)</p>
+<p>Average case: O(1)+O(<span
+class="math inline">\(\lambda\)</span>)</p></li>
+<li><p>space</p>
+<p>requires additional space to store the pointers in linked lists of
+entries.</p>
+<p>Worst case: n-1 additional space</p>
+<p>Average case: <span class="math inline">\(\lambda\)</span>-1
+additional space</p></li>
+</ol>
+<h5 id="opening-addressing-probing">Opening addressing: probing</h5>
+<h6 id="insert">Insert</h6>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230422185347171.png"
+alt="image-20230422185347171" />
+<figcaption aria-hidden="true">image-20230422185347171</figcaption>
+</figure>
+<h6 id="search">Search</h6>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230422185455352.png"
+alt="image-20230422185455352" />
+<figcaption aria-hidden="true">image-20230422185455352</figcaption>
+</figure>
+<h6 id="delete">Delete</h6>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230422190114349.png"
+alt="image-20230422190114349" />
+<figcaption aria-hidden="true">image-20230422190114349</figcaption>
+</figure>
+<h6 id="load-factor-1">Load factor</h6>
+<p>must <span class="math inline">\(\lambda &lt; 1\)</span></p>
+<p>How to deal with the hash table when ! becomes large?</p>
+<ol type="1">
+<li>Make a large hash table and move all elements into it.</li>
+<li>Simply add an additional hash table</li>
+</ol>
+<h6 id="probing-type">probing type</h6>
+<ol type="1">
+<li><p>Linear probing</p>
+<p><span class="math display">\[
+H(k,i) = (H_0(k) + i)\space mod \space m
+\]</span> have clustering problem, multiple keys are hashed to
+consecutive slots.</p>
+<p>performance degrade significantly when <span
+class="math inline">\(\lambda\)</span>&gt; 0.5.</p></li>
+<li><p>Quadratic probing <span class="math display">\[
+H(k,i) = (H_0(k) + a\cdot i+b\cdot i^2)\space mod \space m
+\]</span> reduces the clustering problem.</p></li>
+</ol>
+<h3 id="string-key">string key</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230422191105400.png"
+alt="image-20230422191105400" />
+<figcaption aria-hidden="true">image-20230422191105400</figcaption>
+</figure>
+<h1 id="tree">Tree</h1>
+<p>a tree is an abstract model of a hierarchical structure consists of a
+set of nodes and a set of edges.</p>
+<p>Every node except the root has exactly one parent node.</p>
+<h2 id="definition">Definition</h2>
+<ol type="1">
+<li><p>Length of a path： The number of edges in the path.</p></li>
+<li><p>The height of a node：</p>
+<p>The largest path length from that node to any leaf node (not
+including ancestors).</p>
+<p>Each leaf node has the height 0.</p></li>
+<li><p>The height of a tree: The maximum level of a node in a tree is
+the tree’s height.</p></li>
+<li><p>The depth of a node:</p>
+<p>The node's level (depth) of a node is the length of the path from
+that node to the root.</p>
+<p>The depth of the root is zero.</p></li>
+</ol>
+<h2 id="binary-tree">Binary Tree</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230424201038461.png"
+alt="image-20230424201038461" />
+<figcaption aria-hidden="true">image-20230424201038461</figcaption>
+</figure>
+<h3 id="full-binary-tree">Full Binary Tree</h3>
+<p>Every node has either 0 or 2 children.</p>
+<h3 id="complete-binary-tree">Complete Binary Tree</h3>
+<p>Every level, except the last level, is completely filled, and all
+nodes in the last level are as far left as possible (left
+justified).</p>
+<h3 id="perfect-binary-tree">Perfect Binary Tree</h3>
+<p>Every node except the leaf nodes have two children and every level is
+completely filled.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230424201302544.png"
+alt="image-20230424201302544" />
+<figcaption aria-hidden="true">image-20230424201302544</figcaption>
+</figure>
+<p>list representation: [Root, left-sub-tree, right-sub-tree]</p>
+<h3 id="binary-search-tree">Binary Search Tree</h3>
+<p>Insertion - O(h)</p>
+<p>Search - O(h)</p>
+<p>Deletion: O(h)</p>
+<p>ℎ is O(log⁡n) if tree is balanced.</p>
+<p>all is O(n) in worst case</p>
+<p>左小右大</p>
+<h4 id="search-operation">Search Operation</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Algorithm SearcℎBST(t, target)</span><br><span class="line">  Input: the BST t <span class="keyword">and</span> the target</span><br><span class="line"></span><br><span class="line">  p = t.root</span><br><span class="line">  <span class="keyword">while</span> p≠null do</span><br><span class="line">      <span class="keyword">if</span> target=p.value do</span><br><span class="line">          <span class="keyword">return</span> p</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> target&lt;p.value do</span><br><span class="line">          p=p.left</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">          p=p.rigℎt</span><br><span class="line">  end</span><br><span class="line">  <span class="keyword">return</span> null</span><br></pre></td></tr></table></figure>
+<h4 id="insert-1">Insert</h4>
+<p>average case: O(n) = logn</p>
+<p>worst case: O(n) = n</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Algorithm Insert(t, node)</span><br><span class="line">  Input: the BST t <span class="keyword">and</span> the node</span><br><span class="line"></span><br><span class="line">  p = t.root</span><br><span class="line">  <span class="keyword">if</span> p=null do</span><br><span class="line">      t.root=node</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">  end</span><br><span class="line">  <span class="keyword">while</span> p≠null do</span><br><span class="line">      prev=p</span><br><span class="line">      <span class="keyword">if</span> node.value&lt;p.value do</span><br><span class="line">          p=p.left</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> node.value&gt;p.value do</span><br><span class="line">          p=p.rigℎt</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">          <span class="keyword">return</span></span><br><span class="line">  end</span><br><span class="line">  <span class="keyword">if</span> node.value&lt;prev do</span><br><span class="line">      prev.left=node</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">      prev.rigℎt=node</span><br></pre></td></tr></table></figure>
+<h4 id="find-minimun">find minimun</h4>
+<p>O(h)-ℎ is the depth of the tree</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Algorithm Minimum(t)</span><br><span class="line">  Input: the BST t</span><br><span class="line"></span><br><span class="line">  p = t.root</span><br><span class="line">  <span class="keyword">while</span> p.left≠null do</span><br><span class="line">      p=p.left</span><br><span class="line">  end</span><br><span class="line">  <span class="keyword">return</span> p</span><br></pre></td></tr></table></figure>
+<h4 id="deletion-in-bst">Deletion in BST</h4>
+<ol type="1">
+<li><p>has no child</p>
+<p>delete the node</p></li>
+<li><p>has one child</p>
+<p>use the child to replace z</p></li>
+<li><p>has two children</p>
+<p>delete the minimum node x of the right subtree of z (i.e., x is the
+successor of z), then replace z by x.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230424233325065.png"
+alt="image-20230424233325065" />
+<figcaption aria-hidden="true">image-20230424233325065</figcaption>
+</figure></li>
+</ol>
+<h3 id="tree-traversal">Tree Traversal</h3>
+<h4 id="depth-first-tree-traversal">Depth-first Tree Traversal</h4>
+<h5 id="implement-stack">implement: stack</h5>
+<h6 id="preorder-前序">preorder 前序</h6>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">preorder</span>(<span class="params">root</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root: <span class="keyword">return</span> </span><br><span class="line">    <span class="built_in">print</span>(root.val)</span><br><span class="line">    preorder(root.left)</span><br><span class="line">    preorder(root.right)</span><br></pre></td></tr></table></figure>
+<h6 id="postorder-后序">postorder 后序</h6>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">postorder</span>(<span class="params">root</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root: <span class="keyword">return</span> </span><br><span class="line">    preorder(root.left)</span><br><span class="line">    preorder(root.right)</span><br><span class="line">    <span class="built_in">print</span>(root.val)</span><br></pre></td></tr></table></figure>
+<h6 id="inorder-中序">inorder 中序</h6>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">inorder</span>(<span class="params">root</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root: <span class="keyword">return</span> </span><br><span class="line">    preorder(root.left)</span><br><span class="line">    <span class="built_in">print</span>(root.val)</span><br><span class="line">    preorder(root.right)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+<h4 id="breadth-first-tree-traversal">Breadth-first Tree Traversal</h4>
+<h5 id="implement-queue">implement: queue</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">bfs</span>(<span class="params">root</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> roor: <span class="keyword">return</span></span><br><span class="line">    q=[root]</span><br><span class="line">    result=[]</span><br><span class="line">    <span class="keyword">while</span> q:</span><br><span class="line">        child=[]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> q:</span><br><span class="line">            result.append(i)</span><br><span class="line">            <span class="keyword">if</span> i.left:</span><br><span class="line">                child.append(i.left)</span><br><span class="line">            <span class="keyword">if</span> i.right:</span><br><span class="line">                child.append(i.right)</span><br><span class="line">        q=child</span><br><span class="line">     <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<h1 id="sorting">Sorting</h1>
+<p>stable, unstable, inplace, outplace</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230425140502996.png"
+alt="image-20230425140502996" />
+<figcaption aria-hidden="true">image-20230425140502996</figcaption>
+</figure>
+<h2 id="selection-sort">Selection sort</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230425130213964.png"
+alt="image-20230425130213964" />
+<figcaption aria-hidden="true">image-20230425130213964</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230425130244294.png"
+alt="image-20230425130244294" />
+<figcaption aria-hidden="true">image-20230425130244294</figcaption>
+</figure>
+<p>time-<span class="math inline">\(O(n^2)\)</span></p>
+<p>in-place</p>
+<p>unstable</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">selection_sort</span>(<span class="params">arr</span>):</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(arr)-<span class="number">1</span>):</span><br><span class="line">		min_ind = i</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>, <span class="built_in">len</span>(arr)):</span><br><span class="line">            <span class="keyword">if</span> arr[j]&lt;arr[min_ind]:</span><br><span class="line">                min_index=j</span><br><span class="line">        <span class="keyword">if</span> i!=min_ind:</span><br><span class="line">            arr[min_ind],arr[i]=arr[i],arr[min_index]</span><br><span class="line">    <span class="keyword">return</span> arr</span><br></pre></td></tr></table></figure>
+<h2 id="insertion-sort">Insertion Sort</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230425130404747.png"
+alt="image-20230425130404747" />
+<figcaption aria-hidden="true">image-20230425130404747</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230425130733053.png"
+alt="image-20230425130733053" />
+<figcaption aria-hidden="true">image-20230425130733053</figcaption>
+</figure>
+<p>time -<span class="math inline">\(O(n^2)\)</span></p>
+<p>in-place</p>
+<p>stable</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def insertionSort(arr): </span><br><span class="line">    for i in range(1, len(arr)): </span><br><span class="line">        key = arr[i] </span><br><span class="line">        j = i-1</span><br><span class="line">        while j &gt;=0 and key &lt; arr[j] : </span><br><span class="line">                arr[j+1] = arr[j] </span><br><span class="line">                j -= 1</span><br><span class="line">        arr[j+1] = key </span><br></pre></td></tr></table></figure>
+<h2 id="merge-sort">Merge Sort</h2>
+<p>time - O(nlogn)</p>
+<p>not in-place</p>
+<p>stable</p>
+<ol type="1">
+<li>Divide: divide the array A into two sub-arrays (L and R) of n/2
+numbers each.</li>
+<li>Conquer: sort two sub-arrays recursively.</li>
+<li>Combine: merge two sorted sub-arrays into a sorted array.</li>
+</ol>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230425141231598.png"
+alt="image-20230425141231598" />
+<figcaption aria-hidden="true">image-20230425141231598</figcaption>
+</figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Algorithm MergeSort(A, n)</span><br><span class="line">  Input: the n-size array A</span><br><span class="line"></span><br><span class="line">  if n=1 then</span><br><span class="line">      return A</span><br><span class="line">  (L,R)=A</span><br><span class="line">  L’=MergeSort(L)</span><br><span class="line">  R’=MergeSort(R)</span><br><span class="line">  return Merge(L’, R’)</span><br></pre></td></tr></table></figure>
+<h3 id="merge-function---on">Merge function - O(n)</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Algorithm Merge(A, n_A,B,n_B,C)</span><br><span class="line">  Input: the n_A-size array A and n_B-size array B</span><br><span class="line">  Output: the (n_A+n_B−1)-size array C</span><br><span class="line"></span><br><span class="line">  i=0,j=0,k=0</span><br><span class="line">  while i&lt;n_A and j&lt;n_B do</span><br><span class="line">      if A[i]≤B[j] then</span><br><span class="line">          C[k]=A[i], i=i+1</span><br><span class="line">      else</span><br><span class="line">          C[k]=B[j], j=j+1</span><br><span class="line">      end</span><br><span class="line">      k=k+1</span><br><span class="line">  end</span><br><span class="line">  if i=n_A then</span><br><span class="line">      C[k,⋯]=B[j,⋯]</span><br><span class="line">  else</span><br><span class="line">      C[k,⋯]=A[i,⋯]</span><br><span class="line">  end</span><br></pre></td></tr></table></figure>
+<h2 id="quick-sort">Quick Sort</h2>
+<p>O(nlogn)</p>
+<p>in-place</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/04/Recommendation-wangji/" rel="prev" title="深度学习推荐系统">
+                  <i class="fa fa-chevron-left"></i> 深度学习推荐系统
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/26/KR-GCN/" rel="next" title="KR-GCN">
+                  KR-GCN <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lory</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
