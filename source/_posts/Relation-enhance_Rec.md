@@ -2,16 +2,20 @@
 title: Relation-enhance Rec
 date: 2023/6/17 20:46:25
 categories:
-  - [RecSys]
+  - [RecSys, KGRec]
 ---
 
-Hypergraph knowledge graph
+relation-enhance KG
 
 <!-- more -->
 
 # RE-KGR
 
 Paper: RE-KGR: Relation-Enhanced Knowledge Graph Reasoning for Recommendation
+
+总结：
+
+把relation当做向量空间，同时考虑relation的方向性，最后基于路径概率预测
 
 ## Methodology
 

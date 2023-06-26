@@ -9,7 +9,71 @@ Hypergraph knowledge graph
 
 <!-- more -->
 
+# KHNN
 
+Paper: Knowledge-Aware Hypergraph Neural Network for Recommender Systems
+
+总结：用CKAN方法表示user和item，用hyperedge将l-hop的node全部连在一起，用（l-1）hop和l-hop concate卷积计算出l-hop节点的权重与l-hop节点相乘，再做conv最后得到该层的一维embedding，然后再aggregation
+
+## Methodology
+
+![image-20230617154902916](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617154902916.png)
+
+### Knowledge-Aware Hypergraph Construction
+
+**Initial Hyperedge Construction**
+
+use user’s interacted items to represent user u
+
+![image-20230617155650437](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617155650437.png)
+
+use items, which have been watched by the same user, to construct the initial item set of item v 
+
+![image-20230617155746509](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617155746509.png)
+
+![image-20230617155754397](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617155754397.png)
+
+**Knowledge Hyperedge Construction**
+
+让l-hop neighbor 与(l-1)-hop neighbor在相连，即所有节点被一条hyper-edge相连，主要服务于下面的neighborhood convolution
+
+![image-20230617161110960](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617161110960.png)
+
+###  **Knowledge-Aware Hypergraph Convolution**
+
+**Neighborhood Convolution**
+
+![image-20230617162200596](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617162200596.png)
+
+1. learn the transform matrix T from the entity vectors in both l-order and l-1-order hyperedges for vector permutation and weighting(entity vectors in l-order) . use 1-d conv to generate T , use another 1-d conv to aggregate the transformed vectors.
+
+   ![image-20230617162545551](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617162545551.png)
+
+   *conv*1 and *conv*2 are 1-dimension convolution but withdifffferent out channels.
+
+2. for the initial hyper-edge
+
+   ![image-20230617162625945](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617162625945.png)
+
+3. add item v information
+
+   ![image-20230617162651714](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617162651714.png)
+
+4. combine
+
+   ![image-20230617162708343](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617162708343.png)
+
+5. aggregation
+
+   ![image-20230617162731699](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617162731699.png)
+
+# LGCL
+
+Paper：Line Graph Contrastive Learning for Link Prediction
+
+## Methodology
+
+ ![image-20230617174642449](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617174642449.png)
 
 # HPR
 
@@ -63,3 +127,16 @@ the user embedding:
 predict:
 
 ![image-20230617151352536](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617151352536.png)
+
+
+
+# HypE
+
+Paper:Knowledge Hypergraphs: Extending Knowledge Graphs Beyond Binary Relations
+
+score： convolution-based embedding method for knowledge hypergraph
+
+总结：做KG图的连接预测，无GNN方法，主要是embedding计算方法。考虑到entity在triple中的i个位置，在这个位置有训练出来的filter，对embbeding进行转换，最后计算概率score，
+
+计算成本较低。
+
