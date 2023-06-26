@@ -27,7 +27,7 @@
 <meta property="og:description" content="Relation work of DHT">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-05-26T20:46:25.000Z">
-<meta property="article:modified_time" content="2023-06-17T07:41:46.271Z">
+<meta property="article:modified_time" content="2023-06-26T09:18:05.708Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
 
@@ -142,7 +142,9 @@
 Edge Text Encoding with Virtual Node Tokens</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#text-a-ware-node-representation-learning-edgeformer-n"><span class="nav-number">1.2.2.</span> <span class="nav-text">TEXT-A
 WARE NODE REPRESENTATION LEARNING (EDGEFORMER-N)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#node-aggregating-edge-representations"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">node-Aggregating Edge
 Representations</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#enhancing-edge-representations-with-the-nodes-local-network-structure"><span class="nav-number">1.2.3.</span> <span class="nav-text">Enhancing
-Edge Representations with the Node’s Local Network Structure</span></a></li></ol></li></ol></li></ol></div>
+Edge Representations with the Node’s Local Network Structure</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gratis"><span class="nav-number">2.</span> <span class="nav-text">GRATIS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#methology"><span class="nav-number">2.1.</span> <span class="nav-text">Methology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#backbone"><span class="nav-number">2.1.1.</span> <span class="nav-text">Backbone</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#graph-definition"><span class="nav-number">2.1.2.</span> <span class="nav-text">Graph Definition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#task-specific-topology-prediction"><span class="nav-number">2.1.3.</span> <span class="nav-text">Task-specific Topology
+Prediction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#multi-dimensional-edge-feature-generation"><span class="nav-number">2.1.4.</span> <span class="nav-text">Multi-dimensional
+Edge Feature Generation</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#surge"><span class="nav-number">3.</span> <span class="nav-text">SURGE</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -155,13 +157,13 @@ Edge Representations with the Node’s Local Network Structure</span></a></li></
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -224,7 +226,7 @@ Edge Representations with the Node’s Local Network Structure</span></a></li></
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-06-17 07:41:46" itemprop="dateModified" datetime="2023-06-17T07:41:46+00:00">2023-06-17</time>
+      <time title="Modified: 2023-06-26 09:18:05" itemprop="dateModified" datetime="2023-06-26T09:18:05+00:00">2023-06-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -330,6 +332,85 @@ alt="image-20230602122540378" />
 </figure>
 <p>邻居边的embedding经过一个新tranformer，获取<cls>节点的embedding，作为参加edge
 learning的虚拟节点</p>
+<h1 id="gratis">GRATIS</h1>
+<p>Paper：GRATIS: Deep Learning <strong>G</strong>raph
+<strong>R</strong>epresentation with T<strong>a</strong>sk-specifific
+<strong>T</strong>opology and Mult<strong>i</strong>-dimensional Edge
+Feature<strong>s</strong></p>
+<p>总结：计算一个全局representation-X，X经过MLP和reshape、softmax等操作变成和邻接矩阵大小相同的权重矩阵，然后得到一个edge出现的概率矩阵，概率大于一定阈值就补全边。</p>
+<p>edge用向量表示而不是一个一维数（一维权重）。</p>
+<h2 id="methology">Methology</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617164254419.png"
+alt="image-20230617164254419" />
+<figcaption aria-hidden="true">image-20230617164254419</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617164314513.png"
+alt="image-20230617164314513" />
+<figcaption aria-hidden="true">image-20230617164314513</figcaption>
+</figure>
+<h3 id="backbone">Backbone</h3>
+<p>反正就是各种方法得到一个全局表示X</p>
+<h3 id="graph-definition">Graph Definition</h3>
+<p>采用图原来的点和边</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617164457095.png"
+alt="image-20230617164457095" />
+<figcaption aria-hidden="true">image-20230617164457095</figcaption>
+</figure>
+<h3 id="task-specific-topology-prediction">Task-specific Topology
+Prediction</h3>
+<p>用X计算出一个概率矩阵</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617164752154.png"
+alt="image-20230617164752154" />
+<figcaption aria-hidden="true">image-20230617164752154</figcaption>
+</figure>
+<p>h（x）为mlp</p>
+<p>如果概率大于某个阈值，增加新边</p>
+<h3
+id="multi-dimensional-edge-feature-generation"><strong>Multi-dimensional
+Edge Feature Generation</strong></h3>
+<p>根据边两端的节点计算边</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617165302836.png"
+alt="image-20230617165302836" />
+<figcaption aria-hidden="true">image-20230617165302836</figcaption>
+</figure>
+<p><strong>VCR</strong></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617165318193.png"
+alt="image-20230617165318193" />
+<figcaption aria-hidden="true">image-20230617165318193</figcaption>
+</figure>
+<p><strong>VVR</strong></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617165420670.png"
+alt="image-20230617165420670" />
+<figcaption aria-hidden="true">image-20230617165420670</figcaption>
+</figure>
+<p>fifinally employ either a pooling layer or a fully-connected layer,
+to flatten <span class="math inline">\(F_{i,x,j}\)</span> and <span
+class="math inline">\(F_{ *j,x,i*}\)</span></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617165554284.png"
+alt="image-20230617165554284" />
+<figcaption aria-hidden="true">image-20230617165554284</figcaption>
+</figure>
+<h1 id="surge">SURGE</h1>
+<p>Paper： Knowledge-Consistent Dialogue Generation with Knowledge
+Graphs</p>
+<p>总结：在KG大图中检索与文本相关的子图，用GCN计算node
+representation，用ENGNN计算 edge representation。然后用在后面的任务</p>
 
     </div>
 

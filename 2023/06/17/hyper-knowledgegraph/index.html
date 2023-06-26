@@ -27,7 +27,7 @@
 <meta property="og:description" content="Hypergraph knowledge graph">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-06-17T20:46:25.000Z">
-<meta property="article:modified_time" content="2023-06-17T07:41:46.271Z">
+<meta property="article:modified_time" content="2023-06-26T09:18:05.712Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
 
@@ -138,7 +138,9 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hpr"><span class="nav-number">1.</span> <span class="nav-text">HPR</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#methodology"><span class="nav-number">1.1.</span> <span class="nav-text">Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hyper-graph-learning"><span class="nav-number">1.1.1.</span> <span class="nav-text">Hyper-graph learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#knowledge-graph-construction"><span class="nav-number">1.1.2.</span> <span class="nav-text">Knowledge Graph Construction</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#khnn"><span class="nav-number">1.</span> <span class="nav-text">KHNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#methodology"><span class="nav-number">1.1.</span> <span class="nav-text">Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#knowledge-aware-hypergraph-construction"><span class="nav-number">1.1.1.</span> <span class="nav-text">Knowledge-Aware
+Hypergraph Construction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#knowledge-aware-hypergraph-convolution"><span class="nav-number">1.1.2.</span> <span class="nav-text">Knowledge-Aware
+Hypergraph Convolution</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lgcl"><span class="nav-number">2.</span> <span class="nav-text">LGCL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#methodology-1"><span class="nav-number">2.1.</span> <span class="nav-text">Methodology</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hpr"><span class="nav-number">3.</span> <span class="nav-text">HPR</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#methodology-2"><span class="nav-number">3.1.</span> <span class="nav-text">Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hyper-graph-learning"><span class="nav-number">3.1.1.</span> <span class="nav-text">Hyper-graph learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#knowledge-graph-construction"><span class="nav-number">3.1.2.</span> <span class="nav-text">Knowledge Graph Construction</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hype"><span class="nav-number">4.</span> <span class="nav-text">HypE</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -151,13 +153,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -212,9 +214,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-06-17 20:46:25 / Modified: 07:41:46" itemprop="dateCreated datePublished" datetime="2023-06-17T20:46:25+00:00">2023-06-17</time>
+      <time title="Created: 2023-06-17 20:46:25" itemprop="dateCreated datePublished" datetime="2023-06-17T20:46:25+00:00">2023-06-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-06-26 09:18:05" itemprop="dateModified" datetime="2023-06-26T09:18:05+00:00">2023-06-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -242,6 +250,112 @@
     <div class="post-body" itemprop="articleBody">
         <p>Hypergraph knowledge graph</p>
 <span id="more"></span>
+<h1 id="khnn">KHNN</h1>
+<p>Paper: Knowledge-Aware Hypergraph Neural Network for Recommender
+Systems</p>
+<p>总结：用CKAN方法表示user和item，用hyperedge将l-hop的node全部连在一起，用（l-1）hop和l-hop
+concate卷积计算出l-hop节点的权重与l-hop节点相乘，再做conv最后得到该层的一维embedding，然后再aggregation</p>
+<h2 id="methodology">Methodology</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617154902916.png"
+alt="image-20230617154902916" />
+<figcaption aria-hidden="true">image-20230617154902916</figcaption>
+</figure>
+<h3 id="knowledge-aware-hypergraph-construction">Knowledge-Aware
+Hypergraph Construction</h3>
+<p><strong>Initial Hyperedge Construction</strong></p>
+<p>use user’s interacted items to represent user u</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617155650437.png"
+alt="image-20230617155650437" />
+<figcaption aria-hidden="true">image-20230617155650437</figcaption>
+</figure>
+<p>use items, which have been watched by the same user, to construct the
+initial item set of item v</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617155746509.png"
+alt="image-20230617155746509" />
+<figcaption aria-hidden="true">image-20230617155746509</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617155754397.png"
+alt="image-20230617155754397" />
+<figcaption aria-hidden="true">image-20230617155754397</figcaption>
+</figure>
+<p><strong>Knowledge Hyperedge Construction</strong></p>
+<p>让l-hop neighbor 与(l-1)-hop
+neighbor在相连，即所有节点被一条hyper-edge相连，主要服务于下面的neighborhood
+convolution</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617161110960.png"
+alt="image-20230617161110960" />
+<figcaption aria-hidden="true">image-20230617161110960</figcaption>
+</figure>
+<h3 id="knowledge-aware-hypergraph-convolution"><strong>Knowledge-Aware
+Hypergraph Convolution</strong></h3>
+<p><strong>Neighborhood Convolution</strong></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617162200596.png"
+alt="image-20230617162200596" />
+<figcaption aria-hidden="true">image-20230617162200596</figcaption>
+</figure>
+<ol type="1">
+<li><p>learn the transform matrix T from the entity vectors in both
+l-order and l-1-order hyperedges for vector permutation and
+weighting(entity vectors in l-order) . use 1-d conv to generate T , use
+another 1-d conv to aggregate the transformed vectors.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617162545551.png"
+alt="image-20230617162545551" />
+<figcaption aria-hidden="true">image-20230617162545551</figcaption>
+</figure>
+<p><em>conv</em>1 and <em>conv</em>2 are 1-dimension convolution but
+withdifffferent out channels.</p></li>
+<li><p>for the initial hyper-edge</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617162625945.png"
+alt="image-20230617162625945" />
+<figcaption aria-hidden="true">image-20230617162625945</figcaption>
+</figure></li>
+<li><p>add item v information</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617162651714.png"
+alt="image-20230617162651714" />
+<figcaption aria-hidden="true">image-20230617162651714</figcaption>
+</figure></li>
+<li><p>combine</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617162708343.png"
+alt="image-20230617162708343" />
+<figcaption aria-hidden="true">image-20230617162708343</figcaption>
+</figure></li>
+<li><p>aggregation</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617162731699.png"
+alt="image-20230617162731699" />
+<figcaption aria-hidden="true">image-20230617162731699</figcaption>
+</figure></li>
+</ol>
+<h1 id="lgcl">LGCL</h1>
+<p>Paper：Line Graph Contrastive Learning for Link Prediction</p>
+<h2 id="methodology-1">Methodology</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617174642449.png"
+alt="image-20230617174642449" />
+<figcaption aria-hidden="true">image-20230617174642449</figcaption>
+</figure>
 <h1 id="hpr">HPR</h1>
 <p>Paper: Empowering Knowledge Graph Construction with Hyper-graph for
 Personalized Recommendation</p>
@@ -250,7 +364,7 @@ preferences likes you.</p>
 <p>总结：将相似度高的user作为hyper-edge（本质上是扩展了target
 user的1-hop neighbor），通过计算user的l-hop neighbor与target
 item的相似度来计算出user的embedding</p>
-<h2 id="methodology">Methodology</h2>
+<h2 id="methodology-2">Methodology</h2>
 <p>we would like to calculate the probability of <span
 class="math inline">\(u_1\)</span> will interact with <span
 class="math inline">\(i\)</span></p>
@@ -308,6 +422,13 @@ src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617151352536.png
 alt="image-20230617151352536" />
 <figcaption aria-hidden="true">image-20230617151352536</figcaption>
 </figure>
+<h1 id="hype">HypE</h1>
+<p>Paper:Knowledge Hypergraphs: Extending Knowledge Graphs Beyond Binary
+Relations</p>
+<p>score： convolution-based embedding method for knowledge
+hypergraph</p>
+<p>总结：做KG图的连接预测，无GNN方法，主要是embedding计算方法。考虑到entity在triple中的i个位置，在这个位置有训练出来的filter，对embbeding进行转换，最后计算概率score，</p>
+<p>计算成本较低。</p>
 
     </div>
 

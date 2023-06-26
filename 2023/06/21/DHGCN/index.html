@@ -19,27 +19,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="relation-enhance KG">
+    <meta name="description" content="propose DHGCN,2HRDR">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Relation-enhance Rec">
-<meta property="og:url" content="http://example.com/2023/06/17/Relation-enhance_Rec/index.html">
+<meta property="og:title" content="DHGCN(2HRDR)">
+<meta property="og:url" content="http://example.com/2023/06/21/DHGCN/index.html">
 <meta property="og:site_name" content="Lory&#39;s Page">
-<meta property="og:description" content="relation-enhance KG">
+<meta property="og:description" content="propose DHGCN,2HRDR">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-06-17T20:46:25.000Z">
-<meta property="article:modified_time" content="2023-06-26T09:18:05.712Z">
+<meta property="og:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/IMG_0184(20230621-202928).JPG">
+<meta property="article:published_time" content="2023-06-21T20:46:25.000Z">
+<meta property="article:modified_time" content="2023-06-26T09:18:05.708Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/IMG_0184(20230621-202928).JPG">
 
 
-<link rel="canonical" href="http://example.com/2023/06/17/Relation-enhance_Rec/">
+<link rel="canonical" href="http://example.com/2023/06/21/DHGCN/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/06/17/Relation-enhance_Rec/","path":"2023/06/17/Relation-enhance_Rec/","title":"Relation-enhance Rec"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/06/21/DHGCN/","path":"2023/06/21/DHGCN/","title":"DHGCN(2HRDR)"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Relation-enhance Rec | Lory's Page</title>
+<title>DHGCN(2HRDR) | Lory's Page</title>
   
 
 
@@ -138,7 +140,8 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#re-kgr"><span class="nav-number">1.</span> <span class="nav-text">RE-KGR</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#methodology"><span class="nav-number">1.1.</span> <span class="nav-text">Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#embedding-layer"><span class="nav-number">1.1.1.</span> <span class="nav-text">Embedding Layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rgc-layer"><span class="nav-number">1.1.2.</span> <span class="nav-text">RGC Layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#local-similarity-layer"><span class="nav-number">1.1.3.</span> <span class="nav-text">Local Similarity Layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#prediction-layer"><span class="nav-number">1.1.4.</span> <span class="nav-text">Prediction Layer</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dhgcn"><span class="nav-number">2.</span> <span class="nav-text">DHGCN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hgcn"><span class="nav-number">2.1.</span> <span class="nav-text">HGCN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dhgcn-1"><span class="nav-number">2.2.</span> <span class="nav-text">DHGCN</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hrdr"><span class="nav-number">3.</span> <span class="nav-text">2HRDR</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#task-definition"><span class="nav-number">3.1.</span> <span class="nav-text">Task Definition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#method"><span class="nav-number">3.2.</span> <span class="nav-text">Method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#directed-hypergraph-retrieval-and-construction"><span class="nav-number">3.2.1.</span> <span class="nav-text">Directed
+Hypergraph Retrieval and Construction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#input-encoder"><span class="nav-number">3.2.2.</span> <span class="nav-text">Input Encoder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reasoning-over-hypergraph"><span class="nav-number">3.2.3.</span> <span class="nav-text">Reasoning over Hypergraph</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -184,7 +187,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/17/Relation-enhance_Rec/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/21/DHGCN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -197,12 +200,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Relation-enhance Rec | Lory's Page">
+      <meta itemprop="name" content="DHGCN(2HRDR) | Lory's Page">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Relation-enhance Rec
+          DHGCN(2HRDR)
         </h1>
 
         <div class="post-meta-container">
@@ -213,7 +216,7 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-06-17 20:46:25" itemprop="dateCreated datePublished" datetime="2023-06-17T20:46:25+00:00">2023-06-17</time>
+      <time title="Created: 2023-06-21 20:46:25" itemprop="dateCreated datePublished" datetime="2023-06-21T20:46:25+00:00">2023-06-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -228,11 +231,11 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/RecSys/" itemprop="url" rel="index"><span itemprop="name">RecSys</span></a>
+          <a href="/categories/GNN/" itemprop="url" rel="index"><span itemprop="name">GNN</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/RecSys/KGRec/" itemprop="url" rel="index"><span itemprop="name">KGRec</span></a>
+          <a href="/categories/GNN/hypergraph/" itemprop="url" rel="index"><span itemprop="name">hypergraph</span></a>
         </span>
     </span>
 
@@ -246,95 +249,152 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>relation-enhance KG</p>
+        <p>propose DHGCN,2HRDR</p>
 <span id="more"></span>
-<h1 id="re-kgr">RE-KGR</h1>
-<p>Paper: RE-KGR: Relation-Enhanced Knowledge Graph Reasoning for
-Recommendation</p>
-<p>总结：</p>
-<p>把relation当做向量空间，同时考虑relation的方向性，最后基于路径概率预测</p>
-<h2 id="methodology">Methodology</h2>
+<h1 id="background">Background</h1>
+<p>task:
+基于知识图谱的问答系统，在知识图谱中检索与问题相关的多个元组</p>
+<p>contribution: propose a convolutional network for directed
+hypergraph</p>
+<h1 id="dhgcn">DHGCN</h1>
+<h2 id="hgcn">HGCN</h2>
+<p>given a hypergraph <span class="math inline">\(G=(V,E,W)\)</span>, as
+well as the incidence matrix <span class="math inline">\(H\in
+R^{|V|\times |E|}\)</span></p>
+<p>the edge and vertex degrees:</p>
 <figure>
 <img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617151926949.png"
-alt="image-20230617151926949" />
-<figcaption aria-hidden="true">image-20230617151926949</figcaption>
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230621153922205.png"
+alt="image-20230621153922205" />
+<figcaption aria-hidden="true">image-20230621153922205</figcaption>
 </figure>
-<p>given a CKG</p>
-<h3 id="embedding-layer">Embedding Layer</h3>
-<p>for every entity and relation, one-hot to dense vector</p>
-<h3 id="rgc-layer">RGC Layer</h3>
-<p><strong>First-order Aggregation</strong>:</p>
-<p>project each entity t to a different semantic space conditioned to
-the relation r:</p>
+<p>while the hypergraph convolutional networks is:</p>
 <figure>
 <img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617153022663.png"
-alt="image-20230617153022663" />
-<figcaption aria-hidden="true">image-20230617153022663</figcaption>
-</figure>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617153033948.png"
-alt="image-20230617153033948" />
-<figcaption aria-hidden="true">image-20230617153033948</figcaption>
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230621155931211.png"
+alt="image-20230621155931211" />
+<figcaption aria-hidden="true">image-20230621155931211</figcaption>
 </figure>
 <figure>
 <img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617153045142.png"
-alt="image-20230617153045142" />
-<figcaption aria-hidden="true">image-20230617153045142</figcaption>
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/IMG_0183(20230621-201655).JPG"
+alt="IMG_0183(20230621-201655)" />
+<figcaption aria-hidden="true">IMG_0183(20230621-201655)</figcaption>
+</figure>
+<h2 id="dhgcn-1">DHGCN</h2>
+<p>the directed hypergraph can be denoted by two incidence matrices
+<span class="math inline">\(H^{head}\)</span> and <span
+class="math inline">\(H^{tail}\)</span></p>
+<p>the degree:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230621160733846.png"
+alt="image-20230621160733846" />
+<figcaption aria-hidden="true">image-20230621160733846</figcaption>
+</figure>
+<p>the directed hypergraph convolutional networks is:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230621160751671.png"
+alt="image-20230621160751671" />
+<figcaption aria-hidden="true">image-20230621160751671</figcaption>
+</figure>
+<p><img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/IMG_0184(20230621-202928).JPG" alt="IMG_0184(20230621-202928)" style="zoom:50%;" /></p>
+<h1 id="hrdr">2HRDR</h1>
+<h2 id="task-definition">Task Definition</h2>
+<p>given a knowledge graph <span
+class="math inline">\(K=(V,E,T)\)</span> and <span
+class="math inline">\(q=(w_1,w_2,\cdots ,w_{|q|})\)</span>.</p>
+<p>the task aims to pick the answers from <em>V</em>.</p>
+<h2 id="method">Method</h2>
+<h3 id="directed-hypergraph-retrieval-and-construction"><strong>Directed
+Hypergraph Retrieval and</strong> <strong>Construction</strong></h3>
+<p>find subgraph</p>
+<ol type="1">
+<li>obtain seed entities from the question by entity linking</li>
+<li>get the entities set within L hops to form a subgraph</li>
+<li>get <span class="math inline">\(H^{head}\)</span> and <span
+class="math inline">\(H^{tail}\)</span></li>
+</ol>
+<h3 id="input-encoder">Input Encoder</h3>
+<ol type="1">
+<li><p>apply a bi-LSTM to encode question and obtain hidden states <span
+class="math inline">\(H\in R^{|q|\times h}\)</span>,we assume
+h=d</p></li>
+<li><p>employ co-attention to learn query-aware entity
+representation</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230621170223607.png"
+alt="image-20230621170223607" />
+<figcaption aria-hidden="true">image-20230621170223607</figcaption>
+</figure></li>
+</ol>
+<h3 id="reasoning-over-hypergraph">Reasoning over Hypergraph</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230621163315446.png"
+alt="image-20230621163315446" />
+<figcaption aria-hidden="true">image-20230621163315446</figcaption>
 </figure>
 <figure>
 <img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617153143790.png"
-alt="image-20230617153143790" />
-<figcaption aria-hidden="true">image-20230617153143790</figcaption>
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230621172646592.png"
+alt="image-20230621172646592" />
+<figcaption aria-hidden="true">image-20230621172646592</figcaption>
 </figure>
-<p>Here, <span class="math inline">\(M_{r−1}\)</span>, <span
-class="math inline">\(M_r\)</span> are mapping matrices, and r and r−1
-are a pair of inverse relations,such as AuthorOf and WrittenBy.</p>
-<p><strong>High-order Aggregation</strong>:</p>
+<ol type="1">
+<li><p>Learn Relation Representation Explicitly</p>
+<ol type="1">
+<li><p>combine entity embedding and co-attention</p>
 <figure>
 <img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617153235776.png"
-alt="image-20230617153235776" />
-<figcaption aria-hidden="true">image-20230617153235776</figcaption>
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230621173702999.png"
+alt="image-20230621173702999" />
+<figcaption aria-hidden="true">image-20230621173702999</figcaption>
+</figure></li>
+<li><p>propagation</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230621173728920.png"
+alt="image-20230621173728920" />
+<figcaption aria-hidden="true">image-20230621173728920</figcaption>
+</figure></li>
+<li><p>aggregation</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230621173815550.png"
+alt="image-20230621173815550" />
+<figcaption aria-hidden="true">image-20230621173815550</figcaption>
+</figure></li>
+</ol></li>
+<li><p>Allocate Relation Weights Dynamically(dynamically allocated
+hop-by-hop)</p>
+<ol type="1">
+<li><p>use co-attention to cal <span
+class="math inline">\(R_{co\_attn}\)</span></p></li>
+<li><p>compute the weight of edge</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230621174053983.png"
+alt="image-20230621174053983" />
+<figcaption aria-hidden="true">image-20230621174053983</figcaption>
 </figure>
 <figure>
 <img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617153301643.png"
-alt="image-20230617153301643" />
-<figcaption aria-hidden="true">image-20230617153301643</figcaption>
-</figure>
-<p>Here, is the concatenation operator, and e(0) denotes initial
-embeddings.(dense connectivity)</p>
-<h3 id="local-similarity-layer">Local Similarity Layer</h3>
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230621174101797.png"
+alt="image-20230621174101797" />
+<figcaption aria-hidden="true">image-20230621174101797</figcaption>
+</figure></li>
+</ol></li>
+<li><p>Update Entity Adaptively</p>
 <figure>
 <img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617153403760.png"
-alt="image-20230617153403760" />
-<figcaption aria-hidden="true">image-20230617153403760</figcaption>
-</figure>
-<h3 id="prediction-layer">Prediction Layer</h3>
-<p>Predict Based on path:</p>
-<p>use <span class="math inline">\(P_{UIIP}={(h,r,t)|(h,r,t)\in
-G}\)</span> to describe an acyclic UIIP, the probability of the UIIP
-is:</p>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617153641218.png"
-alt="image-20230617153641218" />
-<figcaption aria-hidden="true">image-20230617153641218</figcaption>
-</figure>
-<p>we use Pui to denote all acyclic UIIPs that start and end with user u
-and item i.</p>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617153723353.png"
-alt="image-20230617153723353" />
-<figcaption aria-hidden="true">image-20230617153723353</figcaption>
-</figure>
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230621174229381.png"
+alt="image-20230621174229381" />
+<figcaption aria-hidden="true">image-20230621174229381</figcaption>
+</figure></li>
+</ol>
 
     </div>
 
@@ -348,13 +408,13 @@ alt="image-20230617153723353" />
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/06/17/hyper-knowledgegraph/" rel="prev" title="Hyper Knowledge Graph">
-                  <i class="fa fa-chevron-left"></i> Hyper Knowledge Graph
+                <a href="/2023/06/17/Relation-enhance_Rec/" rel="prev" title="Relation-enhance Rec">
+                  <i class="fa fa-chevron-left"></i> Relation-enhance Rec
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/06/21/DHGCN/" rel="next" title="DHGCN(2HRDR)">
-                  DHGCN(2HRDR) <i class="fa fa-chevron-right"></i>
+                <a href="/2023/06/24/MATHinDNN/" rel="next" title="Math in DNN">
+                  Math in DNN <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
