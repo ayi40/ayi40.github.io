@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="传统机器学习方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Traditional Machine Learning">
+<meta property="og:url" content="http://example.com/2023/07/10/TraditionalMachineLearning/index.html">
+<meta property="og:site_name" content="Lory&#39;s Page">
+<meta property="og:description" content="传统机器学习方法">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-10T20:46:28.000Z">
+<meta property="article:modified_time" content="2023-07-25T07:14:09.766Z">
+<meta property="article:author" content="Lory">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/07/10/TraditionalMachineLearning/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/07/10/TraditionalMachineLearning/","path":"2023/07/10/TraditionalMachineLearning/","title":"Traditional Machine Learning"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Traditional Machine Learning | Lory's Page</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Lory's Page</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tree"><span class="nav-number">1.</span> <span class="nav-text">Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#single-tree"><span class="nav-number">1.1.</span> <span class="nav-text">Single Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#decision-tree"><span class="nav-number">1.1.1.</span> <span class="nav-text">Decision Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#id3"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">ID3</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#entropy-%E7%86%B5"><span class="nav-number">1.1.1.1.1.</span> <span class="nav-text">Entropy-熵</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#information-gain"><span class="nav-number">1.1.1.1.2.</span> <span class="nav-text">Information Gain</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#id3%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.1.1.3.</span> <span class="nav-text">ID3缺点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c4.5"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">C4.5</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#information-gain-ratio"><span class="nav-number">1.1.1.2.1.</span> <span class="nav-text">Information Gain Ratio</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%89%AA%E6%9E%9D%E7%AD%96%E7%95%A5"><span class="nav-number">1.1.1.2.2.</span> <span class="nav-text">剪枝策略</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%A2%84%E5%89%AA%E6%9E%9D"><span class="nav-number">1.1.1.2.2.1.</span> <span class="nav-text">预剪枝</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%90%8E%E5%89%AA%E6%9E%9D"><span class="nav-number">1.1.1.2.2.2.</span> <span class="nav-text">后剪枝</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">1.1.1.2.3.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.1.2.4.</span> <span class="nav-text">缺点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cart--classification-and-regression-tree"><span class="nav-number">1.1.2.</span> <span class="nav-text">CART- classification
+and regression tree</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#classification"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Classification</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#gini%E5%80%BC"><span class="nav-number">1.1.2.1.1.</span> <span class="nav-text">Gini值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E7%B1%BB%E6%A0%91%E7%9A%84%E6%9E%84%E9%80%A0"><span class="nav-number">1.1.2.1.2.</span> <span class="nav-text">分类树的构造</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#regression"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">Regression</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#several-tree"><span class="nav-number">1.2.</span> <span class="nav-text">Several tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bagged-decision-tree"><span class="nav-number">1.2.1.</span> <span class="nav-text">Bagged Decision Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#random-forest"><span class="nav-number">1.2.2.</span> <span class="nav-text">Random Forest</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">构建随机森林</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gbdt"><span class="nav-number">1.2.3.</span> <span class="nav-text">GBDT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">算法</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lory</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/07/10/TraditionalMachineLearning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lory">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lory's Page">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Traditional Machine Learning | Lory's Page">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Traditional Machine Learning
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-07-10 20:46:28" itemprop="dateCreated datePublished" datetime="2023-07-10T20:46:28+00:00">2023-07-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-07-25 07:14:09" itemprop="dateModified" datetime="2023-07-25T07:14:09+00:00">2023-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ML/Basic/" itemprop="url" rel="index"><span itemprop="name">Basic</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>传统机器学习方法</p>
+<span id="more"></span>
+<h1 id="tree">Tree</h1>
+<h2 id="single-tree">Single Tree</h2>
+<h3 id="decision-tree">Decision Tree</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230712165541790.png"
+alt="image-20230712165541790" />
+<figcaption aria-hidden="true">image-20230712165541790</figcaption>
+</figure>
+<p>决策树重点：挑选重要的特征，越重要的特征放的越接近根节点。</p>
+<h4 id="id3">ID3</h4>
+<p>ID3算法使用Information Gain信息增益作为挑选特征指标。</p>
+<h5 id="entropy-熵">Entropy-熵</h5>
+<p>在数学与物理上，熵指混乱程度，或者说值得是变量X的自由度和不确定性。</p>
+<p>在计算机理论中，熵度量给定数据中的杂质。 <span
+class="math display">\[
+Entropy(p)=\sum_{i=1}^C-p_i*log_2(p_i)
+\]</span> c : 可能出现的种类数量</p>
+<p><span class="math inline">\(p_i\)</span>：第i类的概率</p>
+<p>熵越小，数据越纯</p>
+<p>example:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230712174626803.png"
+alt="image-20230712174626803" />
+<figcaption aria-hidden="true">image-20230712174626803</figcaption>
+</figure>
+<h5 id="information-gain">Information Gain</h5>
+<p>Information
+Gain计算拆分前后熵的变化，即用拆分特征前的熵减去拆分特征后的平均熵。
+<span class="math display">\[
+Information Gain =  Entropy(entire\_dataset)-\frac{1}{n}\sum_{i=1}^n
+Entropy(child\_dataset_i)
+\]</span>
+上面式子表示将整个数据集依照某个特征值拆分为了n个子数据集。</p>
+<p>example:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230712175543982.png"
+alt="也可以" />
+<figcaption aria-hidden="true">也可以</figcaption>
+</figure>
+<p>有的教程会写作：<strong>熵</strong>减去<strong>条件熵</strong></p>
+<p>简单认识一下条件熵就好，起码知道词是个啥子意思嘛</p>
+<p>熵是对事件结果不确定性的度量，但在知道有些条件时，不确定性会变小。这里的条件就是数据集中的特征。</p>
+<p><strong>条件熵</strong>就是已知某个特征X的情况下，事件Y的不确定性
+<span class="math display">\[
+Entropy(Y|X)=\sum_{i=1}^np_i Entropy(Y|X=x_i)
+\]</span> 就是特征X每个可能性的结果的熵乘以发生概率的求和。 <span
+class="math display">\[
+Information Gain =  Entropy(Y)- Entropy(Y|X)
+\]</span></p>
+<h5 id="id3缺点">ID3缺点</h5>
+<ol type="1">
+<li>没有剪枝策略，容易过拟合。</li>
+<li>只能用于处理离散分布的特征。</li>
+<li>没有考虑缺失值。</li>
+<li>InformationGain对可取数值数目较多的特征有所偏好，类似‘ID’的特征其信息增益接近于1。</li>
+</ol>
+<h4 id="c4.5">C4.5</h4>
+<p>使用Information Gain
+Ratio信息增益率作为挑选指标，减少因特征值类别多导致信息增益大的问题。同时引入了剪枝策略。</p>
+<h5 id="information-gain-ratio">Information Gain Ratio</h5>
+<p><span class="math display">\[
+IGR = \frac{IG(feature,dataset)}{Entropy(feature)}
+\]</span></p>
+<p>Entropy(feature):
+特征的固有值，即是特征的纯度，（之前求得都是label的熵）公式如下： <span
+class="math display">\[
+Entropy_A(dataset) = -\sum_{i=1}^np_i*log_2(p_i)
+\]</span> c : A中可能出现的种类数量</p>
+<p><span class="math inline">\(p_i\)</span>：A为第i类的概率</p>
+<p>这能解决ID3的第四个缺点，特征可能类别越多（越细致），纯度低，熵越高，分母越大</p>
+<h5 id="剪枝策略">剪枝策略</h5>
+<p>剪枝缓解决策树过拟合</p>
+<h6 id="预剪枝">预剪枝</h6>
+<p>生成决策树过程中剪枝</p>
+<ol type="1">
+<li>提前设定决策树的高度，当达到这个高度时，就停止构建决策树；</li>
+<li>当达到某节点的实例具有相同的label，也可以停止树的生长；</li>
+<li>提前设定某个阈值，当达到某个节点的样例个数小于该阈值的时候便可以停止树的生长，但这种方法的缺点是对数据量的要求较大，无法处理数据量较小的训练样例；</li>
+<li>同样是设定某个阈值，每次扩展决策树后都计算其对系统性能的增益，若小于该阈值，则让它停止生长。</li>
+</ol>
+<p>预剪枝的显著缺点是视野效果。因为剪枝是伴随着构建决策树同时进行的，构建者无法预知下一步可能会发生的事，会出现某种情况，在相同标准下，当前决策树不满足要求最开始的构建要求、构建者进行了剪枝，但实际上若进行进一步构建后、决策树又满足了要求。这种情况下，预剪枝会过早停止决策树的生长。</p>
+<p>C4.5算法常选择后剪枝的方法消除决策树的过度拟合</p>
+<h6 id="后剪枝">后剪枝</h6>
+<p>在已经生成的决策树上剪枝</p>
+<p>用递归的方式从低往上针对每一个非叶子节点，评估用一个叶子节点去代替这课子树是否有益。如果剪枝后与剪枝前相比其错误率是保持或者下降，则这棵子树就可以被替换掉。C4.5
+通过训练数据集上的错误分类数量来估算未知样本上的错误率。</p>
+<p>后剪枝决策树的欠拟合风险很小，泛化性能往往优于预剪枝决策树。但同时其训练时间会大的多。</p>
+<h5 id="优点">优点</h5>
+<ol type="1">
+<li><p>解决特征值类别多导致信息增益大的问题</p></li>
+<li><p>引入剪枝</p></li>
+<li><p>增加对连续特征值的处理：将连续特征离散化，假设 n 个样本的连续特征
+A 有 m 个取值，C4.5 将其排序并取相邻两样本值的平均数共 m-1
+个划分点，分别计算以该划分点作为二元分类点时的信息增益，并选择信息增益最大的点作为该连续特征的二元离散分类点；</p></li>
+<li><p>增加对缺失值处理：</p>
+<ol type="1">
+<li><p>在特征值缺失的情况下进行划分特征的选择？（即如何计算特征的信息增益率）</p>
+<p>C4.5
+的做法是：对于具有缺失值特征，用没有缺失的样本子集占整个数据集的比重来折算；</p></li>
+<li><p>选定该划分特征，对于缺失该特征值的样本如何处理？（即到底把这个样本划分到哪个结点里）</p>
+<p>C4.5
+的做法是：将样本同时划分到所有子节点。不过要调整样本的权重值，其实也就是以不同概率划分到不同节点中。</p></li>
+</ol></li>
+</ol>
+<h5 id="缺点">缺点</h5>
+<ol type="1">
+<li>依然不能处理回归问题</li>
+<li>使用的熵模型拥有大量耗时的对数运算，连续值还有排序运算；</li>
+<li>用的是多叉树，用二叉树效率更高；</li>
+<li>在构造树的过程中，对数值属性值需要按照其大小进行排序，从中选择一个分割点，所以只适合于能够驻留于内存的数据集，当训练集大得无法在内存容纳时，程序无法运行。</li>
+</ol>
+<h3 id="cart--classification-and-regression-tree">CART- classification
+and regression tree</h3>
+<p>CART是决策树的延伸，也可以看作特殊的决策树。他建立起来的是二叉树，而不是多叉树。</p>
+<p>可以不仅可以解决分类问题，还可以觉得回归问题</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230717124658992.png"
+alt="image-20230717124658992" />
+<figcaption aria-hidden="true">image-20230717124658992</figcaption>
+</figure>
+<h4 id="classification">Classification</h4>
+<p>特征挑选指标：Gini index</p>
+<p>基尼系数越小，纯度越高，特征越好。</p>
+<h5 id="gini值">Gini值</h5>
+<p>Gini值反应了从数据集D中随机抽取两个样本，其类别不一样的概率。 <span
+class="math display">\[
+Gini(D) = \sum_{i=1}^np(x_i)*(1-p(x_i))=1-\sum_{i=1}^np(x_i)^2
+\]</span> <span class="math inline">\(p(x_i)\)</span>: <span
+class="math inline">\(x_i\)</span>出现的概率</p>
+<p>n：类别数量</p>
+<h5 id="分类树的构造">分类树的构造</h5>
+<p>递归生成二叉树，以Gini值最小化作为准则。</p>
+<ol type="1">
+<li><p>遍历所有特征<span class="math inline">\(A\)</span>,遍历特征<span
+class="math inline">\(A\)</span>所有的可能取值<span
+class="math inline">\(a\)</span>，根据特征A
+是否取某一可能值a，把样本D分成两部分<span
+class="math inline">\(D_1\)</span>和<span
+class="math inline">\(D_2\)</span>。计算Gini值，将Gini值最小的<span
+class="math inline">\(A,a\)</span>作为最优特征与最优切分点。 <span
+class="math display">\[
+D_1 = (x,y)\in D |A(x)=a,D_2 = D-D_1
+\]</span></p>
+<p><span class="math display">\[
+Gini(D|A=a) = \frac{|D_1|}{|D|}Gini(D_1)+\frac{|D_2|}{|D|}Gini(D_2)
+\]</span></p></li>
+<li><p>循环1步骤</p></li>
+</ol>
+<h4 id="regression">Regression</h4>
+<p>递归生成二叉树，使用平方误差最小化作为准则。</p>
+<p>假设有n个样本<span
+class="math inline">\(D={(x_1,y_1),(x_2,y_2),\cdots,(x_n,y_n)}\)</span>,其中x是d维向量，代表d个特征，y是连续值。</p>
+<p>CART回归树生成算法：</p>
+<ol type="1">
+<li><p>遍历所有特征<span
+class="math inline">\(d_i\)</span>,遍历n个样本在<span
+class="math inline">\(d_i\)</span>特征的取值x，取相邻两样本值x(排序后)的平均数s作为划分点，利用s作为划分两个区域的阈值：
+<span class="math display">\[
+R_1 = \{y_i|x_{i,d_i}&lt;=s\},R_2 = \{y_i|x_{i,d_i}&gt;s\}
+\]</span> 每个区域内样本<span
+class="math inline">\(y_i\)</span>的均值作为该区域的预测值<span
+class="math inline">\(c_1,
+c_2\)</span>，计算样本真实值和预测值的平方误差之和,并找到能使平方误差最小的<span
+class="math inline">\(d_i\)</span>和<span
+class="math inline">\(s\)</span>: <span class="math display">\[
+c_1 = \frac{1}{n}\sum_{x_i\in R_1}y_i,c_2 = \frac{1}{n}\sum_{x_i\in
+R_2}y_i,
+\]</span></p>
+<p><span class="math display">\[
+\min_{d_i,s}\{\sum_{x_i\in R_1(d_i,s)}(y_i-c_1)^2+\sum_{x_i\in
+R_2(d_i,s)}(y_i-c_2)^2\}
+\]</span></p></li>
+<li><p>重复1直到满足停止条件</p></li>
+<li><p>最后划分为M区域<span
+class="math inline">\(R_1,R_2,\cdots,R_M\)</span>,生成决策树,预测值为：
+<span class="math display">\[
+f(x)=\sum_{i=1}^Mc_iI(x\in R_i)
+\]</span> 这里的<span class="math inline">\(I(x\in
+R_i)\)</span>值，满足条件返回值为1，否则为0</p></li>
+</ol>
+<h2 id="several-tree">Several tree</h2>
+<h3 id="bagged-decision-tree">Bagged Decision Tree</h3>
+<p>单棵的决策树高方差（不同训练集训练的预测结果差很多，不稳定），Bagged
+Decisoin Tree要解决这个问题。</p>
+<p>使用Bootstrap生成多个训练集。它基于有放回地从原始训练数据集中抽取样本，构成一个新的训练集。通过对原始数据集的多次重采样，可以生成多个不同的训练集，每个训练集都是原始数据集的一部分。接着将每轮未抽取的数据合并形成<strong>袋外数据集</strong>（Out
+of Bag, OOB），用于模型中的测试集。</p>
+<p>使用Bagging进行训练和预测。通过在 Bootstrap
+生成的多个训练集上训练多个独立的基础模型，并将它们的预测结果进行平均或投票来进行最终预测。每个基础模型都是独立训练的，它们之间没有依赖关系。Bagging
+可以减少模型的方差，提高模型的稳定性和泛化能力。</p>
+<h3 id="random-forest">Random Forest</h3>
+<p>随机森林使用的方法与Bagged Decision
+Tree一样使用Bootstrap和Bagging方法，但做出了改进。</p>
+<p>决策树使用的是贪心策略，每一步都是局部最优解，但每次的局部最优解不一定能得到全局最优解。而且Bagging后，我们可能会得到几个非常相似的局部最优解树。</p>
+<p>所以随机森林加入随机策略，鲁棒性会更强。</p>
+<h4 id="构建随机森林">构建随机森林</h4>
+<ol type="1">
+<li>使用Bootstrap策略，有放回的抽取sample生成N个训练集，每个训练集可以训练出一个子模型。</li>
+<li>训练单棵决策树
+<ol type="1">
+<li>每个sample有M个特征，在决策树的每个节点需要分裂的时候，随机从M个特种中选取m个特征，满足条件m
+&lt;&lt;
+M。然后从这m个属性中采用某种策略（比如说信息增益）来选择1个属性作为该节点的分裂属性。（这样让决策树不要过分关心一个重要特征，鲁棒性更强）</li>
+<li>循环1步骤</li>
+</ol></li>
+</ol>
+<h3 id="gbdt">GBDT</h3>
+<p>使用Boosting思想，以决策树为基函数的提升方法称为提升决策树。保证每棵树都是低方差，高偏差。</p>
+<p><a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/280222403">GBDT的原理、公式推导、Python实现、可视化和应用
+- 知乎 (zhihu.com)</a></p>
+<h4 id="算法">算法</h4>
+<p>!<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230720171728041.png"
+alt="image-20230720171728041" />]</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/07/01/Recommendation-Wangzhe/" rel="prev" title="深度学习推荐系统-王喆">
+                  <i class="fa fa-chevron-left"></i> 深度学习推荐系统-王喆
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/07/11/PythonBasic/" rel="next" title="Python Basic">
+                  Python Basic <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lory</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

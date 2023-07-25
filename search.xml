@@ -44,6 +44,19 @@
       </categories>
   </entry>
   <entry>
+    <title>Classical Deep Learning Method</title>
+    <url>/2023/07/25/ClassicalDLMethod/</url>
+    <content><![CDATA[<p>经典深度学习模型</p>
+<span id="more"></span>
+<h1 id="residual-network">Residual Network</h1>
+<h1 id="transformer">Transformer</h1>
+]]></content>
+      <categories>
+        <category>ML</category>
+        <category>Basic</category>
+      </categories>
+  </entry>
+  <entry>
     <title>DHGCN(2HRDR)</title>
     <url>/2023/06/21/DHGCN/</url>
     <content><![CDATA[<p>propose DHGCN,2HRDR</p>
@@ -1137,6 +1150,9 @@ alt="image-20230331171139039" />
 <figcaption aria-hidden="true">image-20230331171139039</figcaption>
 </figure>
 <h1 id="hakg">HAKG</h1>
+<p>总结：抽取u，i子图，进行正常的propagation之后，得到自图中所有entity的embedding，包括user和item。用self-attention提取entity相互影响信息，得到矩阵g（u，i），再用use
+embedding，item
+embedding和g（u，i）进行预测，充分利用了子图中的所有信息。</p>
 <h2 id="framework-4">Framework</h2>
 <figure>
 <img
@@ -2486,23 +2502,23 @@ class="math inline">\(\frac{1}{\sqrt{N_n}}\)</span>,
 <p>②只做一次norm影响对称性，所以为了保持对称性在做一次<span
 class="math inline">\(\frac{1}{\sqrt{N_t}}\)</span>,可以理解为neighbor
 node有多少邻居对他给到每个邻居的权重有影响，是否能理解为邻居越多说明这个node能提供的信息更普通没价值（例如所有用户购买了水，对推荐系统来说，水能提供的信息就没那么有用）</p>
-<p>x class UV_Aggregator(nn.Module):    """   item and user aggregator:
-for aggregating embeddings of neighbors (item/user aggreagator).   """​  
- def <strong>init</strong>(self, v2e, r2e, u2e, embed_dim, cuda="cpu",
-uv=True):        ...​    def forward(self, nodes, history_uv, history_r):
-       # create a container for result, shpe of embed_matrix is
-(batchsize,embed_dim)        embed_matrix = torch.empty(len(history_uv),
-self.embed_dim, dtype=torch.float).to(self.device)​        # deal with
-each single item nodes' neighbors        for i in
-range(len(history_uv)):            history = history_uv[i]          
- num_histroy_item = len(history)            tmp_label = history_r[i]​    
-       # e_uv : turn neighbors(user node) id to embedding            #
-uv_rep : turn single node(item node) to embedding            if self.uv
-== True:                # user component                e_uv =
-self.v2e.weight[history]                uv_rep =
-self.u2e.weight[nodes[i]]            else:                # item
-component                e_uv = self.u2e.weight[history]              
- uv_rep = self.v2e.weight[nodes[i]]​            # get rating score
+<p>xxxxxxxxxx class UV_Aggregator(nn.Module):    """   item and user
+aggregator: for aggregating embeddings of neighbors (item/user
+aggreagator).   """​    def <strong>init</strong>(self, v2e, r2e, u2e,
+embed_dim, cuda="cpu", uv=True):        ...​    def forward(self, nodes,
+history_uv, history_r):        # create a container for result, shpe of
+embed_matrix is (batchsize,embed_dim)        embed_matrix =
+torch.empty(len(history_uv), self.embed_dim,
+dtype=torch.float).to(self.device)​        # deal with each single item
+nodes' neighbors        for i in range(len(history_uv)):          
+ history = history_uv[i]            num_histroy_item = len(history)    
+       tmp_label = history_r[i]​            # e_uv : turn neighbors(user
+node) id to embedding            # uv_rep : turn single node(item node)
+to embedding            if self.uv == True:                # user
+component                e_uv = self.v2e.weight[history]              
+ uv_rep = self.u2e.weight[nodes[i]]            else:                #
+item component                e_uv = self.u2e.weight[history]          
+     uv_rep = self.v2e.weight[nodes[i]]​            # get rating score
 embedding            e_r = self.r2e.weight[tmp_label]            #
 concatenated rating and neighbor, and than through two layers mlp to get
 fjt            x = torch.cat((e_uv, e_r), 1)            x =
@@ -2808,6 +2824,21 @@ PASSING）+实例_每天都想躺平的大喵的博客-CSDN博客</a></li>
       </categories>
   </entry>
   <entry>
+    <title>Python Basic</title>
+    <url>/2023/07/11/PythonBasic/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="sort">sort</h1>
+<ol type="1">
+<li>怎么让数组在第一维度正序，第二维度倒序</li>
+</ol>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">li.sort(key = <span class="keyword">lambda</span> x:(x[<span class="number">0</span>],-x[<span class="number">1</span>]),reverse=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+  </entry>
+  <entry>
     <title>王树森推荐系统公开课</title>
     <url>/2023/03/13/Recommendation-WangShusen/</url>
     <content><![CDATA[<p>.</p>
@@ -3092,6 +3123,504 @@ alt="image-20230626171541263" />
 <figcaption aria-hidden="true">image-20230626171541263</figcaption>
 </figure></li>
 </ol>
+<h3 id="双塔模型">双塔模型</h3>
+<p>融合除了ID以为的别的特征</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230626173816258.png"
+alt="image-20230626173816258" />
+<figcaption aria-hidden="true">image-20230626173816258</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230626173835292.png"
+alt="image-20230626173835292" />
+<figcaption aria-hidden="true">image-20230626173835292</figcaption>
+</figure>
+<h4 id="数据集-1">数据集</h4>
+<ol type="1">
+<li><p>正样本</p>
+<p>曝光且有点击的（user，item）组</p>
+<p>问题：少部分物品占据大部分点击，导致正样品大多是热门物品，对冷门物品不公平。</p>
+<p>解决：过采样冷门物品，或降采样热门物品</p>
+<p>​ 过采样：一个样品出现多次</p>
+<p>​ 降采样：一些样本被抛弃</p></li>
+<li><p>负样本</p>
+<p>混合几种负样本：50%的简单负样本，50%的困难负样本</p>
+<p>我们分别讨论下面三种可以作为负样本的数据。</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230626202449765.png"
+alt="image-20230626202449765" />
+<figcaption aria-hidden="true">image-20230626202449765</figcaption>
+</figure>
+<ol type="1">
+<li><p>简单负样本</p>
+<p>没有被召回的数据: <strong>全体物品</strong></p>
+<p>没被召回的数据，大概率是用户不感兴趣的，未被召回的样本约等于全体物品，所以在全体物品中做抽样作为负样本。</p>
+<p><strong>均匀抽样</strong>：正样本大多是热门物品，负样本大多是冷门物品。（因为热门物品比例小），所以我们需要利用非均匀抽样打压热门物品。</p>
+<p><strong>非均抽采样</strong>：负样本抽样概率与热门程度（点击次数）正相关，<span
+class="math inline">\(抽样概率\propto (点击次数)^{0.75}\)</span></p>
+<p><strong>Batch内负采样</strong></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230626203300364.png"
+alt="image-20230626203300364" />
+<figcaption aria-hidden="true">image-20230626203300364</figcaption>
+</figure>
+<p>一个batch有n个正样本对，一个用户和n-1个物品组成负样本，batch中一共有n（n-1）个负样本对。</p>
+<p>此时，热门物品成为负样本的概率过大（热门物品成为正样本概率大）：<span
+class="math inline">\(抽样概率\propto (点击次数)\)</span></p>
+<p>所以做训练时，兴趣分数调整为：<span
+class="math inline">\(cos(a,b_i)-logp_i\)</span>降低热门物品作为负样本的惩罚</p></li>
+<li><p><strong>困难负样本</strong>：用户有一点兴趣，但兴趣不够，特别容易分错</p>
+<p>被粗排淘汰的物品（比较困难）</p>
+<p>精排分数靠后的物品（非常困难）</p></li>
+</ol>
+<p><strong>注意</strong>：不能用曝光但没有点击的样本，因为能通过精排（更复杂的模型）的样本已经是用户比较感兴趣的样本，可能只是机缘巧合没有点击，训练召回不能用这一类样本，但是训练排序可以</p></li>
+</ol>
+<h4 id="训练-1">训练</h4>
+<h5 id="pointwise">Pointwise</h5>
+<p>当做二分类任务，对于正样本，鼓励cos(a,b)接近+1；对于负样本，鼓励cos(a,b)接近-1</p>
+<h5 id="pairwise">Pairwise</h5>
+<p>鼓励<span class="math inline">\(cos(a,b^+)\)</span>大于<span
+class="math inline">\(cos(a,b^-)\)</span></p>
+<p>Triplet hinge loss: <span class="math display">\[
+L(a,b^+,b^-) = max\{0,cos(a,b^-)+m-cos(a,b^+)\}
+\]</span> m为超参数</p>
+<p>Triplet logistic loss: <span class="math display">\[
+L(a,b^+,b^-) = log(1+exp[\sigma(cos(a,b^-)-cos(a,b^+))])
+\]</span></p>
+<h5 id="listwise">Listwise</h5>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230626175637609.png"
+alt="image-20230626175637609" />
+<figcaption aria-hidden="true">image-20230626175637609</figcaption>
+</figure>
+<h4 id="运作基本流程-3">运作基本流程</h4>
+<ol type="1">
+<li>离线存储：把物品向量b存入向量数据库。</li>
+<li>线上召回：查找用户最感兴趣的k个物品。
+<ol type="1">
+<li>给定用户ID和画像，线上用升级网络算用户向量A。</li>
+<li>最近邻查找</li>
+</ol></li>
+</ol>
+<p>为什么用户向量要在线计算：</p>
+<ol type="1">
+<li>没做一次召回只用到一个用户向量A，计算成本较小。</li>
+<li>用户兴趣动态变化，物品较稳定。</li>
+</ol>
+<h4 id="模型更新">模型更新</h4>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230626205649864.png"
+alt="image-20230626205649864" />
+<figcaption aria-hidden="true">image-20230626205649864</figcaption>
+</figure>
+<p><strong>全量更新</strong>：</p>
+<p>​
+在昨天模型参数基础上做训练（不是随机初始化），用昨天的数据，shuffle后训练一个epoch后发布新的用户塔神经网络和物品向量，供线上召回使用。</p>
+<p><strong>增量更新</strong>：</p>
+<p>​ 用户兴趣随时发生变化，实时收集线上数据，对模型做online
+learning，增量更新ID
+Embedding参数(不更新神经网络其他部分参数)，发布用户ID
+Embedding，供用户塔线上计算用户向量。</p>
+<p><strong>不能只做增量更新，不做全量更新</strong></p>
+<ol type="1">
+<li>小时级数据有偏差，分钟级偏差更大。</li>
+<li>全量更新：random shuffle一天数据，做
+1epoch训练；增量更新按照数据从早到晚顺序做1epoch训练，全量更新效果更好。</li>
+</ol>
+<h4 id="自监督学习">自监督学习</h4>
+<h5 id="背景">背景</h5>
+<p>推荐系统头部效应严重：少部分物品占据大部分点击，大部分物品曝光、点击次数不高，导致高点击物品的表征学习的好，长尾物品的表征学的不好，用自监督学习做data
+augmentation，更好的学习长尾物品的向量表征。</p>
+<h5 id="method">Method</h5>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230626212328043.png"
+alt="image-20230626212328043" />
+<figcaption aria-hidden="true">image-20230626212328043</figcaption>
+</figure>
+<h6 id="特征变换方法">特征变换方法</h6>
+<ol type="1">
+<li><p>Random Mask</p>
+<p>随机选一些离散特征(例如类目特征)，把它们遮住</p>
+<p>例子：<span class="math inline">\(U=\{数码，摄影\}\)</span>-&gt;<span
+class="math inline">\(U&#39;-\{default\}\)</span></p></li>
+<li><p>Dropout</p>
+<p>一个物品可以有多个类目，那么类目是一个多值离散特征。Dropout会随机丢弃特征中50%的值。</p>
+<p>例子：<span class="math inline">\(U=\{数码，摄影\}\)</span>-&gt;<span
+class="math inline">\(U&#39;-\{数码\}\)</span></p></li>
+<li><p>complementary互补特征</p>
+<p>假设物品一共有四种特征：ID,类目，关键词，城市</p>
+<p>随机分成两组：{ID,关键词}，{类目，城市}</p>
+<p>{ID,default，关键词，default}作为表征i‘</p>
+<p>{default，类目，default，城市}作为表征i‘’</p></li>
+<li><p>Mask一组关联的特征</p>
+<p>p(u): 某特征取值为u的概率</p>
+<p>p(u,v):某特征取值为u，另一个特征取值为v同时发生的概率</p>
+<p>离线计算特征的两两关系，用户信息(mutual information): <span
+class="math display">\[
+MI(U,V)=\sum_{u\in U}\sum_{v\in V}p(u,v)\cdot log\frac{p(u,v)}{p(u)\cdot
+p(v)}
+\]</span>
+假设一共有k种特征。离线计算两两MI，得到kxk的矩阵，随机选一个特征为种子，找到种子最相关的k/2中特征Mask掉，保留其余的k/2中特征。</p>
+<p>比random
+mask、dropout、互补特征等方法效果更好，但方法复杂实现难度大不容易维护。</p></li>
+</ol>
+<h6 id="自监督训练">自监督训练</h6>
+<p>从全体物品中均匀抽样得到m个物品，作为一个batch。</p>
+<p>做两类特征变换，物品他输出两组向量。</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230626214137364.png"
+alt="image-20230626214137364" />
+<figcaption aria-hidden="true">image-20230626214137364</figcaption>
+</figure>
+<h6 id="自监督训练正常训练">自监督训练+正常训练</h6>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230626214246267.png"
+alt="image-20230626214246267" />
+<figcaption aria-hidden="true">image-20230626214246267</figcaption>
+</figure>
+<h2 id="不适合召回的模型">不适合召回的模型</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230626175824199.png"
+alt="image-20230626175824199" />
+<figcaption aria-hidden="true">image-20230626175824199</figcaption>
+</figure>
+<p>召回需要计算的item量很大，所以我们一般只做后期融合（计算相似度的时候再融合user和item的embedding），因为融合步骤一般要在线计算不能离线计算完保存（需求内存量太大）。如果我们在召回阶段就要让user
+embedding与上亿个item
+embedding过神经网络模型，这样时间复杂度太高了。</p>
+<h2 id="其他方式召回">其他方式召回</h2>
+<p>地理召回</p>
+<p>作者召回</p>
+<p>缓存召回：复用前n次推荐精排的结果</p>
+<h2 id="曝光过滤与链路">曝光过滤与链路</h2>
+<p>。。</p>
+<h1 id="排序">排序</h1>
+]]></content>
+      <categories>
+        <category>RecSys</category>
+        <category>BasicTurtorial</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>深度学习推荐系统-王喆</title>
+    <url>/2023/07/01/Recommendation-Wangzhe/</url>
+    <content><![CDATA[<h1 id="传统模型">传统模型</h1>
+<h2 id="协同过滤">协同过滤</h2>
+<p>User-CF适用于发现热点以及跟踪热点趋势。（user的爱好经常变动，相似度也会随之变动，而且容易受社交关系影响）</p>
+<p>Item-CF适用于兴趣变化较为稳定的应用。（item相似度比较稳定）</p>
+<p>缺点：泛化能力弱：无法将两个物品相似这一信息推广到其他物品的相似性计算上。导致热门的物品有很强的头部效应，容易根大量物品产生相似性，尾部物品则因为特征向量稀疏很少与其他物品产生相似性。</p>
+<h3 id="user-cf">User-CF</h3>
+<p>缺点：
+用户数往往大于物品书，用户数的增长会导致用户相似度矩阵的存储空间以<span
+class="math inline">\(n^2\)</span>的速度快速增长。</p>
+<h4 id="计算用户相似度">计算用户相似度</h4>
+<ol type="1">
+<li>余弦相似度</li>
+</ol>
+<p><span class="math display">\[
+similarity=cos(\theta) = \frac{A\cdot B}{||A||\space ||B||}
+\]</span></p>
+<ol start="2" type="1">
+<li>皮尔逊系数-user <span class="math display">\[
+sim(i,j)=\frac{\sum_{p\in P}(R_{i,p}-\bar R_i)(R_{j,p}-\bar
+R_j)}{\sqrt{\sum_{p\in P}(R_{i,p}-\bar R_i)^2}\sqrt{\sum_{p\in
+P}(R_{j,p}-\bar R_j)^2}}
+\]</span></li>
+</ol>
+<p><span class="math inline">\(R_{i,p}\)</span>:
+用户i对物品p的评分。</p>
+<p><span class="math inline">\(\bar{R_i}\)</span>:
+用户对所有物品的平均评分。</p>
+<ol start="3" type="1">
+<li>皮尔逊系数-item</li>
+</ol>
+<p><span class="math display">\[
+sim(i,j)=\frac{\sum_{p\in P}(R_{i,p}-\bar R_p)(R_{j,p}-\bar
+R_p)}{\sqrt{\sum_{p\in P}(R_{i,p}-\bar R_p)^2}\sqrt{\sum_{p\in
+P}(R_{j,p}-\bar R_p)^2}}
+\]</span></p>
+<p><span class="math inline">\(R_{i,p}\)</span>:
+用户i对物品p的评分。</p>
+<p><span class="math inline">\(\bar{R_p}\)</span>: 物品p的平均分。</p>
+<h4
+id="根据top-n相似用户生成最终推荐结果">根据top-n相似用户生成最终推荐结果</h4>
+<p><span class="math display">\[
+R_{u,s}=\frac{\sum_{s\in S}(w_{u,s}\cdot R_{s,p})}{\sum_{s\in S}w_(u,s)}
+\]</span></p>
+<p><span class="math inline">\(w_{u,s}\)</span>：
+是用户u和用户s的相似度</p>
+<p><span class="math inline">\(R_{s,p}\)</span>：
+是用户s对物品p的评分。</p>
+<h3 id="item-cf">Item-CF</h3>
+<p>计算相似度后（计算方法与user相同），用下面式子计算： <span
+class="math display">\[
+R_{u,p}=\sum_{u\in H}(w_{p,h},\cdot R_{u,h})
+\]</span> <span class="math inline">\(w_{p,h}\)</span>：
+是物品p与物品h的相似程度。</p>
+<p><span class="math inline">\(R_{u,h}\)</span>：
+是用户u对物品h的已有评分。</p>
+<h2 id="矩阵分解">矩阵分解</h2>
+<p><strong>协同过滤的进化</strong></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230706214331238.png"
+alt="image-20230706214331238" />
+<figcaption aria-hidden="true">image-20230706214331238</figcaption>
+</figure>
+<p>优点：</p>
+<ol type="1">
+<li>泛化能力强</li>
+<li>空间复杂度低：不用保存用户或物品相似度矩阵，<span
+class="math inline">\((m,m)or(n,n)-&gt;(n+m)\cdot k\)</span></li>
+<li>更好的扩展性和灵活性。易于与其他特征拼接，易于与深度学习无缝联合。</li>
+</ol>
+<p>缺点：没有考虑用户与物品的其他特征。</p>
+<h3 id="definition">Definition</h3>
+<p>通过分解共现矩阵学习用户和物品的表示。</p>
+<p>将（m,n)维的共现矩阵M分解为(m,k)维的用户矩阵和(k,n)维的物品矩阵，其中相应的行和列为特定用户与物品的表示，k是用户和物品表示的维度。</p>
+<p>预测方法：用户表示与物品表示的内积。 <span class="math display">\[
+r_{ui}=q_i^Tp_u
+\]</span></p>
+<h3 id="如何分解矩阵">如何分解矩阵</h3>
+<h4 id="奇异值分解">奇异值分解</h4>
+<p>特征值分解只能用于方阵，所以用特征值分解</p>
+<p><a
+href="https://zhuanlan.zhihu.com/p/613284889">矩阵分解—特征值分解与奇异值分解
+- 知乎 (zhihu.com)</a></p>
+<p>通过奇异值分解求得<span class="math inline">\(M=U\sum
+V^T\)</span>,其中<span class="math inline">\(U\in (m,m),\sum \in
+(m,n),V^T\in (n,n)\)</span>,中间的为对角阵</p>
+<p>取<span
+class="math inline">\(\sum\)</span>中较大的k个元素为隐含特征，删除其他维度（U与V中的也删掉）</p>
+<p>得到<span class="math inline">\(M=U_{m\times k}\sum_{k\times k}
+V^T_{k\times n}\)</span></p>
+<p><strong>缺点</strong>：</p>
+<ol type="1">
+<li><p>奇异值分解要求原始的共现矩阵是稠密的，如果要使用奇异值分解，就必须对确实的元素值进行填充。</p></li>
+<li><p>复杂度高O(mn^2)</p></li>
+</ol>
+<h4 id="梯度下降">梯度下降</h4>
+<p>主要方法</p>
+<p>Loss： <span class="math display">\[
+L=min_{q^*,p^*}\sum (r_{ui}-q_i^Tp_u)^2+\lambda(||q_i||^2+||p_u||^2)
+\]</span> 由于不同用户打分标准不同，加入偏差 <span
+class="math display">\[
+r_{ui}=\mu +b_i+b_u+q^T_ip_u
+\]</span> <span class="math inline">\(\mu\)</span>:
+全局偏差常数,超参数，提前设置好</p>
+<p><span class="math inline">\(b_i\)</span>:
+物品偏差系数，可以使用物品i收到的所有评分的均值</p>
+<p><span class="math inline">\(b_u\)</span>:
+用户偏差系数，可以使用用户u给出的所有评分的均值 <span
+class="math display">\[
+L=min_{q^*,p^*}\sum
+(r_{ui}-q_i^Tp_u-\mu-b_u-b_i)^2+\lambda(||q_i||^2+||p_u||^2+b_u^2+b_i^2)
+\]</span></p>
+<h2 id="逻辑回归">逻辑回归</h2>
+<p><strong>独立于协同过滤的推荐模型方向</strong></p>
+<p>将用户年龄、性别、物品属性等特征转为数值型向量输入回归或逻辑回归模型</p>
+<p>优点：融合了特征</p>
+<p>缺点：逻辑回归模型简单，表达能力不强</p>
+<h2 id="poly2">POLY2</h2>
+<p>逻辑回归只对单一特征做简单加权，不具备特征交叉生成高维组合特征的能力
+<span class="math display">\[
+POLY2(W,X)=\sum_{j_1=1}^{n-1}
+\sum_{j_2=j_1+1}^nw_h(j_1,j_2)x_{j_1}x_{j_2}
+\]</span> POLY2就是直接暴力组合特征,<span
+class="math inline">\(x\)</span>是未经embedding处理的特征（one-hot 或
+数值特征）</p>
+<p>缺点：</p>
+<ol type="1">
+<li>常常用one-hot编码方式处理类别数据（就是大量<span
+class="math inline">\(x_？\)</span>会为0），POLY2不进行特征选择，会让本来就稀疏的向量更稀疏</li>
+<li>权重参数<span
+class="math inline">\(n-&gt;n^2\)</span>，极大提高了训练复杂度。</li>
+</ol>
+<h2 id="fm-factorization-machines">FM-Factorization Machines</h2>
+<p>FM为给个特征学习了一个隐权重向量，在特征交叉时，使用两个特征隐向量的内积作为交叉特征的权重。下面是二阶的数学部分：
+<span class="math display">\[
+FM(w,x)=\sum_{j_i=1}^{n-1} \sum_{j_2=j_1+1}^n (w_{j_1}\cdot
+w_{j_2})x_{j_1}x_{j_2}
+\]</span> 优点：</p>
+<ol type="1">
+<li>计算复杂度<span
+class="math inline">\(n^2-&gt;nk\)</span>,k是隐向量维度</li>
+<li>泛化强，更好的解决数据稀疏性问题：POLY2只有在出现<span
+class="math inline">\(x_{j_1},x_{j_2}\)</span>组合同时出现时才能学习到weight（不如梯度下降梯度为0），FM只要在组合中其中一个是<span
+class="math inline">\(x_{j_1}\)</span>就能学到隐向量，能反推出没出现过组合的权重。</li>
+</ol>
+<p>缺点：</p>
+<ol type="1">
+<li>丢失了某些具体特征组合的精确记忆能力。</li>
+</ol>
+<h2 id="ffm-field-aware-factorization-machines">FFM-Field-aware
+Factorization Machines</h2>
+<p>FFM每个特征对应的不是唯一一个隐向量，而是一组隐向量。特征作用于不同的特征域有不同的隐向量：特征1与特征2交叉，则是特征1作用于特征域2:<span
+class="math inline">\(w_{j_1,f_2}\)</span>乘特征2作用于特征域1:<span
+class="math inline">\(w_{j_2,f_1}\)</span> <span class="math display">\[
+FFM(w,x)=\sum_{j_i=1}^{n-1} \sum_{j_2=j_1+1}^n (w_{j_1,f_2}\cdot
+w_{j_2,f_1})x_{j_1}x_{j_2}
+\]</span> <strong>与FM区别</strong>：</p>
+<p>下图中，P，下面是特征值</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230706212714465.png"
+alt="image-20230706212714465" />
+<figcaption aria-hidden="true">image-20230706212714465</figcaption>
+</figure>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>ESPN特征与NIKE特征交叉</th>
+<th>ESPN特征与MALE特征交叉</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FM</td>
+<td><span class="math inline">\(w_{ESPN}\cdot w_{NIKE}\)</span></td>
+<td><span class="math inline">\(w_{ESPN}\cdot w_{MALE}\)</span></td>
+</tr>
+<tr class="even">
+<td>FFM</td>
+<td><span class="math inline">\(w_{ESPN,A}\cdot w_{NIKE,P}\)</span></td>
+<td><span class="math inline">\(w_{ESPN,G}\cdot w_{MALE,P}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>计算复杂度：需要学习n个特征在f个特征域上的k维隐向量，参数数量：<span
+class="math inline">\(n\cdot k\cdot
+f\)</span>,二次项不能像FM一样简化，复杂度是<span
+class="math inline">\(kn^2\)</span>。</p>
+<p><strong>注意，n&gt;f,一个特征域有可能有多个特征，例如性别特征域有两种特征：男和女。我们只需要学习NIKE特征在性别特征域的1个隐向量，不需要具体学习NIKE对男性的隐向量或NIKE对女性的。这样参数量还是比POLY2少很多。</strong></p>
+<h2 id="gbdtlr">GBDT+LR</h2>
+<p>POLY2，再提高交叉维度会产生组合爆炸。</p>
+<p>GBDT+LR：就是利用GBDT自动进行特征筛选和组合，生成新的离散特征向量，再把特征向量当做LR模型输入。</p>
+<p>以前特征组合要么人工筛选，要么通过改造目标函数筛选，GBDT+LR实现了end2end用模型筛选。</p>
+<h3 id="gbdt进行特征筛选组合">GBDT进行特征筛选组合</h3>
+<p>决策树的每一层都在划分重要特征（划分后label纯度提高），如果决策树深度为2层则意味着抉择树挑选了两个重要特征进行特征交叉。</p>
+<p>训练sample在输入GBDT的某一子树后会根据每个节点的规则落入叶子节点，把所有叶子节点组成的向量为该棵树的特征。</p>
+<p>e.g.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230720173011264.png"
+alt="image-20230720173011264" />
+<figcaption aria-hidden="true">image-20230720173011264</figcaption>
+</figure>
+<h2 id="ls-plmctr">LS-PLM（CTR）</h2>
+<p>参考：<a
+href="https://zhuanlan.zhihu.com/p/406615820">经典推荐算法学习（四）|
+阿里LS-PLM（MLR）模型原理解析 - 知乎 (zhihu.com)</a></p>
+<p>在逻辑回归的基础上加入分片的思想，其灵感来自对广告推荐领域样本特点的观察。</p>
+<p>举例来说，如果CTR模型要预估的是女性受众点击女装广告的CTR,那么显然，我们不希望把男性用户点击数码类产品的样本数据也考虑进来，因为这样的样本不仅与女性购买女装的广告场景毫无相关性，甚至会在模型训练过程中扰乱相关特征的权重。</p>
+<h3 id="method">METHOD</h3>
+<p>其实就是一个类似attention结构去捕捉用户的兴趣。</p>
+<p>公式如下： <span class="math display">\[
+p(y=1|x) = g(\sum_{j=1}^m\sigma(u_j^Tx)\eta(w_j^Tx))
+\]</span></p>
+<p><span class="math display">\[
+p(y=1|x)=\sum_{i=1}^m\frac{exp(u_i^Tx)}{\sum_{j=1}^mexp(u_i^Tx)}\cdot
+\frac{1}{1+exp(-w_i^Tx)}
+\]</span></p>
+<p>如上述公式所示，LS-PLM在表达上非常朴实，拆开来看就是常见的softmax和LR
+。<span class="math inline">\(u^T,w^T\)</span>是可训练参数</p>
+<p><span class="math inline">\(sigma(u_j^Tx)\)</span>
+:SoftMax部分，负责将特征切分到m个不同的空间。</p>
+<p><span class="math inline">\(\eta(w_j^Tx)\)</span>
+:LR部分则负责对m个空间的特征分片的进行预测</p>
+<p><span class="math inline">\(g(\cdot )\)</span>
+:sigma函数，作用则是使得模型符合概率函数定义。</p>
+<h3 id="特点">特点</h3>
+<ol type="1">
+<li><strong>Nonlinearity.</strong> 具备任意强非线性拟合能力；</li>
+<li><strong>Sparsity.</strong>具备特征选择能力，使得模型具备稀疏性。</li>
+<li><strong>Scalability.</strong>
+具备从大规模稀疏数据中挖掘出具有推广性的非线性模式</li>
+</ol>
+<h4 id="non-linear">Non-linear</h4>
+<p>通过控制分片数m，使得LS-PLM便具备拟合任意强度高维空间的非线性分类面能力。</p>
+<p>如图1，假设训练数据是一个菱形分类面，基于LR的模型能做到的效果如图1.B)，LS-PLM则可以做到用4个分片完美的拟合训练集合，如图1.C)。</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230720180543134.png"
+alt="image-20230720180543134" />
+<figcaption aria-hidden="true">image-20230720180543134</figcaption>
+</figure>
+<p>可以简单理解为通过前面的softmax部分把sample分到不同的LR
+function去进行计算，就可以拟合出上图结果</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230720180730815.png"
+alt="image-20230720180730815" />
+<figcaption aria-hidden="true">image-20230720180730815</figcaption>
+</figure>
+<p>但m增加则容易过拟合，一般阿里选m=12.</p>
+<h4 id="sparsityscalability">Sparsity+Scalability</h4>
+<p>引入L1正则化进行得到稀疏解，引入L2,1正则化提高泛化能力避免过拟合</p>
+<h1 id="深度学习">深度学习</h1>
+<h2
+id="autorec-利用自编码器对共现矩阵泛化">AutoRec-利用自编码器对共现矩阵泛化</h2>
+<p>利用协同过滤中的共现矩阵，完成物品向量或者用户向量的<strong>自编码</strong>。</p>
+<p>假设有m个用户n个物品，我们能得到一个（m,n)的评分矩阵。</p>
+<h3 id="i-autorec">I-AutoRec</h3>
+<h4 id="训练">训练</h4>
+<p>对于物品i，所有m个用户对它的评分可以行程一个m维向量r，构建一个三层网络：</p>
+<p><img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230720215757791.png"
+alt="image-20230720215757791" /> <span class="math display">\[
+h(r,\theta) = f(W\cdot g(Vr+\mu)+b)
+\]</span> g,f为激活函数</p>
+<p>Loss function： <span class="math display">\[
+Loss=min_\theta^n||r^{(i)}-h(r^{(i)},\theta)||^2+\frac{\lambda}{2}(||W||_F^2+||V||_F^2)
+\]</span></p>
+<h4 id="预测">预测</h4>
+<p>当输入物品i评分向量<span
+class="math inline">\(r^{(i)}\)</span>时，模型输出<span
+class="math inline">\(h(r^{(i)},\theta)\)</span>就是所有用户对物品i的评分，那么其中的第u维就是用户u对物品i的预测.
+<span class="math display">\[
+R_{ui} = (h(r,\theta))_u
+\]</span> 其实就是一个泛化过程，重建函数<span
+class="math inline">\(h(r,\theta)\)</span>中存储了所有数据向量的精华，经过自编码器生成的输出向量不会完全等同于输入向量，所以会具备了一定的缺失维度的预测能力。</p>
+<h3 id="u-autorec">U-AutoRec</h3>
+<p>把用户评分向量作为输入向量，但是用户向量稀疏性可能会影响模型效果。</p>
+<h2 id="deep-crossing模型-利用dnn自动学习特征交叉">Deep
+Crossing模型-利用DNN自动学习特征交叉</h2>
+<p>输入特征：</p>
+<ol type="1">
+<li><p>可以被处理为one-hot或者multi-hop的类别特征</p></li>
+<li><p>数组特征</p></li>
+<li><p>需要进一步处理的特征</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230725112028369.png"
+alt="image-20230725112028369" />
+<figcaption aria-hidden="true">image-20230725112028369</figcaption>
+</figure></li>
+</ol>
+<p>模型结构：</p>
+<ol type="1">
+<li>Embedding层：稀疏特征向量转稠密特征向量（有的特征需要，有的特征不需要e.g.数值特征）</li>
+<li>Stacking层：把特征embedding拼接在一起（concatenate）</li>
+<li>Multiple Residual Units层： 多层MLP＋残差网络</li>
+<li>Scoring层：根据具体任务的评分层。CTR问题二分类用逻辑回归模型，多分类用Softmax。</li>
+</ol>
+<p>意义：</p>
+<ol type="1">
+<li>无人工参加特征筛选</li>
+<li>模型能自动学习特征交叉，模型越深，交叉越深</li>
+</ol>
+<h2
+id="neuralcf-在cf思想上使用深度学习方法">NeuralCF-在CF思想上使用深度学习方法</h2>
 ]]></content>
       <categories>
         <category>RecSys</category>
@@ -3106,8 +3635,7 @@ alt="image-20230626171541263" />
 <h1 id="re-kgr">RE-KGR</h1>
 <p>Paper: RE-KGR: Relation-Enhanced Knowledge Graph Reasoning for
 Recommendation</p>
-<p>总结：</p>
-<p>把relation当做向量空间，同时考虑relation的方向性，最后基于路径概率预测</p>
+<p>总结：把relation当做向量空间，同时考虑relation的方向性，最后基于路径概率预测</p>
 <h2 id="methodology">Methodology</h2>
 <figure>
 <img
@@ -3189,6 +3717,13 @@ and item i.</p>
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617153723353.png"
 alt="image-20230617153723353" />
 <figcaption aria-hidden="true">image-20230617153723353</figcaption>
+</figure>
+<h1 id="pern">PeRN</h1>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230627183244905.png"
+alt="image-20230627183244905" />
+<figcaption aria-hidden="true">image-20230627183244905</figcaption>
 </figure>
 ]]></content>
       <categories>
@@ -3340,6 +3875,235 @@ embedding，最后再与没互动过的item计算估计互动概率，</p>
       <categories>
         <category>RecSys</category>
         <category>KGRec</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Traditional Machine Learning</title>
+    <url>/2023/07/10/TraditionalMachineLearning/</url>
+    <content><![CDATA[<p>传统机器学习方法</p>
+<span id="more"></span>
+<h1 id="tree">Tree</h1>
+<h2 id="single-tree">Single Tree</h2>
+<h3 id="decision-tree">Decision Tree</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230712165541790.png"
+alt="image-20230712165541790" />
+<figcaption aria-hidden="true">image-20230712165541790</figcaption>
+</figure>
+<p>决策树重点：挑选重要的特征，越重要的特征放的越接近根节点。</p>
+<h4 id="id3">ID3</h4>
+<p>ID3算法使用Information Gain信息增益作为挑选特征指标。</p>
+<h5 id="entropy-熵">Entropy-熵</h5>
+<p>在数学与物理上，熵指混乱程度，或者说值得是变量X的自由度和不确定性。</p>
+<p>在计算机理论中，熵度量给定数据中的杂质。 <span
+class="math display">\[
+Entropy(p)=\sum_{i=1}^C-p_i*log_2(p_i)
+\]</span> c : 可能出现的种类数量</p>
+<p><span class="math inline">\(p_i\)</span>：第i类的概率</p>
+<p>熵越小，数据越纯</p>
+<p>example:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230712174626803.png"
+alt="image-20230712174626803" />
+<figcaption aria-hidden="true">image-20230712174626803</figcaption>
+</figure>
+<h5 id="information-gain">Information Gain</h5>
+<p>Information
+Gain计算拆分前后熵的变化，即用拆分特征前的熵减去拆分特征后的平均熵。
+<span class="math display">\[
+Information Gain =  Entropy(entire\_dataset)-\frac{1}{n}\sum_{i=1}^n
+Entropy(child\_dataset_i)
+\]</span>
+上面式子表示将整个数据集依照某个特征值拆分为了n个子数据集。</p>
+<p>example:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230712175543982.png"
+alt="也可以" />
+<figcaption aria-hidden="true">也可以</figcaption>
+</figure>
+<p>有的教程会写作：<strong>熵</strong>减去<strong>条件熵</strong></p>
+<p>简单认识一下条件熵就好，起码知道词是个啥子意思嘛</p>
+<p>熵是对事件结果不确定性的度量，但在知道有些条件时，不确定性会变小。这里的条件就是数据集中的特征。</p>
+<p><strong>条件熵</strong>就是已知某个特征X的情况下，事件Y的不确定性
+<span class="math display">\[
+Entropy(Y|X)=\sum_{i=1}^np_i Entropy(Y|X=x_i)
+\]</span> 就是特征X每个可能性的结果的熵乘以发生概率的求和。 <span
+class="math display">\[
+Information Gain =  Entropy(Y)- Entropy(Y|X)
+\]</span></p>
+<h5 id="id3缺点">ID3缺点</h5>
+<ol type="1">
+<li>没有剪枝策略，容易过拟合。</li>
+<li>只能用于处理离散分布的特征。</li>
+<li>没有考虑缺失值。</li>
+<li>InformationGain对可取数值数目较多的特征有所偏好，类似‘ID’的特征其信息增益接近于1。</li>
+</ol>
+<h4 id="c4.5">C4.5</h4>
+<p>使用Information Gain
+Ratio信息增益率作为挑选指标，减少因特征值类别多导致信息增益大的问题。同时引入了剪枝策略。</p>
+<h5 id="information-gain-ratio">Information Gain Ratio</h5>
+<p><span class="math display">\[
+IGR = \frac{IG(feature,dataset)}{Entropy(feature)}
+\]</span></p>
+<p>Entropy(feature):
+特征的固有值，即是特征的纯度，（之前求得都是label的熵）公式如下： <span
+class="math display">\[
+Entropy_A(dataset) = -\sum_{i=1}^np_i*log_2(p_i)
+\]</span> c : A中可能出现的种类数量</p>
+<p><span class="math inline">\(p_i\)</span>：A为第i类的概率</p>
+<p>这能解决ID3的第四个缺点，特征可能类别越多（越细致），纯度低，熵越高，分母越大</p>
+<h5 id="剪枝策略">剪枝策略</h5>
+<p>剪枝缓解决策树过拟合</p>
+<h6 id="预剪枝">预剪枝</h6>
+<p>生成决策树过程中剪枝</p>
+<ol type="1">
+<li>提前设定决策树的高度，当达到这个高度时，就停止构建决策树；</li>
+<li>当达到某节点的实例具有相同的label，也可以停止树的生长；</li>
+<li>提前设定某个阈值，当达到某个节点的样例个数小于该阈值的时候便可以停止树的生长，但这种方法的缺点是对数据量的要求较大，无法处理数据量较小的训练样例；</li>
+<li>同样是设定某个阈值，每次扩展决策树后都计算其对系统性能的增益，若小于该阈值，则让它停止生长。</li>
+</ol>
+<p>预剪枝的显著缺点是视野效果。因为剪枝是伴随着构建决策树同时进行的，构建者无法预知下一步可能会发生的事，会出现某种情况，在相同标准下，当前决策树不满足要求最开始的构建要求、构建者进行了剪枝，但实际上若进行进一步构建后、决策树又满足了要求。这种情况下，预剪枝会过早停止决策树的生长。</p>
+<p>C4.5算法常选择后剪枝的方法消除决策树的过度拟合</p>
+<h6 id="后剪枝">后剪枝</h6>
+<p>在已经生成的决策树上剪枝</p>
+<p>用递归的方式从低往上针对每一个非叶子节点，评估用一个叶子节点去代替这课子树是否有益。如果剪枝后与剪枝前相比其错误率是保持或者下降，则这棵子树就可以被替换掉。C4.5
+通过训练数据集上的错误分类数量来估算未知样本上的错误率。</p>
+<p>后剪枝决策树的欠拟合风险很小，泛化性能往往优于预剪枝决策树。但同时其训练时间会大的多。</p>
+<h5 id="优点">优点</h5>
+<ol type="1">
+<li><p>解决特征值类别多导致信息增益大的问题</p></li>
+<li><p>引入剪枝</p></li>
+<li><p>增加对连续特征值的处理：将连续特征离散化，假设 n 个样本的连续特征
+A 有 m 个取值，C4.5 将其排序并取相邻两样本值的平均数共 m-1
+个划分点，分别计算以该划分点作为二元分类点时的信息增益，并选择信息增益最大的点作为该连续特征的二元离散分类点；</p></li>
+<li><p>增加对缺失值处理：</p>
+<ol type="1">
+<li><p>在特征值缺失的情况下进行划分特征的选择？（即如何计算特征的信息增益率）</p>
+<p>C4.5
+的做法是：对于具有缺失值特征，用没有缺失的样本子集占整个数据集的比重来折算；</p></li>
+<li><p>选定该划分特征，对于缺失该特征值的样本如何处理？（即到底把这个样本划分到哪个结点里）</p>
+<p>C4.5
+的做法是：将样本同时划分到所有子节点。不过要调整样本的权重值，其实也就是以不同概率划分到不同节点中。</p></li>
+</ol></li>
+</ol>
+<h5 id="缺点">缺点</h5>
+<ol type="1">
+<li>依然不能处理回归问题</li>
+<li>使用的熵模型拥有大量耗时的对数运算，连续值还有排序运算；</li>
+<li>用的是多叉树，用二叉树效率更高；</li>
+<li>在构造树的过程中，对数值属性值需要按照其大小进行排序，从中选择一个分割点，所以只适合于能够驻留于内存的数据集，当训练集大得无法在内存容纳时，程序无法运行。</li>
+</ol>
+<h3 id="cart--classification-and-regression-tree">CART- classification
+and regression tree</h3>
+<p>CART是决策树的延伸，也可以看作特殊的决策树。他建立起来的是二叉树，而不是多叉树。</p>
+<p>可以不仅可以解决分类问题，还可以觉得回归问题</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230717124658992.png"
+alt="image-20230717124658992" />
+<figcaption aria-hidden="true">image-20230717124658992</figcaption>
+</figure>
+<h4 id="classification">Classification</h4>
+<p>特征挑选指标：Gini index</p>
+<p>基尼系数越小，纯度越高，特征越好。</p>
+<h5 id="gini值">Gini值</h5>
+<p>Gini值反应了从数据集D中随机抽取两个样本，其类别不一样的概率。 <span
+class="math display">\[
+Gini(D) = \sum_{i=1}^np(x_i)*(1-p(x_i))=1-\sum_{i=1}^np(x_i)^2
+\]</span> <span class="math inline">\(p(x_i)\)</span>: <span
+class="math inline">\(x_i\)</span>出现的概率</p>
+<p>n：类别数量</p>
+<h5 id="分类树的构造">分类树的构造</h5>
+<p>递归生成二叉树，以Gini值最小化作为准则。</p>
+<ol type="1">
+<li><p>遍历所有特征<span class="math inline">\(A\)</span>,遍历特征<span
+class="math inline">\(A\)</span>所有的可能取值<span
+class="math inline">\(a\)</span>，根据特征A
+是否取某一可能值a，把样本D分成两部分<span
+class="math inline">\(D_1\)</span>和<span
+class="math inline">\(D_2\)</span>。计算Gini值，将Gini值最小的<span
+class="math inline">\(A,a\)</span>作为最优特征与最优切分点。 <span
+class="math display">\[
+D_1 = (x,y)\in D |A(x)=a,D_2 = D-D_1
+\]</span></p>
+<p><span class="math display">\[
+Gini(D|A=a) = \frac{|D_1|}{|D|}Gini(D_1)+\frac{|D_2|}{|D|}Gini(D_2)
+\]</span></p></li>
+<li><p>循环1步骤</p></li>
+</ol>
+<h4 id="regression">Regression</h4>
+<p>递归生成二叉树，使用平方误差最小化作为准则。</p>
+<p>假设有n个样本<span
+class="math inline">\(D={(x_1,y_1),(x_2,y_2),\cdots,(x_n,y_n)}\)</span>,其中x是d维向量，代表d个特征，y是连续值。</p>
+<p>CART回归树生成算法：</p>
+<ol type="1">
+<li><p>遍历所有特征<span
+class="math inline">\(d_i\)</span>,遍历n个样本在<span
+class="math inline">\(d_i\)</span>特征的取值x，取相邻两样本值x(排序后)的平均数s作为划分点，利用s作为划分两个区域的阈值：
+<span class="math display">\[
+R_1 = \{y_i|x_{i,d_i}&lt;=s\},R_2 = \{y_i|x_{i,d_i}&gt;s\}
+\]</span> 每个区域内样本<span
+class="math inline">\(y_i\)</span>的均值作为该区域的预测值<span
+class="math inline">\(c_1,
+c_2\)</span>，计算样本真实值和预测值的平方误差之和,并找到能使平方误差最小的<span
+class="math inline">\(d_i\)</span>和<span
+class="math inline">\(s\)</span>: <span class="math display">\[
+c_1 = \frac{1}{n}\sum_{x_i\in R_1}y_i,c_2 = \frac{1}{n}\sum_{x_i\in
+R_2}y_i,
+\]</span></p>
+<p><span class="math display">\[
+\min_{d_i,s}\{\sum_{x_i\in R_1(d_i,s)}(y_i-c_1)^2+\sum_{x_i\in
+R_2(d_i,s)}(y_i-c_2)^2\}
+\]</span></p></li>
+<li><p>重复1直到满足停止条件</p></li>
+<li><p>最后划分为M区域<span
+class="math inline">\(R_1,R_2,\cdots,R_M\)</span>,生成决策树,预测值为：
+<span class="math display">\[
+f(x)=\sum_{i=1}^Mc_iI(x\in R_i)
+\]</span> 这里的<span class="math inline">\(I(x\in
+R_i)\)</span>值，满足条件返回值为1，否则为0</p></li>
+</ol>
+<h2 id="several-tree">Several tree</h2>
+<h3 id="bagged-decision-tree">Bagged Decision Tree</h3>
+<p>单棵的决策树高方差（不同训练集训练的预测结果差很多，不稳定），Bagged
+Decisoin Tree要解决这个问题。</p>
+<p>使用Bootstrap生成多个训练集。它基于有放回地从原始训练数据集中抽取样本，构成一个新的训练集。通过对原始数据集的多次重采样，可以生成多个不同的训练集，每个训练集都是原始数据集的一部分。接着将每轮未抽取的数据合并形成<strong>袋外数据集</strong>（Out
+of Bag, OOB），用于模型中的测试集。</p>
+<p>使用Bagging进行训练和预测。通过在 Bootstrap
+生成的多个训练集上训练多个独立的基础模型，并将它们的预测结果进行平均或投票来进行最终预测。每个基础模型都是独立训练的，它们之间没有依赖关系。Bagging
+可以减少模型的方差，提高模型的稳定性和泛化能力。</p>
+<h3 id="random-forest">Random Forest</h3>
+<p>随机森林使用的方法与Bagged Decision
+Tree一样使用Bootstrap和Bagging方法，但做出了改进。</p>
+<p>决策树使用的是贪心策略，每一步都是局部最优解，但每次的局部最优解不一定能得到全局最优解。而且Bagging后，我们可能会得到几个非常相似的局部最优解树。</p>
+<p>所以随机森林加入随机策略，鲁棒性会更强。</p>
+<h4 id="构建随机森林">构建随机森林</h4>
+<ol type="1">
+<li>使用Bootstrap策略，有放回的抽取sample生成N个训练集，每个训练集可以训练出一个子模型。</li>
+<li>训练单棵决策树
+<ol type="1">
+<li>每个sample有M个特征，在决策树的每个节点需要分裂的时候，随机从M个特种中选取m个特征，满足条件m
+&lt;&lt;
+M。然后从这m个属性中采用某种策略（比如说信息增益）来选择1个属性作为该节点的分裂属性。（这样让决策树不要过分关心一个重要特征，鲁棒性更强）</li>
+<li>循环1步骤</li>
+</ol></li>
+</ol>
+<h3 id="gbdt">GBDT</h3>
+<p>使用Boosting思想，以决策树为基函数的提升方法称为提升决策树。保证每棵树都是低方差，高偏差。</p>
+<p><a
+href="https://zhuanlan.zhihu.com/p/280222403">GBDT的原理、公式推导、Python实现、可视化和应用
+- 知乎 (zhihu.com)</a></p>
+<h4 id="算法">算法</h4>
+<p>!<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230720171728041.png"
+alt="image-20230720171728041" />]</p>
+]]></content>
+      <categories>
+        <category>ML</category>
+        <category>Basic</category>
       </categories>
   </entry>
   <entry>
@@ -3534,6 +4298,22 @@ alt="image-20230307201737792" />
 <h1 id="字典序">字典序</h1>
 <p>就是按照字典排列顺序，英文字母按下面方式排列：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ABCDEFG HIJKLMN OPQRST UVWXYZ</span><br><span class="line">abcdefg hijklmn opqrst uvwxyz</span><br></pre></td></tr></table></figure>
+<h1 id="回溯">回溯</h1>
+<h2 id="显回溯">显回溯</h2>
+<p>pre是公共变量，遍历完这种情况要记得pop（），加入结果时记得copy（）</p>
+<h2 id="隐回溯">隐回溯</h2>
+<p>pre是函数内传递的变量，直接传就ok</p>
+<h2 id="去重">去重</h2>
+<h3 id="去res中重复元素">去res中重复元素</h3>
+<ol type="1">
+<li><p>排序数组</p>
+<p>可以用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">num[i]=num[i-1]跳过同层重复元素的选取（注意：子层不跳过）</span><br></pre></td></tr></table></figure></li>
+<li><p>set去重</p></li>
+</ol>
+<h3 id="排序问题去重">排序问题去重</h3>
+<p>使用used数组</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">used=[True, ..., False, False]</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Algorithm</category>

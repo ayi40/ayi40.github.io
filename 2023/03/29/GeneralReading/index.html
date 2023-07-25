@@ -27,7 +27,7 @@
 <meta property="og:description" content="MKR,RKGE,HAGERec,entity2rec,HAKG">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-03-29T20:46:26.000Z">
-<meta property="article:modified_time" content="2023-06-26T09:18:05.708Z">
+<meta property="article:modified_time" content="2023-07-25T07:14:09.762Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
 
@@ -154,7 +154,7 @@ subgraph encoding</span></a><ol class="nav-child"><li class="nav-item nav-level-
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -223,7 +223,7 @@ subgraph encoding</span></a><ol class="nav-child"><li class="nav-item nav-level-
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-06-26 09:18:05" itemprop="dateModified" datetime="2023-06-26T09:18:05+00:00">2023-06-26</time>
+      <time title="Modified: 2023-07-25 07:14:09" itemprop="dateModified" datetime="2023-07-25T07:14:09+00:00">2023-07-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -453,6 +453,9 @@ alt="image-20230331171139039" />
 <figcaption aria-hidden="true">image-20230331171139039</figcaption>
 </figure>
 <h1 id="hakg">HAKG</h1>
+<p>总结：抽取u，i子图，进行正常的propagation之后，得到自图中所有entity的embedding，包括user和item。用self-attention提取entity相互影响信息，得到矩阵g（u，i），再用use
+embedding，item
+embedding和g（u，i）进行预测，充分利用了子图中的所有信息。</p>
 <h2 id="framework-4">Framework</h2>
 <figure>
 <img
