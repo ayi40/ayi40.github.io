@@ -13,9 +13,7 @@ relation-enhance KG
 
 Paper: RE-KGR: Relation-Enhanced Knowledge Graph Reasoning for Recommendation
 
-总结：
-
-把relation当做向量空间，同时考虑relation的方向性，最后基于路径概率预测
+总结：把relation当做向量空间，同时考虑relation的方向性，最后基于路径概率预测
 
 ## Methodology
 
@@ -67,3 +65,7 @@ use $P_{UIIP}={(h,r,t)|(h,r,t)\in G}$ to describe an acyclic UIIP, the probabili
 we use Pui to denote all acyclic UIIPs that start and end with user u and item i.
 
 ![image-20230617153723353](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230617153723353.png)
+
+# PeRN
+
+![image-20230627183244905](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230627183244905.png)

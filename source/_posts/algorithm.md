@@ -8,6 +8,7 @@ categories:
 .
 
 <!-- more -->
+
 # 二叉树
 
 ## 完全二叉树
@@ -30,5 +31,39 @@ categories:
 ```
 ABCDEFG HIJKLMN OPQRST UVWXYZ
 abcdefg hijklmn opqrst uvwxyz
+```
+
+
+
+# 回溯
+
+## 显回溯
+
+pre是公共变量，遍历完这种情况要记得pop（），加入结果时记得copy（）
+
+## 隐回溯
+
+pre是函数内传递的变量，直接传就ok
+
+## 去重
+
+### 去res中重复元素
+
+1. 排序数组
+
+   可以用
+
+   ```
+   num[i]=num[i-1]跳过同层重复元素的选取（注意：子层不跳过）
+   ```
+
+2. set去重
+
+### 排序问题去重
+
+使用used数组
+
+```
+used=[True, ..., False, False]
 ```
 

@@ -175,6 +175,8 @@ $K_p^+=K_p \cup(u,feedback,i)$
 
 # HAKG
 
+总结：抽取u，i子图，进行正常的propagation之后，得到自图中所有entity的embedding，包括user和item。用self-attention提取entity相互影响信息，得到矩阵g（u，i），再用use embedding，item embedding和g（u，i）进行预测，充分利用了子图中的所有信息。
+
 ## Framework
 
 ![image-20230401160018626](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230401160018626.png)
