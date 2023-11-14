@@ -159,7 +159,7 @@ POLY2就是直接暴力组合特征,$x$是未经embedding处理的特征（one-h
 1. 常常用one-hot编码方式处理类别数据（就是大量$x_？$会为0），POLY2不进行特征选择，会让本来就稀疏的向量更稀疏
 2. 权重参数$n->n^2$，极大提高了训练复杂度。
 
-## FM-Factorization Machines
+## FM-Factorization Machines因式分解
 
 FM为给个特征学习了一个隐权重向量，在特征交叉时，使用两个特征隐向量的内积作为交叉特征的权重。下面是二阶的数学部分：
 $$
@@ -305,6 +305,22 @@ $$
 
 把用户评分向量作为输入向量，但是用户向量稀疏性可能会影响模型效果。
 
+## NeuralCF-在CF思想上使用深度学习方法
+
+传统矩阵分解欠拟合，因为score层太简单
+
+将矩阵分解（CF的扩展）中的scoring层用多层神经网络取代
+
+![image-20230725215426788](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230725215426788.png)
+
+NeuralCF还提出了将传统矩阵分解方法和深度学习方法融合的模型：
+
+![image-20230725220107980](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230725220107980.png)
+
+左边MF为传统矩阵分解学习的向量，通过元素积让向量在各个维度上成分交叉（取代原来的直接内积）；
+
+右边则是深度学习矩阵分解，最后将两个处理后向量连接再进行评分。
+
 ## Deep Crossing模型-利用DNN自动学习特征交叉
 
 输入特征：
@@ -329,7 +345,70 @@ $$
 1. 无人工参加特征筛选
 2. 模型能自动学习特征交叉，模型越深，交叉越深
 
-## NeuralCF-在CF思想上使用深度学习方法
+## PNN模型-加强特征交叉能力
 
+利用乘积层（Product Layer）取代了DeepCrossing中的Stacking层。
 
+![image-20230725221009996](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230725221009996.png)
 
+不同特征的Embedding不再是简单的拼接，而是在Product层进行两两交互，更有针对性的获取特征之间的交互信息。
+
+乘积特征交叉部分又分为内积操作IPNN和外积OPNN操作，其中OPNN在进行外积后得到的是一个矩阵，PNN把所有两两特征Embedding向量外积互操作的结果叠加进行降维。IPNN则是内积得到一个值后concatenate后变成一个向量。
+
+优点：
+
+加强不同特征之间交叉交互。
+
+缺点：
+
+OPNN中粗暴的简化操作可能会丢失信息。
+
+无差别价差特征一定程度上忽略原始特征向量中包含的有价值的信息。
+
+## Wide&Deep-记忆能力与泛化能力的综合
+
+wide-让模型更有记忆能力-模型结构简单，原始数据王位可以直接影响推荐结果。
+
+记忆能力可以理解为模型直接学习并利用历史数据中物品或者特征的“共现频率”能力（哪些关键特征会直接导致什么必然结果，e.g.如果点击过A则大概率会点击B）
+
+deep-让模型更有泛化能力
+
+泛化能力可以理解为模型传递特征的相关性以及挖掘稀疏甚至从未出现过的稀有特征与最终标签相关性的能力。
+
+![image-20230726214649249](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230726214649249.png)
+
+什么特征输入到Deep什么输入到Wide需要深刻理解应用场景后人工设计，例子：
+
+![image-20230726214719704](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230726214719704.png)
+
+所有特征都被输入到Deep去挖掘深层次关系，只有已安装应用和曝光应用这种直接粗暴对结论有重要直接影响的特征。
+
+在Wide层，Geogle用的交叉积变换处理：
+
+![image-20230726215115342](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230726215115342.png)
+
+$c^{ki}$是一个布尔变量，当第i个特征属于第k 个组合特征时，c的值为1，否则为0;
+
+x是第i个特征的值。
+
+例如，对于“AND(user_installed app=netflix.impression app=pandora)”这个组合特征来说只有当“user installed app=netflix和“impression_app=pandora”这两个特征同时为1时，其对应的交叉积变换层的结果才为1，否则为0。
+
+## Wide&Cross模型
+
+用Cross网络取代Wide&Deep中原来Wide部分，Deep部分没变。
+
+Cross网络能增加特征之间的交互力度
+
+![image-20230727160456625](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230727160456625.png)
+
+Cross网络使用多层交叉层，假设第l层输出为$x_l$，那么第l+1层输出为：
+$$
+x_{l+1}=x_0x_l^TW_l+b_l+x_l
+$$
+这里的$x_0$是将所有输入特征处理好之后concatenate起来的一个向量，不同的维度代表不同的特征。
+
+![image-20230727160827480](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230727160827480.png)
+
+cross layer的每一层其实是将两个向量A、B矩阵相乘为一个矩阵M，$M_{ij}$代表A向量的第i维度与B向量第j维度相乘，这样就将两个向量的每个维度两两相乘，而向量$x_0$中的不同维度代表不同特征，也就是让不同特征充分交互。
+
+交叉后过一个MLP层，最后再加上交叉前的l层输入，其实就是为了学习残差。

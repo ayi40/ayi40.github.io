@@ -67,3 +67,37 @@ pre是函数内传递的变量，直接传就ok
 used=[True, ..., False, False]
 ```
 
+# 位运算
+
+## 基础操作
+
+### 取反
+
+异或操作，要取反的区域为1，不取反区域为0
+
+# 优先队列
+
+1. 使用heapq实现
+
+   [8.4. heapq — Heap queue algorithm — Python 2.7.18 documentation](https://docs.python.org/2/library/heapq.html#basic-examples)
+
+​	只能实现最小堆，通过再所有元素前加-号这个trick可实现最大堆
+
+```
+pq=[]
+heapq.heappush(pq,a)
+heapq.heappop(pq)
+```
+
+​	优先队列的元素可以是tuple
+
+```
+>>> h = []
+>>> heappush(h, (5, 'write code'))
+>>> heappush(h, (7, 'release product'))
+>>> heappush(h, (1, 'write spec'))
+>>> heappush(h, (3, 'create tests'))
+>>> heappop(h)
+(1, 'write spec')
+```
+
