@@ -44,6 +44,16 @@
       </categories>
   </entry>
   <entry>
+    <title>Big Data Computing</title>
+    <url>/2024/04/15/BDC/</url>
+    <content><![CDATA[<p>BDC</p>
+<span id="more"></span>
+]]></content>
+      <categories>
+        <category>ML</category>
+      </categories>
+  </entry>
+  <entry>
     <title>CV项目准备</title>
     <url>/2023/08/30/CVProject/</url>
     <content><![CDATA[<p>.</p>
@@ -1341,6 +1351,8 @@ Convolution and Hypergraph Attention</h1>
     <url>/2023/06/12/Initialization/</url>
     <content><![CDATA[<p>.</p>
 <span id="more"></span>
+<p><a href="https://zhuanlan.zhihu.com/p/653754525">Xavier
+初始化【简单易懂】 - 知乎 (zhihu.com)</a></p>
 ]]></content>
       <categories>
         <category>ML</category>
@@ -1931,6 +1943,262 @@ single path are less than l.</p>
       <categories>
         <category>RecSys</category>
         <category>KGRec</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>LLM</title>
+    <url>/2024/04/10/LLM/</url>
+    <content><![CDATA[<p>LLM</p>
+<span id="more"></span>
+<h1 id="nlp">NLP</h1>
+<h2 id="transformer">Transformer</h2>
+<ul>
+<li>self-attention表达式</li>
+</ul>
+<p><span class="math display">\[
+Softmax(\frac{QK^T}{\sqrt{d_k}})V
+\]</span></p>
+<ul>
+<li><p><strong>why scaling</strong></p>
+<p><span class="math inline">\(QK^t\)</span>相乘会让数值变大，scaling
+后进行softmax可以使得输入的数据的分布变得更好，避免数据进入softmax敏感区间，防止梯度消失，让模型能够更容易训练。</p></li>
+<li><p><strong>可以不除以<span
+class="math inline">\(\sqrt{d_k}\)</span>吗</strong> ？</p>
+<p>可以，只要有别的方法可以缓解梯度消失即可</p></li>
+<li><p><strong>self-attention一定要这样表达吗</strong></p>
+<p>不一定，只要可以建模相关性就可以。这样表示的优点：高速计算（矩阵乘法）；表达能力强（query可以主动去关注到其他的key并在value上进行强化，并且忽略不相关的其他部分），模型容量够（引入了project_q/k/v，att_out，多头）。</p></li>
+<li><p><strong>为什么transformer用Layer Norm？有什么用？</strong></p>
+<p>任何norm的意义都是为了让使用norm的网络的输入的数据分布变得更好，也就是转换为标准正态分布，避免数值进入敏感度区间，以减缓梯度消失，从而更容易训练。当然，这也意味着舍弃了除此维度之外其他维度的其他信息。layer
+norm舍弃了batch维度信息； batch Norm舍弃了layer维度信息。</p></li>
+<li><p><strong>为什么不用BN</strong></p>
+<p>BN广泛应用于CV，针对同一特征，以跨样本的方式开展归一化，也就是对不同样本的同一channel间的所有像素值进行归一化，因此不会破坏不同样本同一特征之间的关系，毕竟“减均值，除标准差”只是一个平移加缩放的线性操作。在“身高体重”的例子中，这就意味着“归一化前是高个儿的归一化后仍然是高个儿，归一化前胖的归一化后也不会变瘦”。这一性质进而决定了经过归一化操作后，样本之间仍然具有可比较性。但是，同一样本特征与特征之间的不再具有可比较性，也就是上一个问题中我所说的“舍弃了除此维度之外其他维度的其他信息”。</p></li>
+</ul>
+<p>​
+但是在NLP中对不同样本同一特征的信息进行归一化没有意义，而且不能舍弃同一个样本的不同维度的信息。</p>
+<ul>
+<li><p><strong>Bert为什么要搞一个position embedding？</strong></p>
+<p>self-attention无法表达位置信息，用三角函数避免句子过长时位置编码太大。</p></li>
+<li><p><strong>Bert为什么三个embedding可以相加？</strong></p>
+<p>在实际场景中，叠加是一个更为常态的操作。比如声音、图像等信号。一个时序的波可以用多个不同频率的正弦波叠加来表示。只要叠加的波的频率不同，我们就可以通过傅里叶变换进行逆向转换。</p>
+<p>一串文本也可以看作是一些时序信号，也可以有很多信号进行叠加，只要频率不同，都可以在后面的复杂神经网络中得到解耦（但也不一定真的要得到解耦）。在BERT这个设定中，token，segment，position明显可以对应三种非常不同的频率。</p></li>
+<li><p><strong>transformer为什么要用三个不一样的QKV？</strong></p>
+<p>增强网络的表达能力。</p></li>
+<li><p><strong>为什么要多头？举例说明多头相比单头注意力的优势？</strong></p>
+<p>增强网络的表达能力。不同的头关注不同信息。</p>
+<p>假设有一个句子"the cat, which is black, sat on the
+mat"。在处理"sat"这个词时，一个头可能会更注"cat"，因为"cat"是"sat"的主语；另一个头可能会更关注"on
+the mat"，因为这是"sat"的宾语；还有一个头可能会关注"which is
+black"，因为这是对"cat"的修饰。</p>
+<p>经过多头之后，我们还需要att_out线性层来做线性变换，以自动决定（通过训练）对每个头的输出赋予多大的权重，从而在最终的输出中强调一些头的信息，而忽视其他头的信息。</p></li>
+<li><p><strong>为什么Bert中要用WordPiece/BPE这样的subword
+Token？</strong></p>
+<p>避免OOV（Out Of
+Vocabulary），也就是词汇表外的词。在NLP中，通常会预先构建一个词汇表，包含所有模型能够识别的词。然而，总会有一些词没有出现在预先构建的词汇表中，这些词就是
+OOV。</p>
+<p>传统的处理方式往往是将这些 OOV 映射到一个特殊的符号，如
+<code>&lt;UNK&gt;</code>，但这种方式无法充分利用 OOV
+中的信息。例如，对于词汇表中没有的词 "unhappiness"，如果直接映射为
+<code>&lt;UNK&gt;</code>，则模型就无法理解它的含义。</p>
+<p>WordPiece/Byte Pair Encoding (BPE) 等基于子词的分词方法提供了一种解决
+OOV
+问题的方式。现在更多的语言大模型选择基于BPE的方式，只不过BERT时代更多还是WordPiece。BPE
+通过将词分解为更小的单元（子词或字符），可以有效地处理词汇表外的词。对于上面的
+"unhappiness" 例子，即使 "unhappiness"
+本身不在词汇表中，但是它可以被分解为 "un"、"happiness"
+等子词，而这些子词可能在词汇表中。这样，模型就可以通过这些子词来理解
+"unhappiness" 的含义。</p>
+<p>另一方面就是，BPE本身的语义粒度也很合适，一个token不会太大，也不会小到损失连接信息（如一个字母）。</p></li>
+<li><p><strong>Bert中为什么要在开头加个[CLS]?</strong></p>
+<p>用[cls]学习整个句子的表示</p></li>
+<li><p><strong>不用[CLS]的语义输出，有其他方式可以代替吗？</strong></p>
+<p>这个问题还是考察到了[CLS]的核心内涵，也就是如何获得整个sentence的语义表示。既然不让使用特意训好的[CLS]，那我们就从每个token得到的embedding入手，把所有的token弄到一起。</p>
+<p>很直观的思路，就是对BERT的所有输出词向量（忽略[CLS]和[SEP]）应用MaxPooling和AvgPooling，然后将得到的两个向量拼接起来，作为整个序列的表示。这样做的话可以同时保留序列中最显著的特征（通过MaxPooling）和整体的，均衡的特征（通过AvgPooling）。</p></li>
+<li><p><strong>Bert中有哪些地方用到了mask?</strong></p>
+<p><strong>预训练任务Masked Language Model (MLM)：</strong></p>
+<p>主要的思想是，把输入的其中一部分词汇随机掩盖，模型的目标是预测这些掩盖词汇。这种训练方式使得每个位置的BERT都能学习到其上下文的信息。</p>
+<p><strong>self-attention的计算：</strong></p>
+<p>不同样本的seq_len不一样。但是由于输出的seq_len需要一致，所以需要通过补padding来对齐。而在attention中我们不希望一个token去注意到这些padding的部分，attention中的mask就是来处理掉这些无效的信息的。</p>
+<p>具体来说就是在softmax前每个都设为-inf，然后过完softmax后"padding"部分的权重就会接近于零，query
+token就不会分配注意力权重了。</p>
+<p><strong>下游任务的decoder</strong>：</p>
+<p>在做next token
+prediction的时候，模型是根据前面已有的tokens来做的，也就是看不到未来的tokens的信息。而在我们训练的过程中，通常采用teacher
+forcing的策略，也就是我们当然会把完整的标签喂给模型，但是由于在一个一个生成next
+token的过程中，模型应该是一个一个往外“蹦“字的过程（想想chatgpt回复你的样子）所以我们会遮盖掉seqence中当前位置之后信息，以防止模型利用未来信息，也就是信息泄露。mask掉后模型的注意力只会集中在此前的序列上。</p></li>
+<li><p><strong>Bert中self attention 计算复杂度如何？</strong></p>
+<p><span
+class="math inline">\(O(d_L^2)\)</span>，因为输入的序列的每一个token都要对这个序列上的所有token去求一个attention
+score。</p></li>
+<li><p><strong>有什么技术降低复杂度提升输入长度的？</strong></p>
+<p>比如Sparse
+Attention，放弃对全文的关注，只关心局部的语义组合，相当于self-attention上又加了一些mask，这样的话就可以降低复杂度，而且下游任务的语义关联性的体现往往是局部/稀疏的。</p></li>
+<li><p><strong>为什么以前char level/subword
+level的NLP模型表现一般都比较差，但是到了bert这里就比较好？</strong></p>
+<p>还是归功于Transformers，因为对于字符级别（char-level）或者子词级别（subword-level）的NLP模型，挑战在于需要模型能够理解字符或者子词组合起来形成词语和句子的语义，这对模型的能力有很高的要求。</p>
+<p>然而，以前NLP模型没办法做到很深，两层lstm基本就到极限了，非线性成长路线过分陡峭，所以增加网络容量的时候，降低了泛化能力。</p>
+<p>Bert降低了输入的复杂度，提升了模型的复杂度。模型多层产生的非线性增长平滑，可以加大网络容量，同时增强容量和泛化能力。</p></li>
+<li><p><strong>Bert为什么要使用warmup的学习率trick</strong></p>
+<p>主要是考虑到训练的初始阶段params更新比较大，可能会使模型陷入local
+minima或者overfitting。</p>
+<p>warmup就是把lr从一个较小的值线性增大到预设，以减缓参数震荡，让训练变得比较smooth，当模型参数量上来后这种策略变得更重要了。</p></li>
+<li><p><strong>为什么说GPT是单向的Bert是双向的？</strong></p>
+<p>这也是decoder-only和encoder-only的区别。</p>
+<p>decoder-only架构的生成模型在输出的时候只能看到当前位置前的tokens，也就是屏蔽了序列后面的位置，以适配NTP任务。</p>
+<p>encoder-only架构的编码模型在输出的时候可以利用前后位置的tokens，以适配MLM任务。</p>
+<p>具体的做法是self-attention加不加casual
+mask，也就是遮不遮住序列后面的内容。</p></li>
+<li><p><strong>Bert如何处理一词多义？</strong></p>
+<p>一词多义指的是在不同句子中token有不同的含义。</p>
+<p>这正是self-attention解决的，搭配上MLM的任务，就可以让每个token会注意到上下文的其他token来得到自己的embedding。</p></li>
+<li><p><strong>Bert中的transformer和原生的transformer有什么区别？</strong></p>
+<p>其实很多，如果我们只讨论模型架构，也就是对比<a
+href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1706.03762">Attention
+is All You Need</a>的encoder和BERT的话，最重点的区别在于位置编码。</p>
+<p>原生的transformer是最经典的Sinusoidal绝对位置编码。</p>
+<p>而BERT中变成了可以学习的参数，也就是可学习位置编码。</p>
+<h2 id="四种norm">四种Norm</h2>
+<ul>
+<li><p>Batch
+Norm：把每个Batch中，每句话的相同位置的字向量看成一组做归一化。</p></li>
+<li><p>Layer Norm：在每一个句子中进行归一化。</p></li>
+<li><p>Instance Norm：每一个字的字向量的看成一组做归一化。</p></li>
+<li><p>Group Norm：把每句话的每几个字的字向量看成一组做归一化。</p></li>
+<li><p><strong>Batch Normalization（Batch Norm）</strong>：
+<strong>缺点</strong>：在处理序列数据（如文本）时，Batch
+Norm可能不会表现得很好，因为序列数据通常长度不一，并且一次训练的Batch中的句子的长度可能会有很大的差异；此外，Batch
+Norm对于Batch大小也非常敏感。对于较小的Batch大小，Batch
+Norm可能会表现得不好，因为每个Batch的统计特性可能会有较大的波动。</p></li>
+<li><p><strong>Layer Normalization（Layer Norm）</strong>：
+<strong>优点</strong>：Layer
+Norm是对每个样本进行归一化，因此它对Batch大小不敏感，这使得它在处理序列数据时表现得更好；另外，Layer
+Norm在处理不同长度的序列时也更为灵活。</p></li>
+<li><p><strong>Instance Normalization（Instance Norm）</strong>：
+<strong>优点</strong>：Instance
+Norm是对每个样本的每个特征进行归一化，因此它可以捕捉到更多的细节信息。Instance
+Norm在某些任务，如风格迁移，中表现得很好，因为在这些任务中，细节信息很重要。
+<strong>缺点</strong>：Instance
+Norm可能会过度强调细节信息，忽视了更宏观的信息。此外，Instance
+Norm的计算成本相比Batch Norm和Layer Norm更高。</p></li>
+<li><p><strong>Group Normalization（Group Norm）</strong>：
+<strong>优点</strong>：Group Norm是Batch Norm和Instance
+Norm的折中方案，它在Batch的一个子集（即组）上进行归一化。这使得Group
+Norm既可以捕捉到Batch的统计特性，又可以捕捉到样本的细节信息。此外，Group
+Norm对Batch大小也不敏感。 <strong>缺点</strong>：Group
+Norm的性能取决于组的大小，需要通过实验来确定最优的组大小。此外，Group
+Norm的计算成本也比Batch Norm和Layer Norm更高。</p></li>
+</ul>
+<h1 id="大模型算法">大模型算法</h1>
+<h2 id="并行计算">并行计算</h2>
+<p>并行化指的是拆分任务并将它们分布到多个处理器或设备(如gpu)上，以便它们可以同时完成。</p>
+<h3 id="data-parallenlism">Data Parallenlism</h3>
+<p>数据并行性将训练数据分成多个分片(partition)，并将其分布到不同的节点上。
+每个节点首先用自己的局部数据训练自己的子模型，然后与其他节点通信，以一定的间隔将结果组合在一起，从而得到全局模型。
+最大的缺点是，在向后传递期间，您必须将整个梯度传递给所有其他gpu。它还在所有工作线程中复制模型和优化器，这是相当低内存效率的。</p>
+<h3 id="tensor-parallelism">Tensor Parallelism</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240411135309145.png"
+alt="image-20240411135309145" />
+<figcaption aria-hidden="true">image-20240411135309145</figcaption>
+</figure>
+<p>张量并行将大型矩阵乘法划分为较小的子矩阵计算，然后使用多个gpu同时执行。</p>
+<p>然而，缺点是它在每次前向和后向传播中引入了额外的激活通信，因此需要高通信带宽才能高效</p>
+<h3 id="pipeline-parallelism-and-model-parallelism">Pipeline parallelism
+and model parallelism</h3>
+<p><img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240411135707760.png"
+alt="image-20240411135707760" />
+管道并行通过将模型的层划分为可以并行处理的阶段来提高深度学习训练的内存和计算效率。这有助于显著提高总体吞吐量速度，同时增加最小的通信开销。你可以把管道并行看作是“层间并行”(张量并行可以看作是“层内并行”)。</p>
+<p>与管道并行类似，模型并行是指在gpu之间分割模型并为每个模型使用相同的数据;所以每个GPU只处理模型的一部分，而不是数据的一部分。管道和模型并行的缺点是它不能无限扩展，因为管道并行的程度受模型深度的限制。</p>
+<h3 id="ptd-p">PTD-P</h3>
+<p>combines pipeline, tensor, and data parallelism</p>
+<h3 id="gradient-accumulation">Gradient accumulation</h3>
+<p>在一次对所有累积的梯度执行一个权重更新步骤之前，将多个批次的梯度相加。</p>
+<p>这种方法减少了之间的通信开销,gpu通过允许它们独立地处理自己的本地批数据，直到它们再次相互同步，在为单个优化步骤积累足够的梯度之后。</p>
+<h3
+id="asynchronous-stochastic-gradient-descent-optimization">Asynchronous
+stochastic gradient descent optimization</h3>
+<ul>
+<li>从参数服务器获取处理当前小批量所需的模型的最新参数。</li>
+<li>我们根据这些参数计算损失的梯度.</li>
+<li>这些梯度被发送回参数服务器，然后参数服务器相应地更新模型。</li>
+</ul>
+<h3 id="micro-batching">Micro-batching</h3>
+<p>将 small
+mini-batches合并成大批，这样在反向传播操作期间，可以在更短的时间内处理更多的批，并且在设备之间使用更少的同步点。</p>
+<h2 id="数据集预处理">数据集预处理</h2>
+<ul>
+<li>Data Sampling</li>
+</ul>
+<p>某些数据组件可以被上采样以获得更平衡的数据分布。一些研究对低质量的数据集进行了降采样，如未过滤的网络爬虫数据。其他研究根据模型目标对特定领域的数据进行采样。</p>
+<p>还有一些先进的方法可以过滤高质量的数据，例如将训练好的分类器模型应用到数据集上。例如，Meta
+AI的模型Galactica是专门为科学而建立的，特别是存储、组合和推理科学知识。</p>
+<ul>
+<li>Data cleaning</li>
+</ul>
+<p>删除样板文本和HTML代码或标记，修复拼写错误，处理跨域单应词，删除有偏见、有害的言论。</p>
+<p>有的项目，这些技术并没有被使用，因为模型应该看到真实世界的公平表示，并学习处理拼写错误和毒性作为模型能力的一部分。</p>
+<ul>
+<li>Non-standard textual components handling</li>
+</ul>
+<p>非标准文本组件转换为文本，例如，将表情符号雪花转换为对应的文本“snowflake”。</p>
+<ul>
+<li>Data deduplication</li>
+</ul>
+<p>擅长重复数据</p>
+<ul>
+<li>Downstream task data removal</li>
+</ul>
+<p>在训练集中删除测试集中也存在的数据</p>
+<h2 id="tokenization">Tokenization</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240411152753420.png"
+alt="image-20240411152753420" />
+<figcaption aria-hidden="true">image-20240411152753420</figcaption>
+</figure>
+<p>将文本字符串编码为transformer可读的token ID整数。</p>
+<p>Most state-of-the-art LLMs use subword-based tokenizers like
+byte-pair encoding (BPE) as opposed to word-based approaches.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240411153647039.png"
+alt="image-20240411153647039" />
+<figcaption aria-hidden="true">image-20240411153647039</figcaption>
+</figure></li>
+</ul>
+<p>subword-based methods</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240411154107909.png"
+alt="image-20240411154107909" />
+<figcaption aria-hidden="true">image-20240411154107909</figcaption>
+</figure>
+<h2 id="pre-train">Pre-Train</h2>
+<h2 id="supervised-fine-tuning-sft"><strong>Supervised fine-tuning
+(SFT)</strong></h2>
+<p><a
+href="https://blog.csdn.net/sinat_39620217/article/details/131751780">人工智能大语言模型微调技术：SFT
+监督微调、LoRA 微调方法、P-tuning v2 微调方法、Freeze 监督微调方法_lora
+ptuningv2-CSDN博客</a></p>
+<p>lora：</p>
+<figure>
+<img
+src="C:\Users\37523\AppData\Roaming\Typora\typora-user-images\image-20240411183752670.png"
+alt="image-20240411183752670" />
+<figcaption aria-hidden="true">image-20240411183752670</figcaption>
+</figure>
+<p><a
+href="https://www.zhihu.com/tardis/zm/art/623543497?source_id=1005">LORA：大模型轻量级微调
+(zhihu.com)</a></p>
+<p><a
+href="https://blog.csdn.net/sinat_39620217/article/details/131751780">人工智能大语言模型微调技术：SFT
+监督微调、LoRA 微调方法、P-tuning v2 微调方法、Freeze 监督微调方法_lora
+ptuningv2-CSDN博客</a></p>
+]]></content>
+      <categories>
+        <category>ML</category>
+        <category>LLM</category>
       </categories>
   </entry>
   <entry>
@@ -2661,20 +2929,6 @@ representations.</li>
       </categories>
   </entry>
   <entry>
-    <title>NLP</title>
-    <url>/2023/11/08/NLP/</url>
-    <content><![CDATA[<p>NLP知识概览-（for interview)</p>
-<span id="more"></span>
-<h1 id="词向量">词向量</h1>
-<h1 id="循环神经网络">循环神经网络</h1>
-<h1 id="注意力机制">注意力机制</h1>
-]]></content>
-      <categories>
-        <category>ML</category>
-        <category>NLP</category>
-      </categories>
-  </entry>
-  <entry>
     <title>GraphRec</title>
     <url>/2023/02/24/Note_for_GraphRec/</url>
     <content><![CDATA[<p>.</p>
@@ -2902,9 +3156,22 @@ alt="image-20230313220835272" />
 <li>重排：
 对精排结果做多样性抽样，得到几十个物品，然后用规则调整物品的排序。</li>
 </ol>
-<h2 id="实验流程">实验流程</h2>
-<h3
-id="概要03推荐系统的ab测试没仔细看以后补">概要03推荐系统的AB测试：没仔细看以后补</h3>
+<h2 id="ab测试">AB测试</h2>
+<p>完成离线测试后，使用线上小流量AB测试考察指标，或者用AB测试调参（GNN深度）</p>
+<h3 id="随机分桶">随机分桶</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20231119172737630.png"
+alt="image-20231119172737630" />
+<figcaption aria-hidden="true">image-20231119172737630</figcaption>
+</figure>
+<p>在不同的桶上使用不同的策略或参数实验。</p>
+<h3 id="分层实验">分层实验</h3>
+<p>不同的部门都需要做AB测试，每个部门对应一个层，分层实验满足：</p>
+<ol type="1">
+<li><strong>同层互斥</strong>：同一个部门做实验不能使用同一个桶；例：GNN实验占了召回层4个桶，其它召回实验只能用剩下的6个桶。</li>
+<li><strong>不同层正交</strong>：每一层独立随机对用户做分桶。每一层都可以独立用100%的用户做实验。</li>
+</ol>
 <h1 id="召回">召回</h1>
 <h2 id="协同过滤">协同过滤</h2>
 <h3 id="基于物品的协同过滤-itemcf">基于物品的协同过滤 ItemCF</h3>
@@ -4621,202 +4888,6 @@ hypergraph</p>
       </categories>
   </entry>
   <entry>
-    <title>常见优化函数</title>
-    <url>/2023/03/07/optimizer/</url>
-    <content><![CDATA[<p>.</p>
-<span id="more"></span>
-<h1 id="常见优化函数">常见优化函数</h1>
-<h2 id="梯度下降gd决定优化方向">梯度下降GD(决定优化方向)</h2>
-<p><strong>梯度下降的核心思想：负梯度方向是使函数值下降最快的方向</strong></p>
-<h3 id="批次梯度下降bgd">批次梯度下降BGD</h3>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307202943629.png"
-alt="image-20230307202943629" />
-<figcaption aria-hidden="true">image-20230307202943629</figcaption>
-</figure>
-<p><strong>优点</strong>：在梯度下降法中，因为每次都遍历了完整的训练集，<strong>其能保证结果为全局最优</strong></p>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307204257470.png"
-alt="image-20230307204257470" />
-<figcaption aria-hidden="true">image-20230307204257470</figcaption>
-</figure>
-<p><strong>缺点</strong>：我们需要对于每个参数求偏导，且在对每个参数求偏导的过程中还需要对训练集遍历一次，当训练集（m）很大时，计算费时</p>
-<p><strong>解决方法</strong>：使用minibatch去更新</p>
-<h3 id="随机梯度下降">随机梯度下降</h3>
-<p>为了解决BGD耗时过长，它是利用单个样本的损失函数对θ求偏导得到对应的梯度，来更新θ，更新过程如下：</p>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307204324179.png"
-alt="image-20230307204324179" />
-<figcaption aria-hidden="true">image-20230307204324179</figcaption>
-</figure>
-<p>速度快，但受抽样影响大，<strong>噪音较BGD要多，使得SGD并不是每次迭代都向着整体最优化方向。</strong></p>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307204553630.png"
-alt="image-20230307204553630" />
-<figcaption aria-hidden="true">image-20230307204553630</figcaption>
-</figure>
-<p>因为每一次迭代的梯度受抽样的影响比较大，学习率需要逐渐减少，否则模型很难收敛。在实际操作中，一般采用线性衰减：
-<span class="math display">\[
-\eta_k=(1-\alpha)\eta_0+\alpha\eta_{\tau}
-\]</span></p>
-<p><span class="math display">\[
-\alpha=\frac{k}{\tau}
-\]</span></p>
-<p><span class="math inline">\(\eta_0\)</span>:初始学习率</p>
-<p><span class="math inline">\(\eta_{\tau}\)</span>：
-最后一次迭代的学习率</p>
-<p><span class="math inline">\(\tau\)</span>：自然迭代次数</p>
-<p><span class="math inline">\(\eta_{\tau}\)</span>设为<span
-class="math inline">\(\eta_0\)</span>的1%，k一般设为100的倍数。</p>
-<p><strong>优点</strong>：收敛速度快</p>
-<p><strong>缺点</strong>：</p>
-<ol type="1">
-<li><p>训练不稳定：噪音较BGD要多，使得SGD并不是每次迭代都向着整体最优化方向。</p></li>
-<li><p>选择适当的学习率可能很困难。
-太小的学习率会导致收敛性缓慢，而学习速度太大可能会妨碍收敛，并导致损失函数在最小点波动。</p></li>
-<li><p>无法逃脱鞍点</p></li>
-</ol>
-<details>
-在数学中，鞍点或极小值点是函数图形表面上的一个点，其正交方向上的斜率(导数)均为零(临界点)，但不是函数的局
-部极值。一句话概括就是：一个不是局部极值点的驻点称为鞍点。
-*驻点：函数在一点处的一阶导数为零。
-<img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307205942585.png">
-<details>
-<h3 id="min-batch-小批量梯度下降mbgd">min-batch 小批量梯度下降MBGD</h3>
-<p><strong>算法的训练过程比较快，而且也要保证最终参数训练的准确率</strong></p>
-<p>m表示一个批次的数据个数</p>
-<h2 id="动量方法">动量方法</h2>
-<h3 id="momentum随机梯度下降">Momentum随机梯度下降</h3>
-<p>核心思想：Momentum借用了物理中的<strong>动量</strong>概念,即前一次的梯度也会参与运算。为了表示动量，引入了<strong>一阶动量</strong>m。<img
-src="https://www.nowcoder.com/equation?tex=m&amp;preview=true"
-alt="img" />是之前的梯度的累加,但是每回合都有一定的衰减。公式如下：
-<span class="math display">\[
-m_t=\beta m_{t-1}+(1-\beta)\cdot g_t
-\]</span></p>
-<p><span class="math display">\[
-w_{t+1}=w_t-\eta \cdot m_t
-\]</span></p>
-<p><span class="math inline">\(g_t\)</span>：
-为第t次计算的梯度（就是现在要算这次）</p>
-<p><span class="math inline">\(m_{t-1}\)</span>: 为之前梯度的累加</p>
-<p><span class="math inline">\(\beta\)</span>: 动量因子</p>
-<p>所以当前权值的改变受上一次改变的影响，类似加上了<strong>惯性</strong>。</p>
-<p>优点：momentum能够加速SGD收敛，抑制震荡。并且动量有机会逃脱局部极小值(鞍点)。</p>
-<ol type="1">
-<li>在梯度方向改变时，momentum能够降低参数更新速度，从而减少震荡；</li>
-<li>在梯度方向相同时，momentum可以加速参数更新， 从而加速收敛。</li>
-</ol>
-<h3 id="nesterov动量随机梯度下降法">Nesterov动量随机梯度下降法</h3>
-<p>Nesterov是Momentum的变种。与Momentum唯一区别就是，计算梯度的不同。Nesterov动量中，先用当前的速度临时更新一遍参数，在用更新的临时参数计算梯度。</p>
-<p>在momentum更新梯度时加入对当前梯度的校正，让梯度“多走一步”，可能跳出局部最优解：
-<span class="math display">\[
-w_t^*=\beta m_{t-1}+w_t
-\]</span></p>
-<p><span class="math display">\[
-m_t=\beta m_{t-1}+(1-\beta)\cdot g_t
-\]</span></p>
-<p><span class="math display">\[
-w_{t+1}=w_t-\eta \cdot m_t
-\]</span></p>
-<p>这里的<span class="math inline">\(g_t\)</span>用临时点<span
-class="math inline">\(w_t^*\)</span>计算的</p>
-<h2 id="更新学习率方法">更新学习率方法</h2>
-<h3 id="adagrad">Adagrad</h3>
-<p>引入<strong>二阶动量</strong>，根据训练轮数的不同，对学习率进行了动态调整：</p>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307213914026.png"
-alt="image-20230307213914026" />
-<figcaption aria-hidden="true">image-20230307213914026</figcaption>
-</figure>
-<p><strong>缺点</strong>：仍然需要人为指定一个合适的全局学习率，同时网络训练到一定轮次后，分母上梯度累加过大使得学习率为0而导致训练提前结束。</p>
-<h3 id="adadelta不是很懂">Adadelta(不是很懂)</h3>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307215135905.png"
-alt="image-20230307215135905" />
-<figcaption aria-hidden="true">image-20230307215135905</figcaption>
-</figure>
-<h3 id="rmsprop">RMSProp</h3>
-<p>AdaGrad算法在迭代后期由于学习率过小，可能较难找到一个有用的解。为了解决这一问题，RMSprop算法对Adagrad算法做了一点小小的修改，RMSprop使用指数衰减只保留过去给定窗口大小的梯度，使其能够在找到凸碗状结构后快速收敛。RMSProp法可以视为Adadelta法的一个特例，即依然使用全局学习率替换掉Adadelta法中的<span
-class="math inline">\(s_t\)</span>:</p>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307215341546.png"
-alt="image-20230307215341546" />
-<figcaption aria-hidden="true">image-20230307215341546</figcaption>
-</figure>
-<p>推荐<span
-class="math inline">\(\eta_{global}=1,\rho=0.9,\epsilon=10^{-6}\)</span></p>
-<p>缺点：依然使用了全局学习率，需要根据实际情况来设定 优点：</p>
-<ol type="1">
-<li>分母不再是一味的增加，它会重点考虑距离它较近的梯度（指数衰减的效果）</li>
-<li>只用了部分梯度加和而不是所有，这样避免了梯度累加过大使得学习率为0而导致训练提前结束。</li>
-</ol>
-<h3 id="adam">Adam</h3>
-<p>https://zhuanlan.zhihu.com/p/377968342</p>
-<p>Adam公式如下： <span class="math display">\[
-m_t:=beta_1*m_{t-1}+(1-beta_1)*g
-\]</span></p>
-<p><span class="math display">\[
-v_t:=beta_2*v_{t-1}+(1-beta_2)*g*g
-\]</span></p>
-<p><span class="math display">\[
-variable:=variable-lr_t*\frac{m_t}{\sqrt{v_t+\epsilon}}
-\]</span></p>
-<p><span
-class="math inline">\(m_t\)</span>可以理解为求历史梯度加强平均，思想来自动量方法，防止震荡。</p>
-<p><span class="math inline">\(v_t\)</span>则是用于调整lr的，即是<span
-class="math inline">\(\frac{lr}{\sqrt{v_t+\epsilon}}\)</span>,</p>
-<p>在迭代过程中，如果某一维度一直以很小的梯度进行更新，证明此方向梯度变换较为稳定，因此可以加大学习率，以较大的学习率在此维度更新，体现在公式上就是：对历史梯度平方进行一阶指数平滑后，公式2会得到一个很小的值，公式3中的自适应学习率会相对较大</p>
-<p>相反，某一维度在迭代过程中一直以很大的梯度进行更新，明此方向梯度变换较为剧烈（不稳定），因此可减小学习率，以较小的学习率在此维度更新
-体现在公式上就是：对历史梯度平方进行一阶指数平滑后，公式2则会得到一个很大的值，公式3中的自适应学习率会相对较小</p>
-<p><span
-class="math inline">\(v_t\)</span>也可以解决<strong>梯度稀疏</strong>的问题；频繁更新的梯度将会被赋予一个较小的学习率，而稀疏的梯度则会被赋予一个较大的学习率，通过上述机制，在数据分布稀疏的场景，能更好利用稀疏梯度的信息，比标准的SGD算法更有效地收敛。</p>
-<h1 id="常见优化函数问题">常见优化函数问题</h1>
-<h2
-id="sgd和adam谁收敛的比较快谁能达到全局最优解">SGD和Adam谁收敛的比较快？谁能达到全局最优解？</h2>
-<p>SGD算法没有动量的概念，SGD和Adam相比，缺点是下降速度慢，对学习率要求严格。</p>
-<p>而Adam引入了一阶动量和二阶动量，下降速度比SGD快，Adam可以自适应学习率，所以初始学习率可以很大。</p>
-<p>SGD相比Adam，更容易达到全局最优解。主要是后期Adam的学习率太低，影响了有效的收敛。</p>
-<p>我们可以前期使用Adam，后期使用SGD进一步调优。</p>
-<h2 id="adam用到二阶矩的原理是什么">adam用到二阶矩的原理是什么</h2>
-<p>引入二阶动量，根据训练轮数不同对学习率进行调整。</p>
-<p>可以看出来，公式将前面的训练梯度平方加和，在网络训练的前期，由于分母中梯度的累加（<span
-class="math inline">\(v_t\)</span>）较小，所以一开始的学习率<span
-class="math inline">\(\eta_t\)</span>比较大；随着训练后期梯度累加较大时，<span
-class="math inline">\(\eta_t\)</span>逐渐减小，而且是自适应地减小。</p>
-<p>而且如果某个维度频繁震荡梯度大，学习率就降低；如果梯度小而稳定，学习率就大。</p>
-<h2
-id="batch的大小如何选择过大的batch和过小的batch分别有什么影响">Batch的大小如何选择，过大的batch和过小的batch分别有什么影响</h2>
-<p><strong>Batch选择时尽量采用2的幂次，如8、16、32等</strong></p>
-<p>在合理范围内，增大Batch_size的<strong>好处</strong>：</p>
-<ol type="1">
-<li>提高了<strong>内存利用率</strong>以及大矩阵乘法的并行化效率。</li>
-<li>减少了跑完一次epoch(全数据集）所需要的迭代次数，加快了对于相同数据量的处理速度。</li>
-</ol>
-<p>盲目增大Batch_size的<strong>坏处</strong>：</p>
-<ol type="1">
-<li>提高了内存利用率，但是内存容量可能不足。</li>
-<li>跑完一次epoch(全数据集)所需的迭代次数减少，要想达到相同的精度，其所花费的时间大大增加，从而对参数的修正也就显得更加缓慢。</li>
-<li>Batch_size增大到一定程度，其确定的下降方向已经基本不再变化。</li>
-</ol>
-<p>Batch_size过小的<strong>影响</strong>：</p>
-<ol type="1">
-<li>训练时不稳定，可能不收敛</li>
-<li>精度可能更高。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>ML</category>
-        <category>Basic</category>
-      </categories>
-  </entry>
-  <entry>
     <title>常见损失函数</title>
     <url>/2023/02/28/loss_function/</url>
     <content><![CDATA[<p>常见损失函数及常见问题</p>
@@ -5074,6 +5145,202 @@ src="https://www.nowcoder.com/equation?tex=Q(x)&amp;preview=true"
 alt="img" />为<strong>理论概率分布</strong>，<img
 src="https://www.nowcoder.com/equation?tex=P(x)&amp;preview=true"
 alt="img" />为模型<strong>预测概率分布</strong>，而KL就是度量这两个分布的差异性，当然差异越小越好，所以KL也可以用作损失函数。</p>
+]]></content>
+      <categories>
+        <category>ML</category>
+        <category>Basic</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>常见优化函数</title>
+    <url>/2023/03/07/optimizer/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="常见优化函数">常见优化函数</h1>
+<h2 id="梯度下降gd决定优化方向">梯度下降GD(决定优化方向)</h2>
+<p><strong>梯度下降的核心思想：负梯度方向是使函数值下降最快的方向</strong></p>
+<h3 id="批次梯度下降bgd">批次梯度下降BGD</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307202943629.png"
+alt="image-20230307202943629" />
+<figcaption aria-hidden="true">image-20230307202943629</figcaption>
+</figure>
+<p><strong>优点</strong>：在梯度下降法中，因为每次都遍历了完整的训练集，<strong>其能保证结果为全局最优</strong></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307204257470.png"
+alt="image-20230307204257470" />
+<figcaption aria-hidden="true">image-20230307204257470</figcaption>
+</figure>
+<p><strong>缺点</strong>：我们需要对于每个参数求偏导，且在对每个参数求偏导的过程中还需要对训练集遍历一次，当训练集（m）很大时，计算费时</p>
+<p><strong>解决方法</strong>：使用minibatch去更新</p>
+<h3 id="随机梯度下降">随机梯度下降</h3>
+<p>为了解决BGD耗时过长，它是利用单个样本的损失函数对θ求偏导得到对应的梯度，来更新θ，更新过程如下：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307204324179.png"
+alt="image-20230307204324179" />
+<figcaption aria-hidden="true">image-20230307204324179</figcaption>
+</figure>
+<p>速度快，但受抽样影响大，<strong>噪音较BGD要多，使得SGD并不是每次迭代都向着整体最优化方向。</strong></p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307204553630.png"
+alt="image-20230307204553630" />
+<figcaption aria-hidden="true">image-20230307204553630</figcaption>
+</figure>
+<p>因为每一次迭代的梯度受抽样的影响比较大，学习率需要逐渐减少，否则模型很难收敛。在实际操作中，一般采用线性衰减：
+<span class="math display">\[
+\eta_k=(1-\alpha)\eta_0+\alpha\eta_{\tau}
+\]</span></p>
+<p><span class="math display">\[
+\alpha=\frac{k}{\tau}
+\]</span></p>
+<p><span class="math inline">\(\eta_0\)</span>:初始学习率</p>
+<p><span class="math inline">\(\eta_{\tau}\)</span>：
+最后一次迭代的学习率</p>
+<p><span class="math inline">\(\tau\)</span>：自然迭代次数</p>
+<p><span class="math inline">\(\eta_{\tau}\)</span>设为<span
+class="math inline">\(\eta_0\)</span>的1%，k一般设为100的倍数。</p>
+<p><strong>优点</strong>：收敛速度快</p>
+<p><strong>缺点</strong>：</p>
+<ol type="1">
+<li><p>训练不稳定：噪音较BGD要多，使得SGD并不是每次迭代都向着整体最优化方向。</p></li>
+<li><p>选择适当的学习率可能很困难。
+太小的学习率会导致收敛性缓慢，而学习速度太大可能会妨碍收敛，并导致损失函数在最小点波动。</p></li>
+<li><p>无法逃脱鞍点</p></li>
+</ol>
+<details>
+在数学中，鞍点或极小值点是函数图形表面上的一个点，其正交方向上的斜率(导数)均为零(临界点)，但不是函数的局
+部极值。一句话概括就是：一个不是局部极值点的驻点称为鞍点。
+*驻点：函数在一点处的一阶导数为零。
+<img src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307205942585.png">
+<details>
+<h3 id="min-batch-小批量梯度下降mbgd">min-batch 小批量梯度下降MBGD</h3>
+<p><strong>算法的训练过程比较快，而且也要保证最终参数训练的准确率</strong></p>
+<p>m表示一个批次的数据个数</p>
+<h2 id="动量方法">动量方法</h2>
+<h3 id="momentum随机梯度下降">Momentum随机梯度下降</h3>
+<p>核心思想：Momentum借用了物理中的<strong>动量</strong>概念,即前一次的梯度也会参与运算。为了表示动量，引入了<strong>一阶动量</strong>m。<img
+src="https://www.nowcoder.com/equation?tex=m&amp;preview=true"
+alt="img" />是之前的梯度的累加,但是每回合都有一定的衰减。公式如下：
+<span class="math display">\[
+m_t=\beta m_{t-1}+(1-\beta)\cdot g_t
+\]</span></p>
+<p><span class="math display">\[
+w_{t+1}=w_t-\eta \cdot m_t
+\]</span></p>
+<p><span class="math inline">\(g_t\)</span>：
+为第t次计算的梯度（就是现在要算这次）</p>
+<p><span class="math inline">\(m_{t-1}\)</span>: 为之前梯度的累加</p>
+<p><span class="math inline">\(\beta\)</span>: 动量因子</p>
+<p>所以当前权值的改变受上一次改变的影响，类似加上了<strong>惯性</strong>。</p>
+<p>优点：momentum能够加速SGD收敛，抑制震荡。并且动量有机会逃脱局部极小值(鞍点)。</p>
+<ol type="1">
+<li>在梯度方向改变时，momentum能够降低参数更新速度，从而减少震荡；</li>
+<li>在梯度方向相同时，momentum可以加速参数更新， 从而加速收敛。</li>
+</ol>
+<h3 id="nesterov动量随机梯度下降法">Nesterov动量随机梯度下降法</h3>
+<p>Nesterov是Momentum的变种。与Momentum唯一区别就是，计算梯度的不同。Nesterov动量中，先用当前的速度临时更新一遍参数，在用更新的临时参数计算梯度。</p>
+<p>在momentum更新梯度时加入对当前梯度的校正，让梯度“多走一步”，可能跳出局部最优解：
+<span class="math display">\[
+w_t^*=\beta m_{t-1}+w_t
+\]</span></p>
+<p><span class="math display">\[
+m_t=\beta m_{t-1}+(1-\beta)\cdot g_t
+\]</span></p>
+<p><span class="math display">\[
+w_{t+1}=w_t-\eta \cdot m_t
+\]</span></p>
+<p>这里的<span class="math inline">\(g_t\)</span>用临时点<span
+class="math inline">\(w_t^*\)</span>计算的</p>
+<h2 id="更新学习率方法">更新学习率方法</h2>
+<h3 id="adagrad">Adagrad</h3>
+<p>引入<strong>二阶动量</strong>，根据训练轮数的不同，对学习率进行了动态调整：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307213914026.png"
+alt="image-20230307213914026" />
+<figcaption aria-hidden="true">image-20230307213914026</figcaption>
+</figure>
+<p><strong>缺点</strong>：仍然需要人为指定一个合适的全局学习率，同时网络训练到一定轮次后，分母上梯度累加过大使得学习率为0而导致训练提前结束。</p>
+<h3 id="adadelta不是很懂">Adadelta(不是很懂)</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307215135905.png"
+alt="image-20230307215135905" />
+<figcaption aria-hidden="true">image-20230307215135905</figcaption>
+</figure>
+<h3 id="rmsprop">RMSProp</h3>
+<p>AdaGrad算法在迭代后期由于学习率过小，可能较难找到一个有用的解。为了解决这一问题，RMSprop算法对Adagrad算法做了一点小小的修改，RMSprop使用指数衰减只保留过去给定窗口大小的梯度，使其能够在找到凸碗状结构后快速收敛。RMSProp法可以视为Adadelta法的一个特例，即依然使用全局学习率替换掉Adadelta法中的<span
+class="math inline">\(s_t\)</span>:</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230307215341546.png"
+alt="image-20230307215341546" />
+<figcaption aria-hidden="true">image-20230307215341546</figcaption>
+</figure>
+<p>推荐<span
+class="math inline">\(\eta_{global}=1,\rho=0.9,\epsilon=10^{-6}\)</span></p>
+<p>缺点：依然使用了全局学习率，需要根据实际情况来设定 优点：</p>
+<ol type="1">
+<li>分母不再是一味的增加，它会重点考虑距离它较近的梯度（指数衰减的效果）</li>
+<li>只用了部分梯度加和而不是所有，这样避免了梯度累加过大使得学习率为0而导致训练提前结束。</li>
+</ol>
+<h3 id="adam">Adam</h3>
+<p>https://zhuanlan.zhihu.com/p/377968342</p>
+<p>Adam公式如下： <span class="math display">\[
+m_t:=beta_1*m_{t-1}+(1-beta_1)*g
+\]</span></p>
+<p><span class="math display">\[
+v_t:=beta_2*v_{t-1}+(1-beta_2)*g*g
+\]</span></p>
+<p><span class="math display">\[
+variable:=variable-lr_t*\frac{m_t}{\sqrt{v_t+\epsilon}}
+\]</span></p>
+<p><span
+class="math inline">\(m_t\)</span>可以理解为求历史梯度加强平均，思想来自动量方法，防止震荡。</p>
+<p><span class="math inline">\(v_t\)</span>则是用于调整lr的，即是<span
+class="math inline">\(\frac{lr}{\sqrt{v_t+\epsilon}}\)</span>,</p>
+<p>在迭代过程中，如果某一维度一直以很小的梯度进行更新，证明此方向梯度变换较为稳定，因此可以加大学习率，以较大的学习率在此维度更新，体现在公式上就是：对历史梯度平方进行一阶指数平滑后，公式2会得到一个很小的值，公式3中的自适应学习率会相对较大</p>
+<p>相反，某一维度在迭代过程中一直以很大的梯度进行更新，明此方向梯度变换较为剧烈（不稳定），因此可减小学习率，以较小的学习率在此维度更新
+体现在公式上就是：对历史梯度平方进行一阶指数平滑后，公式2则会得到一个很大的值，公式3中的自适应学习率会相对较小</p>
+<p><span
+class="math inline">\(v_t\)</span>也可以解决<strong>梯度稀疏</strong>的问题；频繁更新的梯度将会被赋予一个较小的学习率，而稀疏的梯度则会被赋予一个较大的学习率，通过上述机制，在数据分布稀疏的场景，能更好利用稀疏梯度的信息，比标准的SGD算法更有效地收敛。</p>
+<h1 id="常见优化函数问题">常见优化函数问题</h1>
+<h2
+id="sgd和adam谁收敛的比较快谁能达到全局最优解">SGD和Adam谁收敛的比较快？谁能达到全局最优解？</h2>
+<p>SGD算法没有动量的概念，SGD和Adam相比，缺点是下降速度慢，对学习率要求严格。</p>
+<p>而Adam引入了一阶动量和二阶动量，下降速度比SGD快，Adam可以自适应学习率，所以初始学习率可以很大。</p>
+<p>SGD相比Adam，更容易达到全局最优解。主要是后期Adam的学习率太低，影响了有效的收敛。</p>
+<p>我们可以前期使用Adam，后期使用SGD进一步调优。</p>
+<h2 id="adam用到二阶矩的原理是什么">adam用到二阶矩的原理是什么</h2>
+<p>引入二阶动量，根据训练轮数不同对学习率进行调整。</p>
+<p>可以看出来，公式将前面的训练梯度平方加和，在网络训练的前期，由于分母中梯度的累加（<span
+class="math inline">\(v_t\)</span>）较小，所以一开始的学习率<span
+class="math inline">\(\eta_t\)</span>比较大；随着训练后期梯度累加较大时，<span
+class="math inline">\(\eta_t\)</span>逐渐减小，而且是自适应地减小。</p>
+<p>而且如果某个维度频繁震荡梯度大，学习率就降低；如果梯度小而稳定，学习率就大。</p>
+<h2
+id="batch的大小如何选择过大的batch和过小的batch分别有什么影响">Batch的大小如何选择，过大的batch和过小的batch分别有什么影响</h2>
+<p><strong>Batch选择时尽量采用2的幂次，如8、16、32等</strong></p>
+<p>在合理范围内，增大Batch_size的<strong>好处</strong>：</p>
+<ol type="1">
+<li>提高了<strong>内存利用率</strong>以及大矩阵乘法的并行化效率。</li>
+<li>减少了跑完一次epoch(全数据集）所需要的迭代次数，加快了对于相同数据量的处理速度。</li>
+</ol>
+<p>盲目增大Batch_size的<strong>坏处</strong>：</p>
+<ol type="1">
+<li>提高了内存利用率，但是内存容量可能不足。</li>
+<li>跑完一次epoch(全数据集)所需的迭代次数减少，要想达到相同的精度，其所花费的时间大大增加，从而对参数的修正也就显得更加缓慢。</li>
+<li>Batch_size增大到一定程度，其确定的下降方向已经基本不再变化。</li>
+</ol>
+<p>Batch_size过小的<strong>影响</strong>：</p>
+<ol type="1">
+<li>训练时不稳定，可能不收敛</li>
+<li>精度可能更高。</li>
+</ol>
 ]]></content>
       <categories>
         <category>ML</category>
