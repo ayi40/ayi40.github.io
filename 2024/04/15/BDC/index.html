@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="BDC">
+    <meta name="description" content="Hadoop">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Big Data Computing">
+<meta property="og:title" content="Hadoop">
 <meta property="og:url" content="http://example.com/2024/04/15/BDC/index.html">
 <meta property="og:site_name" content="Lory&#39;s Page">
-<meta property="og:description" content="BDC">
+<meta property="og:description" content="Hadoop">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-04-15T20:46:25.000Z">
-<meta property="article:modified_time" content="2024-04-15T06:16:05.203Z">
+<meta property="article:modified_time" content="2024-04-22T07:40:46.300Z">
 <meta property="article:author" content="Lory">
 <meta name="twitter:card" content="summary">
 
@@ -36,10 +36,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/04/15/BDC/","path":"2024/04/15/BDC/","title":"Big Data Computing"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/04/15/BDC/","path":"2024/04/15/BDC/","title":"Hadoop"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Big Data Computing | Lory's Page</title>
+<title>Hadoop | Lory's Page</title>
   
 
 
@@ -125,7 +125,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -138,6 +138,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hdfs"><span class="nav-number">1.</span> <span class="nav-text">HDFS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%85%A5%E6%B5%81%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">写入流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%87%BA%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">读出流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mapreduce"><span class="nav-number">2.</span> <span class="nav-text">MapReduce</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E6%88%98"><span class="nav-number">3.</span> <span class="nav-text">实战</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -150,13 +151,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -196,12 +197,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Big Data Computing | Lory's Page">
+      <meta itemprop="name" content="Hadoop | Lory's Page">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Big Data Computing
+          Hadoop
         </h1>
 
         <div class="post-meta-container">
@@ -211,9 +212,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-04-15 20:46:25 / Modified: 06:16:05" itemprop="dateCreated datePublished" datetime="2024-04-15T20:46:25+00:00">2024-04-15</time>
+      <time title="Created: 2024-04-15 20:46:25" itemprop="dateCreated datePublished" datetime="2024-04-15T20:46:25+00:00">2024-04-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-04-22 07:40:46" itemprop="dateModified" datetime="2024-04-22T07:40:46+00:00">2024-04-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -222,6 +229,10 @@
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ML/BDC/" itemprop="url" rel="index"><span itemprop="name">BDC</span></a>
         </span>
     </span>
 
@@ -235,8 +246,80 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>BDC</p>
+        <p>Hadoop</p>
 <span id="more"></span>
+<p>Hadoop = HDFS + MapReduce</p>
+<p>HDFS为海量数据提供了<strong>存储</strong>，而MapReduce为海量数据提供了<strong>计算框架</strong>。</p>
+<h1 id="hdfs">HDFS</h1>
+<ul>
+<li>NameNode
+:是Master节点（主节点），可以看作是分布式文件系统中的管理者，主要负责管理文件系统的命名空间、集群配置信息和存储块的复制等。NameNode会将文件系统的Meta-data存储在内存中，这些信息主要包括了文件信息、每一个文件对应的文件块的信息和每一个文件块在DataNode的信息等。</li>
+<li>DataNode :
+是Slave节点（从节点），是文件存储的基本单元，它将Block存储在本地文件系统中，保存了Block的Meta-data，同时周期性地将所有存在的Block信息发送给NameNode。</li>
+<li>Client :
+切分文件；访问HDFS；与NameNode交互，获得文件位置信息；与DataNode交互，读取和写入数据。 </li>
+</ul>
+<p><strong>Block</strong>:Block是HDFS中的基本读写单元；HDFS中的文件都是被切割为block（块）进行存储的；这些块被复制到多个DataNode中；块的大小（通常为64MB）和复制的块数量在创建文件时由Client决定。</p>
+<h2 id="写入流程">写入流程</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240415144017291.png"
+alt="image-20240415144017291" />
+<figcaption aria-hidden="true">image-20240415144017291</figcaption>
+</figure>
+<p>1 用户向Client（客户机）提出请求。例如，需要写入200MB的数据。</p>
+<p>2
+Client制定计划：将数据按照64MB为块，进行切割；所有的块都保存三份。</p>
+<p>3 Client将大文件切分成块（block）。</p>
+<p>4
+针对第一个块，Client告诉NameNode（主控节点），请帮助我，将64MB的块复制三份。</p>
+<p>5
+NameNode告诉Client三个DataNode（数据节点）的地址，并且将它们根据到Client的距离，进行了排序。</p>
+<p>6 Client把数据和清单发给第一个DataNode。</p>
+<p>7 第一个DataNode将数据复制给第二个DataNode。</p>
+<p>8 第二个DataNode将数据复制给第三个DataNode。</p>
+<p>9 如果某一个块的所有数据都已写入，就会向NameNode反馈已完成。</p>
+<p>10 对第二个Block，也进行相同的操作。</p>
+<p>11 所有Block都完成后，关闭文件。NameNode会将数据持久化到磁盘上。</p>
+<h2 id="读出流程">读出流程</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240415144359467.png"
+alt="image-20240415144359467" />
+<figcaption aria-hidden="true">image-20240415144359467</figcaption>
+</figure>
+<p>1 用户向Client提出读取请求。</p>
+<p>2 Client向NameNode请求这个文件的所有信息。</p>
+<p>3
+NameNode将给Client这个文件的块列表，以及存储各个块的数据节点清单（按照和客户端的距离排序）。</p>
+<p>4 Client从距离最近的数据节点下载所需的块。</p>
+<h1 id="mapreduce">MapReduce</h1>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240416113031092.png"
+alt="image-20240416113031092" />
+<figcaption aria-hidden="true">image-20240416113031092</figcaption>
+</figure>
+<ul>
+<li>Map映射：
+把计算作业拆分成若干个<strong>Map任务</strong>，然后分配到不同的节点上去执行，每一个Map任务处理输入数据中的一部分</li>
+<li>Reduce归约 ： 把前面若干a 个Map的输出汇总到一起并输出。</li>
+</ul>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240415144901036.png"
+alt="image-20240415144901036" />
+<figcaption aria-hidden="true">image-20240415144901036</figcaption>
+</figure>
+<ul>
+<li>JobTRacker: 用于调度和管理其它的TaskTracker,
+可以运行于集群中任一台计算机上。</li>
+<li>TaskTracker: 负责执行任务，必须运行于 DataNode 上。</li>
+</ul>
+<h1 id="实战">实战</h1>
+<p><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42837961/article/details/105493561">Hadoop
+入门教程（超详细）_hadoop教程-CSDN博客</a></p>
 
     </div>
 
@@ -255,6 +338,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2024/04/18/LLM_review/" rel="next" title="LLM Basic Knowledge">
+                  LLM Basic Knowledge <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
