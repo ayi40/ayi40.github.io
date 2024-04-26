@@ -549,5 +549,249 @@ $$
 
 # 排序
 
+## 排序模型特征
 
+### 用户画像
+
++ 用户ID
++ 性别、年龄
++ 新老、活跃度
++ 感兴趣类目、关键词、品牌
+
+### 物品画像
+
++ 物品ID
++ 发布时间
++ GeoHash（经纬度编码）、所在城市
++ 标题、类目、关键词、品牌
++ 字数、图片数、视频清晰度、标签数
++ 内容信息量、图片美学
+
+### 用户统计特征
+
++ 用户最近30天天曝光数、点击数、点赞数、收藏数
++ 按照笔记图文/视频分桶。(比如最近7天，该用户对图文笔记的点击率、对视频笔记的点击率。)
++ 按照笔记类目分桶。(比如最近30天，用户对美妆笔记的点击率、对美食笔记的点击率、对科技数码笔记的点击率。)
+
+### 笔记统计特征
+
++ 笔记最近30天(7天、1天、1小时)的曝光数、点击数点赞数、收藏数…。
++ 按照用户性别分桶、按照用户年龄分桶…
++ 作者特征:
+  + 发布笔记数
+  + 粉丝数
+  + 消费指标(曝光数、点击数、点赞数、收藏数)
+
+### 场景特征
+
++ 用户定位GeoHash(经纬度编码)、城市。
++ 当前时刻(分段，做embedding)
++ 是否是周末、是否是节假日。
++ 手机品牌、手机型号、操作系统。
+
+### 特征处理
+
++ 离散特征:做embedding。
+  + 用户ID、笔记ID、作者ID。
+  + 类目、关键词、城市、手机品牌
++ 连续特征:做分桶，变成离散特征。
+  + 年龄、笔记字数、视频长度。
+  + 连续特征:其他变换。
+  + 曝光数、点击数、点赞数等数值做log(1+x)
+  + 转化为点击率、点赞率等值，并做平滑。
+
+## 粗排模型
+
++ 给几千篇笔记打分
++ 单次推理代价必须小（用户与物品特征后期融合）
++ 预估的准确性不高
+
+### 粗排的三塔模型
+
+![image-20240425153102228](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425153102228.png)
+
+![image-20240425153151749](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425153151749.png)
+
+## 精排模型
+
++ 给几百篇笔记打分
++ 单次推理代价很大（用户与物品特征前期融合）
++ 预估准确性更高
+
+### 多目标模型
+
+#### 模型结构
+
+![image-20240425145400996](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425145400996.png)
+
+loss：
+$$
+Loss=\sum_{i=1}^4\alpha_i \cdot CrossEntropy(y_i,p_i)
+$$
+
+#### 估值校准：
+
+why：为了缩短训练时间会对负样本进行降采样，由于负样本变少，预估点击率大于真实点击率：
+
+真实点击率:$p_{true}=\frac{n_+}{n_++n_-}$
+
+预估点击率：$p_{pred}=\frac{n_+}{n_++\alpha \cdot n_-}$
+
+校准公式： $p_{true}=\frac{\alpha \cdot p_{pred} }{(1-p_{pred})+\alpha \cdot p_{pred}}$
+
+### Multi-gate Mixture-of-Experts (MMoE)
+
+#### 模型结构
+
+假设现在需要求点击率与点赞率两个指标
+
+![image-20240425145112596](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425145112596.png)
+
+![image-20240425145206437](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425145206437.png)
+
+#### 极化现象
+
+softmax输出的权重接近与0,0,0...1，这样不能充分利用所有模型结构
+
+解决方法：dropout
+
+## 预估分数融合
+
+将点击率、点赞量等指标融合，计算出最终分数
+
++ 简单加权和
+
+  $p_{click}+w_1\cdot p_{like}+ w_2\cdot p_{collect} + \cdots$
+
++ 点击率乘以其他项加权和
+
+  $p_{click}\cdot (w_1\cdot p_{like}+ w_2\cdot p_{collect} + \cdots)$
+
++ 海外某短视频app：
+
+  $(1+w_1\cdot p_{time})^{\alpha_1}\cdot (1+w_2\cdot p_{time})^{\alpha_2}\cdots$
+
+  $p_{time}$是预估播放时长
+
++ 国内某视频app：用排名计算
+
+  ![image-20240425150136906](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425150136906.png)
+
++ 电商
+
+  ![image-20240425150219933](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425150219933.png)
+
+## 视频播放时长建模
+
+TBC
+
+# 特征交叉
+
+## Factorized Machine
+
+tbd
+
+## DCN
+
+tbd
+
+
+
+## PPNet
+
+语音识别中的LHUC
+
+![image-20240425191526931](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425191526931.png)
+
+PPNET
+
+![image-20240425191558660](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425191558660.png)
+
+## SENet
+
+有点像autoencoder+全局注意力机制，中间缩小参数量m/r是避免过拟合
+
+![image-20240425192121242](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425192121242.png)
+
+## bilinear cross
+
++  内积 bilinear cross
+
+![image-20240426103501935](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240426103501935.png)
+
++ 哈达玛bilinear cross
+
+![](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240426103501935.png)
+
+## FiBiNet
+
+![image-20240426110218217](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240426110218217.png)
+
+# 用户行为序列建模
+
+## Last N
+
++ 用户最近的n次交互(点击、点赞等)的物品 ID。
++ 对Last N物品I做embedding，得到n个向量。
++ 把几个向量取平均，作为用户的一种特征。
+
+## DIN模型（注意力机制）
+
++ 对于某候选物品，计算它与用户 Last N物品的相似度。
++ 以相似度为权重，求用户Last N物品向量的加权和，结果是一个向量。
++ 把得到的向量作为一种用户特征，输入排序模型，预估(用户，候选物品)的点击率、点赞率等指标。
+
+![](https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240426110602597.png)
+
+简单平均和 注意力机制 都适用于精排模型。
+
++ 简单平均适用于双塔模型、三塔模型。
+  + 简单平均只需要用到LastN，属于用户自身的特征。
+  + 把LastN向量的平均作为用户塔的输入。
++ 注意力机制不适用于双塔模型、三塔模型。
+  + 注意力机制需要用到LastN+候选物品。
+  + 用户塔看不到候选物品，不能把注意力机制用在用户塔
+
+## SIM模型（长序列建模）
+
+DIN模型缺点：
+
++ 注意力层计算量与n相关
++ 只能记录最近几百个物品，否则计算量太大
++ 关注短期兴趣，遗忘长期兴趣
+
+SIM模型目的：
+
++ 保留用户长期行为序列，而且计算量不会很大。
+
+改善DIN方法：DIN对Last N向量做加权平均，权重是相似度，如果某Last N物品与候选物品差异很大，则权重接近零。可以提前快速排除掉与候选物品无关（相似度低，权重接近0）的Last N物品，降低注意力层的计算量。
+
+### 模型架构
+
++ 保留用户长期行为记录，n的大小可以是几千。
++ 对于每个候选物品，在用户Last N记录中做快速查找，找到k个相似物品。
++ 把LastN变成TopK，然后输入到注意力层
++ SIM 模型减小计算量(从n降到k)。
+
+#### 查找
+
++ Hard Search（基于规则）
+  + 根据候选物品的类目，保留Last N物品中类目相同的。
+    ·简单，快速，无需训练。
++ Soft Search
+  + 把物品做embedding，变成向量。
+  + 把候选物品向量作为query，做k近邻查找，保留LastN物品中最接近的k个。
+  + 效果更好，编程实现更复杂。
+
+#### 注意力机制
+
++ 只使用挑出来的Top K计算权重
++ 使用时间信息：SIM序列长，记录用户长期行为，时间越久远，重要性越低
+  + 用户与某个LastN物品的交互时刻距今为δ。
+  + 对δ做离散化，再做embedding，变成向量d
+  + 把两个向量做concatenation，表征一个LastN物品。
+    + 向量x是物品embedding。
+    + 向量d是时间的embedding
+
+# 重排
 
