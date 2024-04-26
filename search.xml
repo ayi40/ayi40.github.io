@@ -127,6 +127,19 @@ href="https://blog.csdn.net/weixin_42837961/article/details/105493561">Hadoop
       </categories>
   </entry>
   <entry>
+    <title>Classical Deep Learning Method</title>
+    <url>/2023/07/25/ClassicalDLMethod/</url>
+    <content><![CDATA[<p>经典深度学习模型</p>
+<span id="more"></span>
+<h1 id="residual-network">Residual Network</h1>
+<h1 id="transformer">Transformer</h1>
+]]></content>
+      <categories>
+        <category>ML</category>
+        <category>Basic</category>
+      </categories>
+  </entry>
+  <entry>
     <title>CV项目准备</title>
     <url>/2023/08/30/CVProject/</url>
     <content><![CDATA[<p>.</p>
@@ -141,19 +154,6 @@ href="https://blog.csdn.net/weixin_42837961/article/details/105493561">Hadoop
 ]]></content>
       <categories>
         <category>CV</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Classical Deep Learning Method</title>
-    <url>/2023/07/25/ClassicalDLMethod/</url>
-    <content><![CDATA[<p>经典深度学习模型</p>
-<span id="more"></span>
-<h1 id="residual-network">Residual Network</h1>
-<h1 id="transformer">Transformer</h1>
-]]></content>
-      <categories>
-        <category>ML</category>
-        <category>Basic</category>
       </categories>
   </entry>
   <entry>
@@ -1777,69 +1777,6 @@ in self.lap_list.</p>
       </categories>
   </entry>
   <entry>
-    <title>KR-GCN</title>
-    <url>/2023/04/26/KR-GCN/</url>
-    <content><![CDATA[<p>.</p>
-<span id="more"></span>
-<h1 id="background">Background</h1>
-<p>previous study:</p>
-<ol type="1">
-<li>error propagation: consider all paths between every user-item pair
-might involve irrelevant one</li>
-<li>weak explainability</li>
-</ol>
-<h1 id="model">Model</h1>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230426111943016.png"
-alt="image-20230426111943016" />
-<figcaption aria-hidden="true">image-20230426111943016</figcaption>
-</figure>
-<p>4 parts:</p>
-<ol type="1">
-<li>the Graph encoding module: learn the representations of nodes in the
-heterogeneous graph.</li>
-<li>the Path Extraction and Selection module: extract paths between
-users and items from the heterogeneous graph and select higher-quality
-reasoning paths</li>
-<li>the Path Encoding module: learn the representations of the selection
-reasoning paths.</li>
-<li>the Preference Prediction module: predicts users’ preferences
-according to the reasoning paths.</li>
-</ol>
-<h2 id="graph-encoding---gcn">Graph Encoding - GCN</h2>
-<ol type="1">
-<li>propagation and aggregation</li>
-</ol>
-<p>initialized randomly</p>
-<p>weighted sum aggregator : the neighborhood nodes are aggregated via
-mean function.</p>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230426113233853.png"
-alt="image-20230426113233853" />
-<figcaption aria-hidden="true">image-20230426113233853</figcaption>
-</figure>
-<ol start="2" type="1">
-<li>weight sum to merge every layers</li>
-</ol>
-<figure>
-<img
-src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230426114004010.png"
-alt="image-20230426114004010" />
-<figcaption aria-hidden="true">image-20230426114004010</figcaption>
-</figure>
-<h2 id="path-extraction">Path Extraction</h2>
-<p>we prune irrelevant paths between each user-item pair.</p>
-<p>we extract multi-hop paths with the limitation that hops in every
-single path are less than l.</p>
-]]></content>
-      <categories>
-        <category>RecSys</category>
-        <category>KGRec</category>
-      </categories>
-  </entry>
-  <entry>
     <title>KGCN</title>
     <url>/2023/03/02/KGCN/</url>
     <content><![CDATA[<p>.</p>
@@ -2012,6 +1949,69 @@ alt="image-20230302120154981" />
 class="math inline">\(T_u\)</span> is the number of negative samples for
 user <em>u</em>. In this paper,</p>
 <h1 id="experiment">Experiment</h1>
+]]></content>
+      <categories>
+        <category>RecSys</category>
+        <category>KGRec</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>KR-GCN</title>
+    <url>/2023/04/26/KR-GCN/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="background">Background</h1>
+<p>previous study:</p>
+<ol type="1">
+<li>error propagation: consider all paths between every user-item pair
+might involve irrelevant one</li>
+<li>weak explainability</li>
+</ol>
+<h1 id="model">Model</h1>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230426111943016.png"
+alt="image-20230426111943016" />
+<figcaption aria-hidden="true">image-20230426111943016</figcaption>
+</figure>
+<p>4 parts:</p>
+<ol type="1">
+<li>the Graph encoding module: learn the representations of nodes in the
+heterogeneous graph.</li>
+<li>the Path Extraction and Selection module: extract paths between
+users and items from the heterogeneous graph and select higher-quality
+reasoning paths</li>
+<li>the Path Encoding module: learn the representations of the selection
+reasoning paths.</li>
+<li>the Preference Prediction module: predicts users’ preferences
+according to the reasoning paths.</li>
+</ol>
+<h2 id="graph-encoding---gcn">Graph Encoding - GCN</h2>
+<ol type="1">
+<li>propagation and aggregation</li>
+</ol>
+<p>initialized randomly</p>
+<p>weighted sum aggregator : the neighborhood nodes are aggregated via
+mean function.</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230426113233853.png"
+alt="image-20230426113233853" />
+<figcaption aria-hidden="true">image-20230426113233853</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>weight sum to merge every layers</li>
+</ol>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20230426114004010.png"
+alt="image-20230426114004010" />
+<figcaption aria-hidden="true">image-20230426114004010</figcaption>
+</figure>
+<h2 id="path-extraction">Path Extraction</h2>
+<p>we prune irrelevant paths between each user-item pair.</p>
+<p>we extract multi-hop paths with the limitation that hops in every
+single path are less than l.</p>
 ]]></content>
       <categories>
         <category>RecSys</category>
@@ -4393,6 +4393,285 @@ embedding过神经网络模型，这样时间复杂度太高了。</p>
 <h2 id="曝光过滤与链路">曝光过滤与链路</h2>
 <p>。。</p>
 <h1 id="排序">排序</h1>
+<h2 id="排序模型特征">排序模型特征</h2>
+<h3 id="用户画像">用户画像</h3>
+<ul>
+<li>用户ID</li>
+<li>性别、年龄</li>
+<li>新老、活跃度</li>
+<li>感兴趣类目、关键词、品牌</li>
+</ul>
+<h3 id="物品画像">物品画像</h3>
+<ul>
+<li>物品ID</li>
+<li>发布时间</li>
+<li>GeoHash（经纬度编码）、所在城市</li>
+<li>标题、类目、关键词、品牌</li>
+<li>字数、图片数、视频清晰度、标签数</li>
+<li>内容信息量、图片美学</li>
+</ul>
+<h3 id="用户统计特征">用户统计特征</h3>
+<ul>
+<li>用户最近30天天曝光数、点击数、点赞数、收藏数</li>
+<li>按照笔记图文/视频分桶。(比如最近7天，该用户对图文笔记的点击率、对视频笔记的点击率。)</li>
+<li>按照笔记类目分桶。(比如最近30天，用户对美妆笔记的点击率、对美食笔记的点击率、对科技数码笔记的点击率。)</li>
+</ul>
+<h3 id="笔记统计特征">笔记统计特征</h3>
+<ul>
+<li>笔记最近30天(7天、1天、1小时)的曝光数、点击数点赞数、收藏数…。</li>
+<li>按照用户性别分桶、按照用户年龄分桶…</li>
+<li>作者特征:
+<ul>
+<li>发布笔记数</li>
+<li>粉丝数</li>
+<li>消费指标(曝光数、点击数、点赞数、收藏数)</li>
+</ul></li>
+</ul>
+<h3 id="场景特征">场景特征</h3>
+<ul>
+<li>用户定位GeoHash(经纬度编码)、城市。</li>
+<li>当前时刻(分段，做embedding)</li>
+<li>是否是周末、是否是节假日。</li>
+<li>手机品牌、手机型号、操作系统。</li>
+</ul>
+<h3 id="特征处理">特征处理</h3>
+<ul>
+<li>离散特征:做embedding。
+<ul>
+<li>用户ID、笔记ID、作者ID。</li>
+<li>类目、关键词、城市、手机品牌</li>
+</ul></li>
+<li>连续特征:做分桶，变成离散特征。
+<ul>
+<li>年龄、笔记字数、视频长度。</li>
+<li>连续特征:其他变换。</li>
+<li>曝光数、点击数、点赞数等数值做log(1+x)</li>
+<li>转化为点击率、点赞率等值，并做平滑。</li>
+</ul></li>
+</ul>
+<h2 id="粗排模型">粗排模型</h2>
+<ul>
+<li>给几千篇笔记打分</li>
+<li>单次推理代价必须小（用户与物品特征后期融合）</li>
+<li>预估的准确性不高</li>
+</ul>
+<h3 id="粗排的三塔模型">粗排的三塔模型</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425153102228.png"
+alt="image-20240425153102228" />
+<figcaption aria-hidden="true">image-20240425153102228</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425153151749.png"
+alt="image-20240425153151749" />
+<figcaption aria-hidden="true">image-20240425153151749</figcaption>
+</figure>
+<h2 id="精排模型">精排模型</h2>
+<ul>
+<li>给几百篇笔记打分</li>
+<li>单次推理代价很大（用户与物品特征前期融合）</li>
+<li>预估准确性更高</li>
+</ul>
+<h3 id="多目标模型">多目标模型</h3>
+<h4 id="模型结构">模型结构</h4>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425145400996.png"
+alt="image-20240425145400996" />
+<figcaption aria-hidden="true">image-20240425145400996</figcaption>
+</figure>
+<p>loss： <span class="math display">\[
+Loss=\sum_{i=1}^4\alpha_i \cdot CrossEntropy(y_i,p_i)
+\]</span></p>
+<h4 id="估值校准">估值校准：</h4>
+<p>why：为了缩短训练时间会对负样本进行降采样，由于负样本变少，预估点击率大于真实点击率：</p>
+<p>真实点击率:<span
+class="math inline">\(p_{true}=\frac{n_+}{n_++n_-}\)</span></p>
+<p>预估点击率：<span
+class="math inline">\(p_{pred}=\frac{n_+}{n_++\alpha \cdot
+n_-}\)</span></p>
+<p>校准公式： <span class="math inline">\(p_{true}=\frac{\alpha \cdot
+p_{pred} }{(1-p_{pred})+\alpha \cdot p_{pred}}\)</span></p>
+<h3 id="multi-gate-mixture-of-experts-mmoe">Multi-gate
+Mixture-of-Experts (MMoE)</h3>
+<h4 id="模型结构-1">模型结构</h4>
+<p>假设现在需要求点击率与点赞率两个指标</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425145112596.png"
+alt="image-20240425145112596" />
+<figcaption aria-hidden="true">image-20240425145112596</figcaption>
+</figure>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425145206437.png"
+alt="image-20240425145206437" />
+<figcaption aria-hidden="true">image-20240425145206437</figcaption>
+</figure>
+<h4 id="极化现象">极化现象</h4>
+<p>softmax输出的权重接近与0,0,0...1，这样不能充分利用所有模型结构</p>
+<p>解决方法：dropout</p>
+<h2 id="预估分数融合">预估分数融合</h2>
+<p>将点击率、点赞量等指标融合，计算出最终分数</p>
+<ul>
+<li><p>简单加权和</p>
+<p><span class="math inline">\(p_{click}+w_1\cdot p_{like}+ w_2\cdot
+p_{collect} + \cdots\)</span></p></li>
+<li><p>点击率乘以其他项加权和</p>
+<p><span class="math inline">\(p_{click}\cdot (w_1\cdot p_{like}+
+w_2\cdot p_{collect} + \cdots)\)</span></p></li>
+<li><p>海外某短视频app：</p>
+<p><span class="math inline">\((1+w_1\cdot p_{time})^{\alpha_1}\cdot
+(1+w_2\cdot p_{time})^{\alpha_2}\cdots\)</span></p>
+<p><span class="math inline">\(p_{time}\)</span>是预估播放时长</p></li>
+<li><p>国内某视频app：用排名计算</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425150136906.png"
+alt="image-20240425150136906" />
+<figcaption aria-hidden="true">image-20240425150136906</figcaption>
+</figure></li>
+<li><p>电商</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425150219933.png"
+alt="image-20240425150219933" />
+<figcaption aria-hidden="true">image-20240425150219933</figcaption>
+</figure></li>
+</ul>
+<h2 id="视频播放时长建模">视频播放时长建模</h2>
+<p>TBC</p>
+<h1 id="特征交叉">特征交叉</h1>
+<h2 id="factorized-machine">Factorized Machine</h2>
+<p>tbd</p>
+<h2 id="dcn">DCN</h2>
+<p>tbd</p>
+<h2 id="ppnet">PPNet</h2>
+<p>语音识别中的LHUC</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425191526931.png"
+alt="image-20240425191526931" />
+<figcaption aria-hidden="true">image-20240425191526931</figcaption>
+</figure>
+<p>PPNET</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425191558660.png"
+alt="image-20240425191558660" />
+<figcaption aria-hidden="true">image-20240425191558660</figcaption>
+</figure>
+<h2 id="senet">SENet</h2>
+<p>有点像autoencoder+全局注意力机制，中间缩小参数量m/r是避免过拟合</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240425192121242.png"
+alt="image-20240425192121242" />
+<figcaption aria-hidden="true">image-20240425192121242</figcaption>
+</figure>
+<h2 id="bilinear-cross">bilinear cross</h2>
+<ul>
+<li>内积 bilinear cross</li>
+</ul>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240426103501935.png"
+alt="image-20240426103501935" />
+<figcaption aria-hidden="true">image-20240426103501935</figcaption>
+</figure>
+<ul>
+<li>哈达玛bilinear cross</li>
+</ul>
+<p><img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240426103501935.png" /></p>
+<h2 id="fibinet">FiBiNet</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240426110218217.png"
+alt="image-20240426110218217" />
+<figcaption aria-hidden="true">image-20240426110218217</figcaption>
+</figure>
+<h1 id="用户行为序列建模">用户行为序列建模</h1>
+<h2 id="last-n">Last N</h2>
+<ul>
+<li>用户最近的n次交互(点击、点赞等)的物品 ID。</li>
+<li>对Last N物品I做embedding，得到n个向量。</li>
+<li>把几个向量取平均，作为用户的一种特征。</li>
+</ul>
+<h2 id="din模型注意力机制">DIN模型（注意力机制）</h2>
+<ul>
+<li>对于某候选物品，计算它与用户 Last N物品的相似度。</li>
+<li>以相似度为权重，求用户Last N物品向量的加权和，结果是一个向量。</li>
+<li>把得到的向量作为一种用户特征，输入排序模型，预估(用户，候选物品)的点击率、点赞率等指标。</li>
+</ul>
+<p><img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240426110602597.png" /></p>
+<p>简单平均和 注意力机制 都适用于精排模型。</p>
+<ul>
+<li>简单平均适用于双塔模型、三塔模型。
+<ul>
+<li>简单平均只需要用到LastN，属于用户自身的特征。</li>
+<li>把LastN向量的平均作为用户塔的输入。</li>
+</ul></li>
+<li>注意力机制不适用于双塔模型、三塔模型。
+<ul>
+<li>注意力机制需要用到LastN+候选物品。</li>
+<li>用户塔看不到候选物品，不能把注意力机制用在用户塔</li>
+</ul></li>
+</ul>
+<h2 id="sim模型长序列建模">SIM模型（长序列建模）</h2>
+<p>DIN模型缺点：</p>
+<ul>
+<li>注意力层计算量与n相关</li>
+<li>只能记录最近几百个物品，否则计算量太大</li>
+<li>关注短期兴趣，遗忘长期兴趣</li>
+</ul>
+<p>SIM模型目的：</p>
+<ul>
+<li>保留用户长期行为序列，而且计算量不会很大。</li>
+</ul>
+<p>改善DIN方法：DIN对Last N向量做加权平均，权重是相似度，如果某Last
+N物品与候选物品差异很大，则权重接近零。可以提前快速排除掉与候选物品无关（相似度低，权重接近0）的Last
+N物品，降低注意力层的计算量。</p>
+<h3 id="模型架构">模型架构</h3>
+<ul>
+<li>保留用户长期行为记录，n的大小可以是几千。</li>
+<li>对于每个候选物品，在用户Last
+N记录中做快速查找，找到k个相似物品。</li>
+<li>把LastN变成TopK，然后输入到注意力层</li>
+<li>SIM 模型减小计算量(从n降到k)。</li>
+</ul>
+<h4 id="查找">查找</h4>
+<ul>
+<li>Hard Search（基于规则）
+<ul>
+<li>根据候选物品的类目，保留Last N物品中类目相同的。
+·简单，快速，无需训练。</li>
+</ul></li>
+<li>Soft Search
+<ul>
+<li>把物品做embedding，变成向量。</li>
+<li>把候选物品向量作为query，做k近邻查找，保留LastN物品中最接近的k个。</li>
+<li>效果更好，编程实现更复杂。</li>
+</ul></li>
+</ul>
+<h4 id="注意力机制">注意力机制</h4>
+<ul>
+<li>只使用挑出来的Top K计算权重</li>
+<li>使用时间信息：SIM序列长，记录用户长期行为，时间越久远，重要性越低
+<ul>
+<li>用户与某个LastN物品的交互时刻距今为δ。</li>
+<li>对δ做离散化，再做embedding，变成向量d</li>
+<li>把两个向量做concatenation，表征一个LastN物品。
+<ul>
+<li>向量x是物品embedding。</li>
+<li>向量d是时间的embedding</li>
+</ul></li>
+</ul></li>
+</ul>
+<h1 id="重排">重排</h1>
 ]]></content>
       <categories>
         <category>RecSys</category>
