@@ -127,19 +127,6 @@ href="https://blog.csdn.net/weixin_42837961/article/details/105493561">Hadoop
       </categories>
   </entry>
   <entry>
-    <title>Classical Deep Learning Method</title>
-    <url>/2023/07/25/ClassicalDLMethod/</url>
-    <content><![CDATA[<p>经典深度学习模型</p>
-<span id="more"></span>
-<h1 id="residual-network">Residual Network</h1>
-<h1 id="transformer">Transformer</h1>
-]]></content>
-      <categories>
-        <category>ML</category>
-        <category>Basic</category>
-      </categories>
-  </entry>
-  <entry>
     <title>CV项目准备</title>
     <url>/2023/08/30/CVProject/</url>
     <content><![CDATA[<p>.</p>
@@ -154,6 +141,19 @@ href="https://blog.csdn.net/weixin_42837961/article/details/105493561">Hadoop
 ]]></content>
       <categories>
         <category>CV</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Classical Deep Learning Method</title>
+    <url>/2023/07/25/ClassicalDLMethod/</url>
+    <content><![CDATA[<p>经典深度学习模型</p>
+<span id="more"></span>
+<h1 id="residual-network">Residual Network</h1>
+<h1 id="transformer">Transformer</h1>
+]]></content>
+      <categories>
+        <category>ML</category>
+        <category>Basic</category>
       </categories>
   </entry>
   <entry>
@@ -4391,7 +4391,61 @@ embedding过神经网络模型，这样时间复杂度太高了。</p>
 <p>作者召回</p>
 <p>缓存召回：复用前n次推荐精排的结果</p>
 <h2 id="曝光过滤与链路">曝光过滤与链路</h2>
-<p>。。</p>
+<ul>
+<li>如果用户看过某个物品，则不再把该物品曝光给该用户</li>
+<li>对于每个用户，记录已经曝光给他的物品。(小红书只召回1个月以内的笔记，因此只需要记录每个用户最近1个月的曝光历史。)</li>
+<li>对于每个召回的物品，判断它是否已经给该用户曝光过排除掉曾经曝光过的物品。</li>
+<li>一位用户看过n个物品，本次召回r个物品，如果暴力对比，需要O(nr)的时间。</li>
+</ul>
+<h3 id="bloom-filter">Bloom Filter</h3>
+<ul>
+<li>Bloom filter 判断一个物品ID是否在已曝光的物品集合中。</li>
+<li>如果判断为no，那么该物品一定不在集合中</li>
+<li>如果判断为yes，那么该物品很可能在集合中。(可能误伤错误判断未曝光物品为已曝光，将其过滤掉)</li>
+<li>Bloom flter 把物品集合表征为一个m维二进制向量。</li>
+<li>Bloom
+filter有k个哈希函数，每个哈希函数把物品I映射成介于0和m-1之间的整数。</li>
+<li>已曝光物品和召回物品都可以用这个m维向量表示。</li>
+</ul>
+<p>当k=1：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240430102619856.png"
+alt="image-20240430102619856" />
+<figcaption aria-hidden="true">image-20240430102619856</figcaption>
+</figure>
+<p>当k=3：</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240430102711948.png"
+alt="image-20240430102711948" />
+<figcaption aria-hidden="true">image-20240430102711948</figcaption>
+</figure>
+<p>BloomFilter误伤概率：</p>
+<ul>
+<li>曝光物品集合大小为n，二进制向量维度为m，使用k个哈希函数。</li>
+<li>误伤的概率为<span
+class="math inline">\(δ≈(1-exp(-\frac{kn}{m}))^k\)</span>
+<ul>
+<li>n越大，向量中的1越多，误伤概率越大。</li>
+<li>m越大，向量越长，越不容易发生哈希碰撞。但要求更多存储空间。</li>
+<li>k太大、太小都不好，k有最优取值。</li>
+</ul></li>
+<li>计算k最优参数，设定可容忍误伤概率<span
+class="math inline">\(δ\)</span>：</li>
+<li><span class="math inline">\(k=1.44\cdot
+ln(\frac{1}{δ})\)</span></li>
+<li><span class="math inline">\(m=2n\cdot ln(\frac{1}{δ})\)</span></li>
+</ul>
+<p>优缺点</p>
+<ul>
+<li><p>Bloom filtcr
+把物品的集合表示成一个二进制向量，节省存储空间和计算成本。</p></li>
+<li><p>每往集合中添加一个物品，只需要把向量k个位置的元素置为1。(如果原本就是1，则不变)</p></li>
+<li><p>Bloom filter只支持添加物品，不支持删除物品。</p></li>
+<li><p>每天都需要从物品集合中移除年龄大于1个月的物品(超龄物品不可能被召回，没必要把它们记录在Bloom
+filter，降低n可以降低误伤率)</p></li>
+</ul>
 <h1 id="排序">排序</h1>
 <h2 id="排序模型特征">排序模型特征</h2>
 <h3 id="用户画像">用户画像</h3>
@@ -4542,12 +4596,47 @@ alt="image-20240425150219933" />
 </figure></li>
 </ul>
 <h2 id="视频播放时长建模">视频播放时长建模</h2>
-<p>TBC</p>
+<h3 id="播放时长建模">播放时长建模</h3>
+<p>训练：最小化y与p的交叉熵函数</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240430105536098.png"
+alt="image-20240430105536098" />
+<figcaption aria-hidden="true">image-20240430105536098</figcaption>
+</figure>
+<p>预测：直接求<span class="math inline">\(exp(z)\)</span></p>
+<h3 id="视频完播">视频完播</h3>
+<h4 id="建模方法">建模方法</h4>
+<ul>
+<li><p>回归方法</p>
+<p>视频长度10分钟，实际播放4分钟，则实际播放率为y=0.4
+让预估播放率p拟合y: <span
+class="math inline">\(loss=y·logp+(1-y)·log(1-p)\)</span></p>
+<p>线上预估完播率，模型输出p=0.73，意思是预计播放73%。</p></li>
+<li><p>二元分类</p>
+<p>定义完播指标，比如完播80%。 例:视频长度10分钟，播放$&gt;<span
+class="math inline">\(8分钟作为正样本，播放\)</span>&lt;<span
+class="math inline">\(8分钟作为负样本。
+做二元分类训练模型:播放\)</span>&gt;<span class="math inline">\(80%vs
+播放\)</span>&lt;$80%。线上预估完播率，模型输出p=0.73，意思是P(播放&gt;80%)=
+0.73</p></li>
+</ul>
+<h4 id="融入融分公式">融入融分公式</h4>
+<p>不可直接使用融分公式，因为视频越长完播率越低</p>
+<p>需要做调整: <span class="math display">\[
+p_{finish}=\frac{预估完播率}{f（视频时长）}
+\]</span> "把<span
+class="math inline">\(p_{finish}\)</span>作为融分公式中的一项。</p>
 <h1 id="特征交叉">特征交叉</h1>
 <h2 id="factorized-machine">Factorized Machine</h2>
 <p>tbd</p>
 <h2 id="dcn">DCN</h2>
-<p>tbd</p>
+<p>使用场景：</p>
+<ul>
+<li>双塔模型中用户塔和物品塔</li>
+<li>排序模型</li>
+<li>MMOE模型中专家网络</li>
+</ul>
 <h2 id="ppnet">PPNet</h2>
 <p>语音识别中的LHUC</p>
 <figure>
@@ -4672,6 +4761,236 @@ N记录中做快速查找，找到k个相似物品。</li>
 </ul></li>
 </ul>
 <h1 id="重排">重排</h1>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240430142915426.png"
+alt="image-20240430142915426" />
+<figcaption aria-hidden="true">image-20240430142915426</figcaption>
+</figure>
+<p>粗排精排：</p>
+<ul>
+<li>粗排和精排用多目标模型对物品做 pointwise打分。</li>
+<li>对于物品i，模型输出点击率、交互率的预估，融合成分数reward。<span
+class="math inline">\(reward_i\)</span>表示用户对物品i的兴趣，即物品本身价值。</li>
+</ul>
+<p>后处理（精排的后处理称为重排）：</p>
+<ul>
+<li>从n个后序物品选出k个，既要她们总分高，也需要它们有多样性</li>
+</ul>
+<h2 id="相似性度量">相似性度量</h2>
+<p>提高多样性意味着推荐的物品不可过于相似，首先需要度量物品之间相似度</p>
+<h3 id="基于物品属性标签">基于物品属性标签。</h3>
+<p>物品属性标签：类目、品牌、关键词………</p>
+<p>根据一级类目、二级类目、品牌计算相似度</p>
+<ul>
+<li>物品i:美妆、彩妆、香奈儿</li>
+<li>物品j:美妆、香水、香奈儿</li>
+</ul>
+<p>相似度:simi(i,j)=1，simz(i,j)=0，sim3(i,j)=1。在做加权</p>
+<h3 id="基于物品向量表征">基于物品向量表征。</h3>
+<ul>
+<li><p>用召回的双塔模型学到的物品向量(不好)</p>
+<p>召回双塔模型基于用户物品交互，冷门物品没办法学好表征，热门物品多交互也不代表相似</p></li>
+<li><p>基于内容的向量表征(好)</p>
+<p>用cv或nlp模型，提取特征</p>
+<p>使用clip预训练方法：对于图片文字二元组，预测图文是否匹配，无需人工标注</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240430142711097.png"
+alt="image-20240430142711097" />
+<figcaption aria-hidden="true">image-20240430142711097</figcaption>
+</figure></li>
+</ul>
+<h2 id="maximal-margianl-relevancemmr">Maximal Margianl
+Relevance（MMR）</h2>
+<p>精排给n个候选物品打分，把第i和j个物品的相似度记作
+sim(i,j)，从几个物品中选出k个，既要有高精排分数也要有多样性。</p>
+<h3 id="原理">原理</h3>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240430143624521.png"
+alt="image-20240430143624521" />
+<figcaption aria-hidden="true">image-20240430143624521</figcaption>
+</figure>
+<h3 id="流程">流程</h3>
+<p>1.已选中的物品S初始化为空集，未选中的物品初始化为全集 {1,…,n}
+2.选择精排分数rewardi最高的物品，从集合R移到S 3.做k-1轮循环:
+a.计算集合见中所有物品的分数<span class="math inline">\(\{MR_i\}_{i\in
+R}\)</span>。 b.选出分数最高的物品，将其从<span
+class="math inline">\(R\)</span>移到<span
+class="math inline">\(S\)</span>。</p>
+<h3 id="trick滑动窗口">Trick：滑动窗口</h3>
+<ul>
+<li>已选中的物品越多(即集合S越大)，越难找出物品<span
+class="math inline">\(i\in R\)</span>使得i与S中的物品都不相似。</li>
+<li>设sim 的取值范围是「0,1]。当S很大时，多样性分数<span
+class="math inline">\({max}_{j\in S}sim(i,j)\)</span>总是约等于1,导致
+MMR 算法失效。</li>
+<li>解决方案:设置一个滑动窗口W，比如最近选中的10个物品，用W代替MMR
+公式中的S。</li>
+</ul>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240430144236363.png"
+alt="image-20240430144236363" />
+<figcaption aria-hidden="true">image-20240430144236363</figcaption>
+</figure>
+<h2 id="通过重排规则提高多样性">通过重排规则提高多样性</h2>
+<h3 id="重排规则">重排规则</h3>
+<ul>
+<li><p>最多连续出现k篇某种笔记</p>
+<p>小红书推荐系统的物品分为图文笔记、视频笔记。
+最多连续出现k=5篇图文笔记，最多连续出现k-5篇视频笔记。
+如果排i到i+4的全都是图文笔记，那么排在i+5的必须是视频笔记。</p></li>
+<li><p>每k篇笔记最多出现1篇某种笔记
+运营推广笔记的精排分会乘以大于1的系数(boost)帮助笔记获得更多曝光。
+为了防止boost影响体验，限制每k-9篇笔记最多出现1篇运营推广笔记。
+如果排第i位的是运营推广笔记，那么排i+1到i+8的不能是运营推广笔记。</p></li>
+<li><p>每k篇笔记最多出现1篇某种笔记
+运营推广笔记的精排分会乘以大于1的系数(boost)帮助笔记获得更多曝光。
+为了防止boost影响体验，限制每k-9篇笔记最多出现1篇运营推广笔记。
+如果排第i位的是运营推广笔记，那么排i+1到i+8的不能是运营推广笔记。</p></li>
+</ul>
+<h3 id="mmr重排规则">MMR+重排规则</h3>
+<p>每一轮先用规则排除掉R中的部分物品，得到子集R'。</p>
+<p>MMR 公式中的R替换成子集R'，选中的物品符合规则。</p>
+<h2 id="dpp多样性算法">DPP多样性算法</h2>
+<h3 id="数学基础-超平形体">数学基础-超平形体</h3>
+<h4 id="二维">二维</h4>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240430155731053.png"
+alt="image-20240430155731053" />
+<figcaption aria-hidden="true">image-20240430155731053</figcaption>
+</figure>
+<p>2维空间的超平形体为平行四边形。</p>
+<p>平行四边形中的点可以表示为 <span class="math display">\[
+x=\alpha_1v_1+ \alpha_2v_2
+\]</span> 系数<span class="math inline">\(\alpha_1\)</span>和<span
+class="math inline">\(\alpha_2\)</span>的取值范围是[0,1]</p>
+<h4 id="三维">三维</h4>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240430155806892.png"
+alt="image-20240430155806892" />
+<figcaption aria-hidden="true">image-20240430155806892</figcaption>
+</figure>
+<p>2维空间的超平形体为平行六面体。</p>
+<p>平行四边形中的点可以表示为 <span class="math display">\[
+x=\alpha_1v_1+ \alpha_2v_2+ \alpha_3v_3
+\]</span> 系数<span class="math inline">\(\alpha_1\)</span>和<span
+class="math inline">\(\alpha_2\)</span>、<span
+class="math inline">\(\alpha_3\)</span>的取值范围是[0,1]</p>
+<h4 id="多维">多维</h4>
+<p>一组向量<span class="math inline">\(v_1,\cdots,v_k\in
+R^d\)</span>可以确定一个k维超平行体： <span class="math display">\[
+P(v_1,\cdots, v_k) = \{\alpha_1v_1+\cdots+\alpha_kv_k|0\leqslant
+\alpha_1,\cdots,\alpha_k \leqslant 1\}
+\]</span> 要求<span class="math inline">\(k\le
+d\)</span>,比如d=3维向量空间中有k=2维平行四边形。否则超平行体会跟拍扁了一样。</p>
+<h4 id="超平形体体积">超平形体体积</h4>
+<p>构成超平形体的向量正交时，超平行体体积最大，vol=1</p>
+<p>如果<span class="math inline">\(v_1,\cdots,v_k\in
+R^d\)</span>线性相关，体积<span
+class="math inline">\(vol(p)=0\)</span></p>
+<p>我们可以认为体积最大意味着多样性好，体积最小意味着多样性差。</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240430162451245.png"
+alt="image-20240430162451245" />
+<figcaption aria-hidden="true">image-20240430162451245</figcaption>
+</figure>
+<p>对于一组向量<span class="math inline">\(v_1,\cdots,v_k\in
+R^d\)</span>，<span class="math inline">\(k\leq
+d\)</span>,把它们作为矩阵的列，行列式与体积满足： <span
+class="math display">\[
+det(V^TV) = vol(p(v_1,\cdots,v_k))^2
+\]</span></p>
+<h3 id="dpp应用于多样性">DPP应用于多样性</h3>
+<p>精排给n个物品打分:<span class="math inline">\(reward_1,\cdots,
+reward_n\)</span></p>
+<p>n 个物品的向量表征:<span class="math inline">\(v_1,\cdots , v_n \in
+R^d\)</span></p>
+<p>从n个物品中选出k个物品，组成集合S</p>
+<ul>
+<li><p>价值大:分数之和<span class="math inline">\(∑_{j\in
+s}reward_j\)</span>越大越好</p></li>
+<li><p>多样性好:S中k个向量组成的超平形体P(S)的体积越大越好。</p></li>
+</ul>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240430165104679.png"
+alt="image-20240430165104679" />
+<figcaption aria-hidden="true">image-20240430165104679</figcaption>
+</figure>
+<p>集合S中的k个物品的向量作为列，组成矩阵 <span
+class="math inline">\(V_s\in R^{dxk}\)</span></p>
+<p>以这k个向量作为边，组成超平形体P(S) <span class="math display">\[
+det(V_s^TV_s) = vol(p(S))^2
+\]</span> DPP是一种传统的统计学习方法 <span class="math display">\[
+\mathop{\arg\min}\limits_{S:|S|=k} \space log det(V_s^TV_s)
+\]</span> 应用于推荐系统 <span class="math display">\[
+\mathop{\arg\min}\limits_{S:|S|=k}\space \theta\cdot (\sum_{j\in
+S}reward_j)+(1-\theta)\cdot log det(V_s^TV_s)
+\]</span> 我们构造一个nxn的矩阵<span
+class="math inline">\(A\)</span>，它的(i,j)元素使<span
+class="math inline">\(a_{ij}=v_i^Tv_j\)</span>，计算这个矩阵的时间复杂度是<span
+class="math inline">\(O(n^2d)\)</span>。 <span class="math display">\[
+A_s \in R^{(k\times k)}=V_s^TV_s
+\]</span> 是矩阵<span
+class="math inline">\(A\)</span>的子矩阵，如果<span
+class="math inline">\(i,j\in S\)</span>,则<span
+class="math inline">\(a_{ij}\)</span>是<span
+class="math inline">\(A_s\)</span>的一个元素。</p>
+<p>DPP是个组合优化问题，从集合{1…,n}中选出一个大小为k的子集S。</p>
+<h4 id="暴力贪心算法">暴力贪心算法</h4>
+<p>用S表示已选中的物品，用R表示未选中的物品，贪心算法求解 <span
+class="math display">\[
+\mathop{\arg\min}\limits_{i\in R}\space \theta\cdot
+(reward_i)+(1-\theta)\cdot log det(A_{S\cup i})
+\]</span> 对于单个i，计算 <span class="math inline">\(A_{S\or
+i}\)</span>的行列式需要<span
+class="math inline">\(O(|A|^3)\)</span>时间(求行列式就是需要<span
+class="math inline">\(O(n^3)\)</span>)</p>
+<p>对于所有的<span class="math inline">\(i\in
+R\)</span>，计算行列式需要时间<span class="math inline">\(O(|A|^3\cdot
+|R|)\)</span>。</p>
+<p>需要求解上式k次才能选出k个物品。如果暴力计算行列式，那么总时间复杂度为
+<span class="math display">\[
+O(|A|^3\cdot |R|\cdot k)=O(nk^4)
+\]</span> 再加上计算A的时间，暴力算法总时间复杂度是： <span
+class="math display">\[
+O(n^2d+nk^4)
+\]</span></p>
+<h4 id="hulu快速算法">Hulu快速算法</h4>
+<p>给定向量<span class="math inline">\(v_1,\cdots , v_n \in
+R^d\)</span>，需要<span
+class="math inline">\(O(n^2d)\)</span>时间计算A</p>
+<p>用<span
+class="math inline">\(O(nk^2)\)</span>)时间计算所有的行列式(利用Cholesky分解)</p>
+<ul>
+<li><p>Cholesky 分解</p></li>
+<li><p>Cholesky 分解<span
+class="math inline">\(A_s=LL^T\)</span>，其中L是下三角矩阵(对角线以上的元素全零)</p>
+<p>Cholesky 分解可供计算<span
+class="math inline">\(A_s\)</span>的行列式。</p>
+<ul>
+<li>下三角矩阵L的行列式 det(L)等于L对角线元素乘积。</li>
+<li>As 的行列式为 <span class="math inline">\(det(A_s)= det(L)^2=\prod_i
+l_{ii}^2\)</span></li>
+</ul></li>
+<li><p>已知<span
+class="math inline">\(A_s=LL^T\)</span>，则可以快速求出所有<span
+class="math inline">\(A_{S\cup i}\)</span> 的
+Cholesky分解(有方法可以快速算出增加一行一列的行列式)，因此可以快速算出所有
+<span class="math inline">\(A_{S\cup i}\)</span> 的行列式。</p></li>
+</ul>
+<h3 id="dpp扩展-滑动窗口">DPP扩展-滑动窗口</h3>
+<p>与MMR方法一样，随着<span
+class="math inline">\(S\)</span>增大，其中相似物品越来越多，物品向量会趋近线性相关。</p>
+<p>DPP失效</p>
+<h1 id="冷启动">冷启动</h1>
+<h1 id="涨指标方法">涨指标方法</h1>
 ]]></content>
       <categories>
         <category>RecSys</category>
@@ -4819,7 +5138,18 @@ Machines因式分解</h2>
 <span class="math display">\[
 FM(w,x)=\sum_{j_i=1}^{n-1} \sum_{j_2=j_1+1}^n (w_{j_1}\cdot
 w_{j_2})x_{j_1}x_{j_2}
-\]</span> 优点：</p>
+\]</span> 我们也可以看作是将POLY2方法中<span
+class="math inline">\(R^{n\times n}\)</span>的矩阵分解为两个矩阵<span
+class="math inline">\(R^{n\times k}\)</span>和<span
+class="math inline">\(R^{k\times
+n}\)</span>，其中第一个矩阵第i行与第二个矩阵第j列相乘即使特征i、j的特征交叉参数。</p>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240430134835195.png"
+alt="image-20240430134835195" />
+<figcaption aria-hidden="true">image-20240430134835195</figcaption>
+</figure>
+<p>优点：</p>
 <ol type="1">
 <li>计算复杂度<span
 class="math inline">\(n^2-&gt;nk\)</span>,k是隐向量维度</li>
@@ -5080,6 +5410,11 @@ alt="image-20230727160827480" />
 <p>cross layer的每一层其实是将两个向量A、B矩阵相乘为一个矩阵M，<span
 class="math inline">\(M_{ij}\)</span>代表A向量的第i维度与B向量第j维度相乘，这样就将两个向量的每个维度两两相乘，而向量<span
 class="math inline">\(x_0\)</span>中的不同维度代表不同特征，也就是让不同特征充分交互。</p>
+<p>cross network为1层的时候，我们可以得到的最高是2维的特征交叉；cross
+network为2层的时候，我们得到的是最高3维的特征交叉；cross
+network为3层的时候，我们得到的是最高4维的特征交叉；以此类推。。。</p>
+<p>因此cross
+network以一种参数共享的方式，通过对叠加层数的控制，可以高效地学习出低维的特征交叉组合，避免了人工特征工程。</p>
 <p>交叉后过一个MLP层，最后再加上交叉前的l层输入，其实就是为了学习残差。</p>
 ]]></content>
       <categories>
@@ -5765,6 +6100,41 @@ heapq — Heap queue algorithm — Python 2.7.18 documentation</a></p></li>
 ]]></content>
       <categories>
         <category>Algorithm</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>蛋糕烘焙</title>
+    <url>/2023/02/14/bakery/</url>
+    <content><![CDATA[<p>.</p>
+<span id="more"></span>
+<h1 id="巴斯克">巴斯克</h1>
+<h2 id="抹茶巴斯克">抹茶巴斯克</h2>
+<p>6寸模具(直径15cm)</p>
+<h3 id="材料">材料</h3>
+<p>白巧克力：120g</p>
+<p>抹茶：23g</p>
+<p>奶油奶酪：230g</p>
+<p>细砂糖60g</p>
+<p>常温鸡蛋：3个</p>
+<p>蛋黄：1个</p>
+<p>马斯卡彭50g</p>
+<p>淡奶油：230g</p>
+<h3 id="做法">做法</h3>
+<ul>
+<li>120g白巧克力隔水融化</li>
+<li>加入23g抹茶粉搅拌均匀</li>
+<li>230g奶油奶酪隔水融化，搅拌丝滑</li>
+<li>加入50g白砂糖搅拌均匀</li>
+<li>加入鸡蛋、蛋黄、马斯卡彭、淡奶油搅拌均匀</li>
+<li>加入抹茶巧克力搅拌均匀</li>
+<li>过筛，倒入模具</li>
+<li>230度烤19~21分钟左右，上色满意盖上锡纸</li>
+</ul>
+<h3 id="要点">要点</h3>
+<p>奶油奶酪选用很重要，铁塔牌更酸一点，kiri没那么酸</p>
+]]></content>
+      <categories>
+        <category>baked food</category>
       </categories>
   </entry>
   <entry>
