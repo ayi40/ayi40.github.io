@@ -45,12 +45,13 @@
   </entry>
   <entry>
     <title>Hadoop</title>
-    <url>/2024/04/15/BDC/</url>
+    <url>/2024/04/15/BDC-Hadoop/</url>
     <content><![CDATA[<p>Hadoop</p>
 <span id="more"></span>
 <p>Hadoop = HDFS + MapReduce</p>
 <p>HDFS为海量数据提供了<strong>存储</strong>，而MapReduce为海量数据提供了<strong>计算框架</strong>。</p>
-<h1 id="hdfs">HDFS</h1>
+<h1 id="基本概念">基本概念</h1>
+<h2 id="hdfs">HDFS</h2>
 <ul>
 <li>NameNode
 :是Master节点（主节点），可以看作是分布式文件系统中的管理者，主要负责管理文件系统的命名空间、集群配置信息和存储块的复制等。NameNode会将文件系统的Meta-data存储在内存中，这些信息主要包括了文件信息、每一个文件对应的文件块的信息和每一个文件块在DataNode的信息等。</li>
@@ -60,7 +61,7 @@
 切分文件；访问HDFS；与NameNode交互，获得文件位置信息；与DataNode交互，读取和写入数据。 </li>
 </ul>
 <p><strong>Block</strong>:Block是HDFS中的基本读写单元；HDFS中的文件都是被切割为block（块）进行存储的；这些块被复制到多个DataNode中；块的大小（通常为64MB）和复制的块数量在创建文件时由Client决定。</p>
-<h2 id="写入流程">写入流程</h2>
+<h3 id="写入流程">写入流程</h3>
 <figure>
 <img
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240415144017291.png"
@@ -81,7 +82,7 @@ NameNode告诉Client三个DataNode（数据节点）的地址，并且将它们�
 <p>9 如果某一个块的所有数据都已写入，就会向NameNode反馈已完成。</p>
 <p>10 对第二个Block，也进行相同的操作。</p>
 <p>11 所有Block都完成后，关闭文件。NameNode会将数据持久化到磁盘上。</p>
-<h2 id="读出流程">读出流程</h2>
+<h3 id="读出流程">读出流程</h3>
 <figure>
 <img
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240415144359467.png"
@@ -93,7 +94,7 @@ alt="image-20240415144359467" />
 <p>3
 NameNode将给Client这个文件的块列表，以及存储各个块的数据节点清单（按照和客户端的距离排序）。</p>
 <p>4 Client从距离最近的数据节点下载所需的块。</p>
-<h1 id="mapreduce">MapReduce</h1>
+<h2 id="mapreduce">MapReduce</h2>
 <figure>
 <img
 src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240416113031092.png"
@@ -116,6 +117,38 @@ alt="image-20240415144901036" />
 可以运行于集群中任一台计算机上。</li>
 <li>TaskTracker: 负责执行任务，必须运行于 DataNode 上。</li>
 </ul>
+<h2 id="yarn">YARN</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240506120131953.png"
+alt="image-20240506120131953" />
+<figcaption aria-hidden="true">image-20240506120131953</figcaption>
+</figure>
+<ul>
+<li><p><strong>ResourceManager</strong>（RM）：整个集群资源（内存、CPU等）的管理者</p></li>
+<li><p><strong>NodeManager</strong>（NM）：单个节点服务器的管理者</p></li>
+<li><p><strong>ApplicationMaster</strong>（AM）：单个任务运行的负责人</p></li>
+<li><p><strong>Container</strong>：容器，相当于一台独立的服务器，里面封装了任务运行所需要的资源（内存、CPU、磁盘、网络）</p></li>
+<li><p>注意</p></li>
+<li><ul>
+<li>客户端可以有多个</li>
+<li>集群上可以运行多个 ApplicationMaster</li>
+<li>每个 NodeManager 上可以有多个 Container</li>
+</ul></li>
+</ul>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240506120252480.png"
+alt="image-20240506120252480" />
+<figcaption aria-hidden="true">image-20240506120252480</figcaption>
+</figure>
+<h2 id="三者关系">三者关系</h2>
+<figure>
+<img
+src="https://ayimd-pic.oss-cn-guangzhou.aliyuncs.com/image-20240506144828981.png"
+alt="image-20240506144828981" />
+<figcaption aria-hidden="true">image-20240506144828981</figcaption>
+</figure>
 <h1 id="实战">实战</h1>
 <p><a
 href="https://blog.csdn.net/weixin_42837961/article/details/105493561">Hadoop
@@ -141,6 +174,137 @@ href="https://blog.csdn.net/weixin_42837961/article/details/105493561">Hadoop
 ]]></content>
       <categories>
         <category>CV</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Spark</title>
+    <url>/2024/05/13/BDC-Spark/</url>
+    <content><![CDATA[<p>Spark</p>
+<span id="more"></span>
+<h1 id="搭建环境">搭建环境</h1>
+<p><a href="https://www.sundog-education.com/spark-python/">Taming Big
+Data with Apache Spark and Python - Getting Started - Sundog Education
+with Frank Kane (sundog-education.com)</a></p>
+<p><strong>Note</strong>：Step12使用<code>pyspark</code>指令前记得先进入anaconda中的环境。</p>
+<h1 id="introduction">Introduction</h1>
+<h2 id="overview">Overview</h2>
+<p>TBC</p>
+<h1 id="resilient-distributed-data-setrdd弹性分布式数据集">Resilient
+Distributed Data Set（RDD）弹性分布式数据集</h1>
+<p>RDD是数据集，我们通常对一个RDD做一些操作去获得另外一个RDD。我们需要实例化一个对象<code>SparkContext</code>来执行这些操作。</p>
+<h2 id="basic-operation">Basic Operation</h2>
+<h3 id="transforming-rdd">Transforming RDD</h3>
+<ul>
+<li>map</li>
+<li>flatmap</li>
+<li>filter: removing information potentially that you don't care
+about</li>
+<li>distinct</li>
+<li>sample</li>
+<li>union, intersection, subtract, cartesian</li>
+</ul>
+<h3 id="rdd-action">RDD Action</h3>
+<ul>
+<li>collect</li>
+<li>count： 统计RDD中value出现的次数</li>
+<li>countByValue</li>
+<li>take</li>
+<li>top</li>
+<li>reduce</li>
+<li>... and more ...</li>
+</ul>
+<h3
+id="example统计user对movie的评分">Example：统计user对movie的评分</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf, SparkContext</span><br><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"></span><br><span class="line"><span class="comment"># setMaster指定在单个主机(local)还是在集群(cluster)中运行，这里我们暂时使用单线程</span></span><br><span class="line">conf = SparkConf().setMaster(<span class="string">&quot;local&quot;</span>).setAppName(<span class="string">&quot;RatingsHistogram&quot;</span>)</span><br><span class="line"><span class="comment"># 创建SparkContext</span></span><br><span class="line">sc = SparkContext(conf = conf)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用sc.textFile创建RDD，text中每一行（整行文本）对应RDD中一个值</span></span><br><span class="line"><span class="comment"># exp：</span></span><br><span class="line"><span class="comment">#user_id movie_id rating timestep</span></span><br><span class="line"><span class="comment">#196 242 4 991232423</span></span><br><span class="line"><span class="comment">#186 302 3 984927391</span></span><br><span class="line"><span class="comment">#......</span></span><br><span class="line">lines = sc.textFile(<span class="string">&quot;file:///SparkCourse/ml-100k/u.data&quot;</span>)</span><br><span class="line"><span class="comment"># 使用map与lambda对RDD进行transform</span></span><br><span class="line">ratings = lines.<span class="built_in">map</span>(<span class="keyword">lambda</span> x: x.split()[<span class="number">2</span>])</span><br><span class="line"><span class="comment"># 对新的RDD进行action</span></span><br><span class="line">result = ratings.countByValue()</span><br><span class="line"></span><br><span class="line">sortedResults = collections.OrderedDict(<span class="built_in">sorted</span>(result.items()))</span><br><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> sortedResults.items():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;%s %i&quot;</span> % (key, value))</span><br></pre></td></tr></table></figure>
+<h2 id="key-value-rdd">Key-Value RDD</h2>
+<h3 id="create-key-value-rdd">Create Key-Value RDD</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">totalsByAge = rdd.map(lambda x:(x,1))</span><br></pre></td></tr></table></figure>
+<p>键值对的value不一定非得是一个值，也可以是列表</p>
+<h3 id="special-action">Special Action</h3>
+<ul>
+<li><p>reduceByKey(): combine values with the same key using some
+function.</p>
+<p>exp: use <code>rdd.reduceByKey(lambda x,y:x+y)</code> to adds values
+up</p></li>
+<li><p>groupByKey(): Group values with the same key</p></li>
+<li><p>sortByKey(): Sort RDD by key values</p></li>
+<li><p>keys(), values(): create an RDD of just the keys, or just the
+values</p></li>
+</ul>
+<h3 id="example-统计一定年龄段的朋友有多少">Example:
+统计一定年龄段的朋友有多少</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># datasets</span></span><br><span class="line"><span class="comment"># indexd name age friends_num</span></span><br><span class="line"><span class="comment"># 0 Will 33 385</span></span><br><span class="line"><span class="comment"># 1 Jean 33 2</span></span><br><span class="line"><span class="comment"># 2 Huge 55 221</span></span><br><span class="line"><span class="comment"># 3 Luke 40 465</span></span><br><span class="line"><span class="comment">#...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf, SparkContext</span><br><span class="line"></span><br><span class="line">conf = SparkConf().setMaster(<span class="string">&quot;local&quot;</span>).setAppName(<span class="string">&quot;FriendsByAge&quot;</span>)</span><br><span class="line">sc = SparkContext(conf = conf)</span><br><span class="line"></span><br><span class="line"><span class="comment"># transform to key-value RDD</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">parseLine</span>(<span class="params">line</span>):</span><br><span class="line">    fields = line.split(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">    age = <span class="built_in">int</span>(fields[<span class="number">2</span>])</span><br><span class="line">    numFriends = <span class="built_in">int</span>(fields[<span class="number">3</span>])</span><br><span class="line">    <span class="keyword">return</span> (age, numFriends)</span><br><span class="line"></span><br><span class="line">lines = sc.textFile(<span class="string">&quot;file:///SparkCourse/fakefriends.csv&quot;</span>)</span><br><span class="line">rdd = lines.<span class="built_in">map</span>(parseLine)</span><br><span class="line"></span><br><span class="line"><span class="comment"># transform (33,385) to (33, (385, 1)),and them sum up respectively, 385用来计算总朋友数，1用来计算人头数用于求平均</span></span><br><span class="line">totalsByAge = rdd.mapValues(<span class="keyword">lambda</span> x: (x, <span class="number">1</span>)).reduceByKey(<span class="keyword">lambda</span> x, y: (x[<span class="number">0</span>] + y[<span class="number">0</span>], x[<span class="number">1</span>] + y[<span class="number">1</span>]))</span><br><span class="line">averagesByAge = totalsByAge.mapValues(<span class="keyword">lambda</span> x: x[<span class="number">0</span>] / x[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">results = averagesByAge.collect()</span><br><span class="line"><span class="keyword">for</span> result <span class="keyword">in</span> results:</span><br><span class="line">    <span class="built_in">print</span>(result)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="filtering-rdd">Filtering RDD</h2>
+<p>map：对RDD处理，input和output始终是一对一关系</p>
+<p>flatmap： 可以从一个value生成多个values</p>
+<p>e.g. (The quick red fox ...) ——》 lines.flatmap(lambda x:x.split())
+——》 (The) (quick) (red) (fox)...</p>
+<h3 id="example-找出气候站一年的最低温低">Example:
+找出气候站一年的最低温低</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># dataset</span></span><br><span class="line"><span class="comment"># wether sation code, date, type, temp, other</span></span><br><span class="line"><span class="comment"># ITE00100554, 18000101, TMAX, -75,,,E </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf, SparkContext</span><br><span class="line"></span><br><span class="line">conf = SparkConf().setMaster(<span class="string">&quot;local&quot;</span>).setAppName(<span class="string">&quot;MinTemperatures&quot;</span>)</span><br><span class="line">sc = SparkContext(conf = conf)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">parseLine</span>(<span class="params">line</span>):</span><br><span class="line">    fields = line.split(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">    stationID = fields[<span class="number">0</span>]</span><br><span class="line">    entryType = fields[<span class="number">2</span>]</span><br><span class="line">    temperature = <span class="built_in">float</span>(fields[<span class="number">3</span>]) * <span class="number">0.1</span> * (<span class="number">9.0</span> / <span class="number">5.0</span>) + <span class="number">32.0</span></span><br><span class="line">    <span class="keyword">return</span> (stationID, entryType, temperature)</span><br><span class="line"></span><br><span class="line">lines = sc.textFile(<span class="string">&quot;file:///SparkCourse/1800.csv&quot;</span>)</span><br><span class="line">parsedLines = lines.<span class="built_in">map</span>(parseLine)</span><br><span class="line">minTemps = parsedLines.<span class="built_in">filter</span>(<span class="keyword">lambda</span> x: <span class="string">&quot;TMIN&quot;</span> <span class="keyword">in</span> x[<span class="number">1</span>])</span><br><span class="line">stationTemps = minTemps.<span class="built_in">map</span>(<span class="keyword">lambda</span> x: (x[<span class="number">0</span>], x[<span class="number">2</span>]))</span><br><span class="line">minTemps = stationTemps.reduceByKey(<span class="keyword">lambda</span> x, y: <span class="built_in">min</span>(x,y))</span><br><span class="line">results = minTemps.collect();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> result <span class="keyword">in</span> results:</span><br><span class="line">    <span class="built_in">print</span>(result[<span class="number">0</span>] + <span class="string">&quot;\t&#123;:.2f&#125;F&quot;</span>.<span class="built_in">format</span>(result[<span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
+<h2 id="flatmap">Flatmap</h2>
+<h3 id="example-统计文本中词汇出现次数">Example：
+统计文本中词汇出现次数</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf, SparkContext</span><br><span class="line"></span><br><span class="line">conf = SparkConf().setMaster(<span class="string">&quot;local&quot;</span>).setAppName(<span class="string">&quot;WordCount&quot;</span>)</span><br><span class="line">sc = SparkContext(conf = conf)</span><br><span class="line"></span><br><span class="line"><span class="built_in">input</span> = sc.textFile(<span class="string">&quot;file:///sparkcourse/book.txt&quot;</span>)</span><br><span class="line">words = <span class="built_in">input</span>.flatMap(<span class="keyword">lambda</span> x: x.split())</span><br><span class="line">wordCounts = words.countByValue()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> word, count <span class="keyword">in</span> wordCounts.items():</span><br><span class="line">    cleanWord = word.encode(<span class="string">&#x27;ascii&#x27;</span>, <span class="string">&#x27;ignore&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> (cleanWord):</span><br><span class="line">        <span class="built_in">print</span>(cleanWord.decode() + <span class="string">&quot; &quot;</span> + <span class="built_in">str</span>(count))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>上面代码只通过空格分解，会出现<code>spark,</code>这种情况，我们下面用正则表达式改进一下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf, SparkContext</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">normalizeWords</span>(<span class="params">text</span>):</span><br><span class="line">    <span class="keyword">return</span> re.<span class="built_in">compile</span>(<span class="string">r&#x27;\W+&#x27;</span>, re.UNICODE).split(text.lower())</span><br><span class="line"></span><br><span class="line">conf = SparkConf().setMaster(<span class="string">&quot;local&quot;</span>).setAppName(<span class="string">&quot;WordCount&quot;</span>)</span><br><span class="line">sc = SparkContext(conf = conf)</span><br><span class="line"></span><br><span class="line"><span class="built_in">input</span> = sc.textFile(<span class="string">&quot;file:///sparkcourse/book.txt&quot;</span>)</span><br><span class="line">words = <span class="built_in">input</span>.flatMap(normalizeWords)</span><br><span class="line">wordCounts = words.countByValue()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> word, count <span class="keyword">in</span> wordCounts.items():</span><br><span class="line">    cleanWord = word.encode(<span class="string">&#x27;ascii&#x27;</span>, <span class="string">&#x27;ignore&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> (cleanWord):</span><br><span class="line">        <span class="built_in">print</span>(cleanWord.decode() + <span class="string">&quot; &quot;</span> + <span class="built_in">str</span>(count))</span><br></pre></td></tr></table></figure>
+<p>加上排序</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkConf, SparkContext</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">normalizeWords</span>(<span class="params">text</span>):</span><br><span class="line">    <span class="keyword">return</span> re.<span class="built_in">compile</span>(<span class="string">r&#x27;\W+&#x27;</span>, re.UNICODE).split(text.lower())</span><br><span class="line"></span><br><span class="line">conf = SparkConf().setMaster(<span class="string">&quot;local&quot;</span>).setAppName(<span class="string">&quot;WordCount&quot;</span>)</span><br><span class="line">sc = SparkContext(conf = conf)</span><br><span class="line"></span><br><span class="line"><span class="built_in">input</span> = sc.textFile(<span class="string">&quot;file:///sparkcourse/book.txt&quot;</span>)</span><br><span class="line">words = <span class="built_in">input</span>.flatMap(normalizeWords)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用另外一种方法实现词频统计</span></span><br><span class="line">wordCounts = words.<span class="built_in">map</span>(<span class="keyword">lambda</span> x: (x, <span class="number">1</span>)).reduceByKey(<span class="keyword">lambda</span> x, y: x + y)</span><br><span class="line"><span class="comment"># key，value转换，然后用sordbykey方法</span></span><br><span class="line">wordCountsSorted = wordCounts.<span class="built_in">map</span>(<span class="keyword">lambda</span> x: (x[<span class="number">1</span>], x[<span class="number">0</span>])).sortByKey()</span><br><span class="line">results = wordCountsSorted.collect()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> result <span class="keyword">in</span> results:</span><br><span class="line">    count = <span class="built_in">str</span>(result[<span class="number">0</span>])</span><br><span class="line">    word = result[<span class="number">1</span>].encode(<span class="string">&#x27;ascii&#x27;</span>, <span class="string">&#x27;ignore&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> (word):</span><br><span class="line">        <span class="built_in">print</span>(word.decode() + <span class="string">&quot;:\t\t&quot;</span> + count)</span><br></pre></td></tr></table></figure>
+<h1 id="spark-sql">Spark SQL</h1>
+<p>一种dataframe，可以用sql语句查询，可以与rdd互相转换</p>
+<h2 id="example将rdd转为sparksql">Example：将RDD转为SparkSQL</h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> Row</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a SparkSessiony用于操作SparkSQL</span></span><br><span class="line"><span class="comment"># spark.getOrCreate()与spark.close()相对应</span></span><br><span class="line">spark = SparkSession.builder.appName(<span class="string">&quot;SparkSQL&quot;</span>).getOrCreate()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">mapper</span>(<span class="params">line</span>):</span><br><span class="line">    fields = line.split(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> Row(ID=<span class="built_in">int</span>(fields[<span class="number">0</span>]), name=<span class="built_in">str</span>(fields[<span class="number">1</span>].encode(<span class="string">&quot;utf-8&quot;</span>)), \</span><br><span class="line">               age=<span class="built_in">int</span>(fields[<span class="number">2</span>]), numFriends=<span class="built_in">int</span>(fields[<span class="number">3</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个value是Row的RDD</span></span><br><span class="line">lines = spark.sparkContext.textFile(<span class="string">&quot;fakefriends.csv&quot;</span>)</span><br><span class="line">people = lines.<span class="built_in">map</span>(mapper)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 利用RDD创建DataFrame</span></span><br><span class="line"><span class="comment"># Infer the schema, and register the DataFrame as a table.</span></span><br><span class="line"><span class="comment"># cache是将这个表存入内存里</span></span><br><span class="line">schemaPeople = spark.createDataFrame(people).cache()</span><br><span class="line"><span class="comment"># 要对DataFrame进行操作，需要创建一个临时View（如果View已经存在则替换）</span></span><br><span class="line">schemaPeople.createOrReplaceTempView(<span class="string">&quot;people&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># SQL can be run over DataFrames that have been registered as a table.</span></span><br><span class="line"><span class="comment"># return a dataframe</span></span><br><span class="line"><span class="comment"># 这里people对应View的名字，age对于创建Row是给的名字</span></span><br><span class="line">teenagers = spark.sql(<span class="string">&quot;SELECT * FROM people WHERE age &gt;= 13 AND age &lt;= 19&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># The results of SQL queries are RDDs and support all the normal RDD operations.</span></span><br><span class="line"><span class="keyword">for</span> teen <span class="keyword">in</span> teenagers.collect():</span><br><span class="line">  <span class="built_in">print</span>(teen)</span><br><span class="line"></span><br><span class="line"><span class="comment"># We can also use functions instead of SQL queries:</span></span><br><span class="line">schemaPeople.groupBy(<span class="string">&quot;age&quot;</span>).count().orderBy(<span class="string">&quot;age&quot;</span>).show()</span><br><span class="line"></span><br><span class="line">spark.stop()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2
+id="example直接打开dataframe用执行代码处理数据">Example：直接打开DataFrame+用执行代码处理数据</h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"></span><br><span class="line">spark = SparkSession.builder.appName(<span class="string">&quot;SparkSQL&quot;</span>).getOrCreate()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取csv文件</span></span><br><span class="line"><span class="comment"># option(&quot;header&quot;, &quot;true&quot;)表明这个csv文件有header</span></span><br><span class="line"><span class="comment"># option(&quot;inferSchema&quot;, &quot;true&quot;)要求推理检测模式</span></span><br><span class="line">people = spark.read.option(<span class="string">&quot;header&quot;</span>, <span class="string">&quot;true&quot;</span>).option(<span class="string">&quot;inferSchema&quot;</span>, <span class="string">&quot;true&quot;</span>)\</span><br><span class="line">    .csv(<span class="string">&quot;file:///SparkCourse/fakefriends-header.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># print属性名与属性类型</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Here is our inferred schema:&quot;</span>)</span><br><span class="line">people.printSchema()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Let&#x27;s display the name column:&quot;</span>)</span><br><span class="line">people.select(<span class="string">&quot;name&quot;</span>).show()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Filter out anyone over 21:&quot;</span>)</span><br><span class="line">people.<span class="built_in">filter</span>(people.age &lt; <span class="number">21</span>).show()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Group by age&quot;</span>)</span><br><span class="line">people.groupBy(<span class="string">&quot;age&quot;</span>).count().show()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Make everyone 10 years older:&quot;</span>)</span><br><span class="line">people.select(people.name, people.age + <span class="number">10</span>).show()</span><br><span class="line"></span><br><span class="line">spark.stop()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2
+id="example计算某个年龄平均有几个朋友">Example：计算某个年龄平均有几个朋友</h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> Row</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> functions <span class="keyword">as</span> func</span><br><span class="line"></span><br><span class="line">spark = SparkSession.builder.appName(<span class="string">&quot;FriendsByAge&quot;</span>).getOrCreate()</span><br><span class="line"></span><br><span class="line">lines = spark.read.option(<span class="string">&quot;header&quot;</span>, <span class="string">&quot;true&quot;</span>).option(<span class="string">&quot;inferSchema&quot;</span>, <span class="string">&quot;true&quot;</span>).csv(<span class="string">&quot;file:///SparkCourse/fakefriends-header.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Select only age and numFriends columns</span></span><br><span class="line">friendsByAge = lines.select(<span class="string">&quot;age&quot;</span>, <span class="string">&quot;friends&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># From friendsByAge we group by &quot;age&quot; and then compute average</span></span><br><span class="line">friendsByAge.groupBy(<span class="string">&quot;age&quot;</span>).avg(<span class="string">&quot;friends&quot;</span>).show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sorted</span></span><br><span class="line">friendsByAge.groupBy(<span class="string">&quot;age&quot;</span>).avg(<span class="string">&quot;friends&quot;</span>).sort(<span class="string">&quot;age&quot;</span>).show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Formatted more nicely</span></span><br><span class="line"><span class="comment"># agg()聚合多个命令，func.round()取小数点后几位</span></span><br><span class="line">friendsByAge.groupBy(<span class="string">&quot;age&quot;</span>).agg(func.<span class="built_in">round</span>(func.avg(<span class="string">&quot;friends&quot;</span>), <span class="number">2</span>)).sort(<span class="string">&quot;age&quot;</span>).show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># With a custom column name</span></span><br><span class="line"><span class="comment"># alias()可以自定义列的名字</span></span><br><span class="line">friendsByAge.groupBy(<span class="string">&quot;age&quot;</span>).agg(func.<span class="built_in">round</span>(func.avg(<span class="string">&quot;friends&quot;</span>), <span class="number">2</span>)</span><br><span class="line">  .alias(<span class="string">&quot;friends_avg&quot;</span>)).sort(<span class="string">&quot;age&quot;</span>).show()</span><br><span class="line"></span><br><span class="line">spark.stop()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="func">func</h2>
+<p>Passing columns as parameters</p>
+<ul>
+<li>func.explode(): similar to flatmap</li>
+<li>func.split()</li>
+<li>func.lower()</li>
+</ul>
+<h3 id="example-wordcounting处理非结构数据">Example:
+WordCounting处理非结构数据</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> functions <span class="keyword">as</span> func</span><br><span class="line"></span><br><span class="line">spark = SparkSession.builder.appName(<span class="string">&quot;WordCount&quot;</span>).getOrCreate()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Read each line of my book into a dataframe</span></span><br><span class="line">inputDF = spark.read.text(<span class="string">&quot;file:///SparkCourse/book.txt&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Split using a regular expression that extracts words</span></span><br><span class="line">words = inputDF.select(func.explode(func.split(inputDF.value, <span class="string">&quot;\\W+&quot;</span>)).alias(<span class="string">&quot;word&quot;</span>))</span><br><span class="line">wordsWithoutEmptyString = words.<span class="built_in">filter</span>(words.word != <span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Normalize everything to lowercase</span></span><br><span class="line">lowercaseWords = wordsWithoutEmptyString.select(func.lower(wordsWithoutEmptyString.word).alias(<span class="string">&quot;word&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Count up the occurrences of each word</span></span><br><span class="line">wordCounts = lowercaseWords.groupBy(<span class="string">&quot;word&quot;</span>).count()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sort by counts</span></span><br><span class="line">wordCountsSorted = wordCounts.sort(<span class="string">&quot;count&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Show the results.</span></span><br><span class="line">wordCountsSorted.show(wordCountsSorted.count())</span><br></pre></td></tr></table></figure>
+<h3 id="example-找最大最小温度">Example: 找最大最小温度</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> functions <span class="keyword">as</span> func</span><br><span class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> StructType, StructField, StringType, IntegerType, FloatType</span><br><span class="line"></span><br><span class="line">spark = SparkSession.builder.appName(<span class="string">&quot;MinTemperatures&quot;</span>).getOrCreate()</span><br><span class="line"></span><br><span class="line"><span class="comment"># define the schema</span></span><br><span class="line"><span class="comment"># 根据列顺序分配</span></span><br><span class="line">schema = StructType([ \</span><br><span class="line">                     StructField(<span class="string">&quot;stationID&quot;</span>, StringType(), <span class="literal">True</span>), \</span><br><span class="line">                     StructField(<span class="string">&quot;date&quot;</span>, IntegerType(), <span class="literal">True</span>), \</span><br><span class="line">                     StructField(<span class="string">&quot;measure_type&quot;</span>, StringType(), <span class="literal">True</span>), \</span><br><span class="line">                     StructField(<span class="string">&quot;temperature&quot;</span>, FloatType(), <span class="literal">True</span>)])</span><br><span class="line"></span><br><span class="line"><span class="comment"># // Read the file as dataframe</span></span><br><span class="line">df = spark.read.schema(schema).csv(<span class="string">&quot;file:///SparkCourse/1800.csv&quot;</span>)</span><br><span class="line">df.printSchema()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Filter out all but TMIN entries</span></span><br><span class="line">minTemps = df.<span class="built_in">filter</span>(df.measure_type == <span class="string">&quot;TMIN&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Select only stationID and temperature</span></span><br><span class="line">stationTemps = minTemps.select(<span class="string">&quot;stationID&quot;</span>, <span class="string">&quot;temperature&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Aggregate to find minimum temperature for every station</span></span><br><span class="line">minTempsByStation = stationTemps.groupBy(<span class="string">&quot;stationID&quot;</span>).<span class="built_in">min</span>(<span class="string">&quot;temperature&quot;</span>)</span><br><span class="line"><span class="comment"># 当有show()等action才会开始真正执行上面的代码</span></span><br><span class="line">minTempsByStation.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Convert temperature to fahrenheit and sort the dataset</span></span><br><span class="line"><span class="comment"># withColumn()新建一列名为“temperature&quot;,value是第二个参数</span></span><br><span class="line"><span class="comment"># 创建好新列后再进行select</span></span><br><span class="line">minTempsByStationF = minTempsByStation.withColumn(<span class="string">&quot;temperature&quot;</span>,</span><br><span class="line">                                                  func.<span class="built_in">round</span>(func.col(<span class="string">&quot;min(temperature)&quot;</span>) * <span class="number">0.1</span> * (<span class="number">9.0</span> / <span class="number">5.0</span>) + <span class="number">32.0</span>, <span class="number">2</span>))\</span><br><span class="line">                                                  .select(<span class="string">&quot;stationID&quot;</span>, <span class="string">&quot;temperature&quot;</span>).sort(<span class="string">&quot;temperature&quot;</span>)</span><br><span class="line">                                                  </span><br><span class="line"><span class="comment"># Collect, format, and print the results</span></span><br><span class="line">results = minTempsByStationF.collect()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> result <span class="keyword">in</span> results:</span><br><span class="line">    <span class="built_in">print</span>(result[<span class="number">0</span>] + <span class="string">&quot;\t&#123;:.2f&#125;F&quot;</span>.<span class="built_in">format</span>(result[<span class="number">1</span>]))</span><br><span class="line">    </span><br><span class="line">spark.stop()</span><br></pre></td></tr></table></figure>
+<h3 id="exercisecustomer_order">Exercise：customer_order</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> functions <span class="keyword">as</span> func</span><br><span class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> StructType, StructField, IntegerType, FloatType</span><br><span class="line"></span><br><span class="line">spark = SparkSession.builder.appName(<span class="string">&quot;TotalSpentByCustomer&quot;</span>).master(<span class="string">&quot;local[*]&quot;</span>).getOrCreate()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create schema when reading customer-orders</span></span><br><span class="line">customerOrderSchema = StructType([ \</span><br><span class="line">                                  StructField(<span class="string">&quot;cust_id&quot;</span>, IntegerType(), <span class="literal">True</span>),</span><br><span class="line">                                  StructField(<span class="string">&quot;item_id&quot;</span>, IntegerType(), <span class="literal">True</span>),</span><br><span class="line">                                  StructField(<span class="string">&quot;amount_spent&quot;</span>, FloatType(), <span class="literal">True</span>)</span><br><span class="line">                                  ])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load up the data into spark dataset</span></span><br><span class="line">customersDF = spark.read.schema(customerOrderSchema).csv(<span class="string">&quot;file:///SparkCourse/customer-orders.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line">totalByCustomer = customersDF.groupBy(<span class="string">&quot;cust_id&quot;</span>).agg(func.<span class="built_in">round</span>(func.<span class="built_in">sum</span>(<span class="string">&quot;amount_spent&quot;</span>), <span class="number">2</span>) \</span><br><span class="line">                                      .alias(<span class="string">&quot;total_spent&quot;</span>))</span><br><span class="line"></span><br><span class="line">totalByCustomerSorted = totalByCustomer.sort(<span class="string">&quot;total_spent&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># totalByCustomerSorted.count()算出整个table一共多少行，这是为了输出整个表</span></span><br><span class="line">totalByCustomerSorted.show(totalByCustomerSorted.count())</span><br><span class="line"></span><br><span class="line">spark.stop()</span><br></pre></td></tr></table></figure>
+<h2 id="advanced-example">Advanced Example</h2>
+<h3
+id="找出最受欢迎的电影-最多评分数的电影">找出最受欢迎的电影-最多评分数的电影</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> functions <span class="keyword">as</span> func</span><br><span class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> StructType, StructField, IntegerType, LongType</span><br><span class="line"></span><br><span class="line">spark = SparkSession.builder.appName(<span class="string">&quot;PopularMovies&quot;</span>).getOrCreate()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create schema when reading u.data</span></span><br><span class="line">schema = StructType([ \</span><br><span class="line">                     StructField(<span class="string">&quot;userID&quot;</span>, IntegerType(), <span class="literal">True</span>), \</span><br><span class="line">                     StructField(<span class="string">&quot;movieID&quot;</span>, IntegerType(), <span class="literal">True</span>), \</span><br><span class="line">                     StructField(<span class="string">&quot;rating&quot;</span>, IntegerType(), <span class="literal">True</span>), \</span><br><span class="line">                     StructField(<span class="string">&quot;timestamp&quot;</span>, LongType(), <span class="literal">True</span>)])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load up movie data as dataframe</span></span><br><span class="line"><span class="comment"># option(&quot;sep&quot;, &quot;\t&quot;)说明以&quot;\t&quot;为分割符</span></span><br><span class="line">moviesDF = spark.read.option(<span class="string">&quot;sep&quot;</span>, <span class="string">&quot;\t&quot;</span>).schema(schema).csv(<span class="string">&quot;file:///SparkCourse/ml-100k/u.data&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Some SQL-style magic to sort all movies by popularity in one line!</span></span><br><span class="line">topMovieIDs = moviesDF.groupBy(<span class="string">&quot;movieID&quot;</span>).count().orderBy(func.desc(<span class="string">&quot;count&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Grab the top 10</span></span><br><span class="line">topMovieIDs.show(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Stop the session</span></span><br><span class="line">spark.stop()</span><br></pre></td></tr></table></figure>
+<h3 id="broadcast">Broadcast</h3>
+<p>将一个变量分发到cluster上每个点</p>
+<p>example：给电影ID找对于的电影名字</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> functions <span class="keyword">as</span> func</span><br><span class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> StructType, StructField, IntegerType, LongType</span><br><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">loadMovieNames</span>():</span><br><span class="line">    movieNames = &#123;&#125;</span><br><span class="line">    <span class="comment"># CHANGE THIS TO THE PATH TO YOUR u.ITEM FILE:</span></span><br><span class="line">    <span class="keyword">with</span> codecs.<span class="built_in">open</span>(<span class="string">&quot;E:/SparkCourse/ml-100k/u.ITEM&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&#x27;ISO-8859-1&#x27;</span>, errors=<span class="string">&#x27;ignore&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">            fields = line.split(<span class="string">&#x27;|&#x27;</span>)</span><br><span class="line">            movieNames[<span class="built_in">int</span>(fields[<span class="number">0</span>])] = fields[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">return</span> movieNames</span><br><span class="line"></span><br><span class="line">spark = SparkSession.builder.appName(<span class="string">&quot;PopularMovies&quot;</span>).getOrCreate()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将loadMovieNames方法return的字典分发到cluster上所有节点</span></span><br><span class="line">nameDict = spark.sparkContext.broadcast(loadMovieNames())</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create schema when reading u.data</span></span><br><span class="line">schema = StructType([ \</span><br><span class="line">                     StructField(<span class="string">&quot;userID&quot;</span>, IntegerType(), <span class="literal">True</span>), \</span><br><span class="line">                     StructField(<span class="string">&quot;movieID&quot;</span>, IntegerType(), <span class="literal">True</span>), \</span><br><span class="line">                     StructField(<span class="string">&quot;rating&quot;</span>, IntegerType(), <span class="literal">True</span>), \</span><br><span class="line">                     StructField(<span class="string">&quot;timestamp&quot;</span>, LongType(), <span class="literal">True</span>)])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load up movie data as dataframe</span></span><br><span class="line">moviesDF = spark.read.option(<span class="string">&quot;sep&quot;</span>, <span class="string">&quot;\t&quot;</span>).schema(schema).csv(<span class="string">&quot;file:///SparkCourse/ml-100k/u.data&quot;</span>)</span><br><span class="line"></span><br><span class="line">movieCounts = moviesDF.groupBy(<span class="string">&quot;movieID&quot;</span>).count()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a user-defined function to look up movie names from our broadcasted dictionary</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">lookupName</span>(<span class="params">movieID</span>):</span><br><span class="line">    <span class="keyword">return</span> nameDict.value[movieID]</span><br><span class="line">lookupNameUDF = func.udf(lookupName)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add a movieTitle column using our new udf</span></span><br><span class="line">moviesWithNames = movieCounts.withColumn(<span class="string">&quot;movieTitle&quot;</span>, lookupNameUDF(func.col(<span class="string">&quot;movieID&quot;</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sort the results</span></span><br><span class="line"><span class="comment"># 新的一种排序方法</span></span><br><span class="line">sortedMoviesWithNames = moviesWithNames.orderBy(func.desc(<span class="string">&quot;count&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Grab the top 10</span></span><br><span class="line">sortedMoviesWithNames.show(<span class="number">10</span>, <span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Stop the session</span></span><br><span class="line">spark.stop()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="example-find-the-most-popular-superhero">Example: find the most
+popular superhero</h2>
+<p>数据集：</p>
+<ul>
+<li><p>Marvel-graph.txt</p>
+<p>4395 7483 9475 7483</p>
+<p>4802 3939 ...</p>
+<p>每行第一个ID是superhero
+ID，后面跟着的是在漫画中和这个superhero同时出现过的superhero ID</p>
+<p>一个超级英雄可能多次在每一行的第一个出现</p></li>
+<li><p>Marvel-names.txt</p>
+<p>superhero ID与名字的映射</p></li>
+</ul>
+<h3
+id="mission1找出最受欢迎的superhero">Mission1：找出最受欢迎的superhero</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> functions <span class="keyword">as</span> func</span><br><span class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> StructType, StructField, IntegerType, StringType</span><br><span class="line"></span><br><span class="line">spark = SparkSession.builder.appName(<span class="string">&quot;MostPopularSuperhero&quot;</span>).getOrCreate()</span><br><span class="line"></span><br><span class="line">schema = StructType([ \</span><br><span class="line">                     StructField(<span class="string">&quot;id&quot;</span>, IntegerType(), <span class="literal">True</span>), \</span><br><span class="line">                     StructField(<span class="string">&quot;name&quot;</span>, StringType(), <span class="literal">True</span>)])</span><br><span class="line"></span><br><span class="line">names = spark.read.schema(schema).option(<span class="string">&quot;sep&quot;</span>, <span class="string">&quot; &quot;</span>).csv(<span class="string">&quot;file:///SparkCourse/Marvel-names.txt&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 暂时不在意这个datafram的schema</span></span><br><span class="line">lines = spark.read.text(<span class="string">&quot;file:///SparkCourse/Marvel-graph.txt&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Small tweak vs. what&#x27;s shown in the video: we trim each line of whitespace as that could</span></span><br><span class="line"><span class="comment"># throw off the counts.</span></span><br><span class="line">connections = lines.withColumn(<span class="string">&quot;id&quot;</span>, func.split(func.trim(func.col(<span class="string">&quot;value&quot;</span>)), <span class="string">&quot; &quot;</span>)[<span class="number">0</span>]) \</span><br><span class="line">    .withColumn(<span class="string">&quot;connections&quot;</span>, func.size(func.split(func.trim(func.col(<span class="string">&quot;value&quot;</span>)), <span class="string">&quot; &quot;</span>)) - <span class="number">1</span>) \</span><br><span class="line">    .groupBy(<span class="string">&quot;id&quot;</span>).agg(func.<span class="built_in">sum</span>(<span class="string">&quot;connections&quot;</span>).alias(<span class="string">&quot;connections&quot;</span>))</span><br><span class="line">    </span><br><span class="line">mostPopular = connections.sort(func.col(<span class="string">&quot;connections&quot;</span>).desc()).first()</span><br><span class="line"></span><br><span class="line">mostPopularName = names.<span class="built_in">filter</span>(func.col(<span class="string">&quot;id&quot;</span>) == mostPopular[<span class="number">0</span>]).select(<span class="string">&quot;name&quot;</span>).first()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(mostPopularName[<span class="number">0</span>] + <span class="string">&quot; is the most popular superhero with &quot;</span> + <span class="built_in">str</span>(mostPopular[<span class="number">1</span>]) + <span class="string">&quot; co-appearances.&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3
+id="mission2找出最不起眼的superhero">Mission2：找出最不起眼的superhero</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> functions <span class="keyword">as</span> func</span><br><span class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> StructType, StructField, IntegerType, StringType</span><br><span class="line"></span><br><span class="line">spark = SparkSession.builder.appName(<span class="string">&quot;MostObscureSuperheroes&quot;</span>).getOrCreate()</span><br><span class="line"></span><br><span class="line">schema = StructType([ \</span><br><span class="line">                     StructField(<span class="string">&quot;id&quot;</span>, IntegerType(), <span class="literal">True</span>), \</span><br><span class="line">                     StructField(<span class="string">&quot;name&quot;</span>, StringType(), <span class="literal">True</span>)])</span><br><span class="line"></span><br><span class="line">names = spark.read.schema(schema).option(<span class="string">&quot;sep&quot;</span>, <span class="string">&quot; &quot;</span>).csv(<span class="string">&quot;file:///SparkCourse/Marvel-names.txt&quot;</span>)</span><br><span class="line"></span><br><span class="line">lines = spark.read.text(<span class="string">&quot;file:///SparkCourse/Marvel-graph.txt&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Small tweak vs. what&#x27;s shown in the video: we trim whitespace from each line as this</span></span><br><span class="line"><span class="comment"># could throw the counts off by one.</span></span><br><span class="line">connections = lines.withColumn(<span class="string">&quot;id&quot;</span>, func.split(func.trim(func.col(<span class="string">&quot;value&quot;</span>)), <span class="string">&quot; &quot;</span>)[<span class="number">0</span>]) \</span><br><span class="line">    .withColumn(<span class="string">&quot;connections&quot;</span>, func.size(func.split(func.trim(func.col(<span class="string">&quot;value&quot;</span>)), <span class="string">&quot; &quot;</span>)) - <span class="number">1</span>) \</span><br><span class="line">    .groupBy(<span class="string">&quot;id&quot;</span>).agg(func.<span class="built_in">sum</span>(<span class="string">&quot;connections&quot;</span>).alias(<span class="string">&quot;connections&quot;</span>))</span><br><span class="line">    </span><br><span class="line">minConnectionCount = connections.agg(func.<span class="built_in">min</span>(<span class="string">&quot;connections&quot;</span>)).first()[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">minConnections = connections.<span class="built_in">filter</span>(func.col(<span class="string">&quot;connections&quot;</span>) == minConnectionCount)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用join方法联合两个表</span></span><br><span class="line">minConnectionsWithNames = minConnections.join(names, <span class="string">&quot;id&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The following characters have only &quot;</span> + <span class="built_in">str</span>(minConnectionCount) + <span class="string">&quot; connection(s):&quot;</span>)</span><br><span class="line"></span><br><span class="line">minConnectionsWithNames.select(<span class="string">&quot;name&quot;</span>).show()</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>ML</category>
+        <category>BDC</category>
       </categories>
   </entry>
   <entry>
@@ -1041,6 +1205,165 @@ alt="image-20230425141231598" />
 ]]></content>
       <categories>
         <category>DS</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>分布式训练</title>
+    <url>/2024/05/08/DistributeTraining/</url>
+    <content><![CDATA[<p>分布式训练</p>
+<span id="more"></span>
+<p>参考文章：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/394064174">Optimizer state
+sharding (ZeRO) - 知乎 (zhihu.com)</a>写的很好很详细</p>
+<h1 id="模型训练流程">模型训练流程</h1>
+<p>1、正向传播计算出output</p>
+<p>2、反向传播计算梯度</p>
+<p>3、得到梯度后，用optimizer优化参数</p>
+<h1 id="数据并行">数据并行</h1>
+<h2 id="dp">DP</h2>
+<p>DP只能在一个主机上多个GPU间进行分布式训练。</p>
+<figure>
+<img
+src="https://pic2.zhimg.com/v2-040f702b1af9554c769c7b1ae7e4ef39_r.jpg"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>流程：</p>
+<ul>
+<li>将 inputs 从主 GPU 分发到所有 GPU 上。</li>
+<li>将 model 从主 GPU 分发到所有 GPU 上。</li>
+<li>每个 GPU 分别独立进行前向传播，得到 outputs。</li>
+<li>将每个 GPU 的 outputs 发回主 GPU。</li>
+<li>在主 GPU 上，通过 loss function 计算出 loss，对 loss function
+求导，求出损失梯度。</li>
+<li>计算得到的梯度分发到所有 GPU 上。</li>
+<li>反向传播计算参数梯度。</li>
+<li>将所有梯度回传到主 GPU，通过梯度更新模型权重。</li>
+<li>不断重复上面的过程</li>
+</ul>
+<h2 id="ddp">DDP</h2>
+<p>可以在不同主机的GPU进行分布式训练</p>
+<figure>
+<img
+src="https://pic1.zhimg.com/v2-d0347bc4f3f85e0944b39c5e18864af0_r.jpg"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>下面rank代表一个worker</p>
+<ul>
+<li>首先将 rank=0 进程中的模型参数广播到进程组中的其他进程；</li>
+<li>然后，每个 DDP 进程都会创建一个 <strong>local Reducer</strong>
+来负责梯度同步。</li>
+<li>在训练过程中，每个进程从磁盘加载 batch 数据，并将它们传递到其
+GPU。独立完成向前传播，计算出loss。</li>
+<li>反向传播过程中，梯度在各个 GPUs 间进行 All-Reduce，每个 GPU
+都收到其他 GPU
+的梯度，从而可以独自进行反向传播和参数更新。同时，每一层的梯度不依赖于前一层，所以<strong>梯度的
+All-Reduce 和后向过程同时计算</strong>，以进一步缓解网络瓶颈。</li>
+<li>用optimizer更新参数：每个节点都得到了平均梯度，原参数也是相同的，这样各个
+GPU 中的模型参数保持同步 。</li>
+</ul>
+<h2 id="zero">ZeRO</h2>
+<p>数据并行因其易用性，得到了最为广泛的应用。然而，数据并行会产生大量冗余
+Model States 的空间占用。ZeRO
+的本质，是在数据并行的基础上，对冗余空间占用进行深度优化。</p>
+<p>Model State的组成：</p>
+<ol type="1">
+<li>Optimizer States: <strong><code>Optimizer States</code></strong> 是
+<strong>Optimizer</strong> 在进行梯度更新时所需要用到的数据，例如 SGD
+中的<code>Momentum</code>以及使用混合精度训练时的<code>Float32 Master Parameters</code>。</li>
+<li>Gradient：
+在反向传播后所产生的梯度信息，其决定了参数的更新方向。</li>
+<li>Model Parameter:
+模型参数，也就是我们在整个过程中通过数据“学习”的信息。</li>
+</ol>
+<p>在传统数据并行下，每个进程都使用同样参数来进行训练。每个进程也会持有对<code>Optimizer States</code>的完整拷贝，同样占用了大量显存。在混合精度场景下，以参数量为<code>Ψ</code>的模型和Adam
+optimzier为例，Adam需要保存： -
+Float16的<code>参数</code>和<code>梯度</code>的备份。这两项分别消耗了2Ψ和2Ψ
+Bytes内存；（1 Float16 = 2 Bytes） -
+Float32的<code>参数</code>，<code>Momentum</code>，<code>Variance</code>备份，对应到
+3 份<code>4Ψ</code>的内存占用。（1 Float32 = 4 Bytes）</p>
+<p>最终需要<code>2Ψ + 2Ψ + KΨ = 16Ψ bytes</code>的显存。一个7.5B参数量的模型，就需要至少
+120 GB
+的显存空间才能装下这些<code>Model States</code>。当数据并行时，这些重复的<code>Model States</code>会在N个GPU上复制N份[1]。</p>
+<p>有三个级别的ZeRO：</p>
+<figure>
+<img
+src="https://pic3.zhimg.com/v2-8c87dd82df3b817be6342a15091660f6_r.jpg"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="zero-1">ZeRO-1</h3>
+<p>Optimizer
+在进行梯度更新时，会使用<code>参数</code>与<code>Optimizer States</code>计算新的<code>参数</code>。而在正向或反向传播中，<code>Optimizer States</code>并不会参与其中的计算。
+（算完反向传播梯度就不用关心每个GPU数据不同问题了，梯度已经统一了）因此，我们完全可以让每个进程只持有<strong>一小段</strong><code>Optimizer States</code>，利用这<strong>一小段</strong><code>Optimizer States</code>更新完与之对应的<strong>一小段</strong><code>参数</code>后，再把各个小段拼起来合为完整的模型参数。<strong>ZeRO-1</strong>
+中正是这么做的：</p>
+<ol type="1">
+<li>forward过程由每个rank的GPU独自完整的完成，然后进行backward过程。在backward过程中，梯度通过allReduce进行同步。</li>
+<li>Optimizer state
+使用贪心策略基于参数量进行分片，以此确保每个rank几乎拥有相同大小的优化器内存。</li>
+<li>每个rank只负责更新当前优化器分片的部分，由于每个rank只有分片的优化器state，所以当前rank忽略其余的state。</li>
+<li>在更新过后，通过广播或者allGather的方式确保所有的rank都收到最新更新过后的模型参数。</li>
+</ol>
+<p>ZeRO-1
+非常适合使用类似Adam进行优化的模型训练，因为Adam拥有额外的参数m（momentum）与v（variance），特别是FP16混合精度训练。ZeRO-1
+不适合使用SGD类似的优化器进行模型训练，因为SGD只有较少的参数内存，并且由于需要更新模型参数，导致额外的通讯成本。ZeRO-1只是解决了Optimizer
+state的冗余。</p>
+<h3 id="zero-2">ZeRO-2</h3>
+<p>ZeRO-1将<code>Optimizer States</code>分<strong>小段</strong>储存在了多个进程中，所以在计算时，这<strong>一小段</strong>的<code>Optimizer States</code>也只需要得到进程所需的对应<strong>一小段</strong><code>Gradient</code>就可以。遵循这种原理，和<code>Optimizer States</code>一样，ZeRO-2也将<code>Gradient</code>进行了<strong>切片</strong>：</p>
+<p>在一个Layer的<code>Gradient</code>都被计算出来后： -
+<code>Gradient</code>通过<code>AllReduce</code>进行聚合。 （类似于DDP）
+-
+聚合后的梯度只会被某一个进程用来更新参数，因此其它进程上的这段<code>Gradient</code>不再被需要，可以立马释放掉。（按需保留）</p>
+<p>这样就在<strong>ZeRO-1</strong>的基础上实现了对<code>Gradient</code>的切分。</p>
+<h3 id="zero-3">ZeRO-3</h3>
+<p>ZeRO-3
+通过对<code>Optimizer States</code>，<code>Gradient</code>和<code>Model Parameter</code>三方面的分割，从而使<strong>所有进程共同协作，只储存一份完整
+Model
+States</strong>。其核心思路就是<strong>精细化通讯</strong>，按照计算需求做到参数的收集和释放。</p>
+<h4 id="宏观做法">宏观做法</h4>
+<ul>
+<li><p>初始化：一个模型由多个<code>Submodule</code>组成。在初始化时，ZeRO-3
+会将<strong>每个</strong><code>Submodule Parameter Tensor</code>下的数据按照
+GPU
+的数量，<strong>分摊切割</strong>成多个小<code>ds_tensor</code>储存在在不同
+GPU
+进程中。因为<code>ds_tensor</code>可以共同组合出完整数据，所以原始<code>param</code>下的数据变为冗余信息，会被释放掉。</p></li>
+<li><p>训练中：在训练过程中，ZeRO-3
+会按照<code>Submodule</code>的计算需求进行参数的收集和释放：
+在当前<code>Submodule</code>正向/反向传播<strong>计算前</strong>，ZeRO-3
+通过<code>All-gather</code>拿到分摊储存在不同进程中的<code>ds_tensor</code>，重建原始的<code>param</code>。重建之后的参数就可以参与计算。</p></li>
+<li><p>计算后：在当前<code>Submodule</code>正向/反向传播计算后，<code>param</code>下的数据并没有发生变更，与
+ds_tensor
+相同，造成了冗余。因此，<code>param</code>会再次被释放。</p></li>
+</ul>
+<p>经过 ZeRO-3, 一套完整的 model states 就被分布式储存在了多个 GPU
+进程中。通过按照计算需求的数据收集和释放，实现储存空间有限的情况下超大规模模型的训练。</p>
+<h4 id="代码详解">代码详解</h4>
+<p>TBC <a href="https://zhuanlan.zhihu.com/p/394064174">Optimizer state
+sharding (ZeRO) - 知乎 (zhihu.com)</a></p>
+<h2 id="hdfs">HDFS</h2>
+<h3 id="计算流程">计算流程</h3>
+<p>Pytorch
+的FSDP是一种数据并行的训练方法，<strong>它实际上就是ZeRO-3</strong>.</p>
+<figure>
+<img src="https://pytorch.org/tutorials/_images/fsdp_workflow.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>这里，All-Reduce操作被分为All-gather和Reduce-Scatter操作</p>
+<figure>
+<img src="https://pytorch.org/tutorials/_images/fsdp_sharding.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="代码实现">代码实现</h3>
+<h1 id="模型并行">模型并行</h1>
+<h1 id="流水线并行">流水线并行</h1>
+]]></content>
+      <categories>
+        <category>ML</category>
+        <category>BDC</category>
       </categories>
   </entry>
   <entry>
@@ -2016,6 +2339,26 @@ single path are less than l.</p>
       <categories>
         <category>RecSys</category>
         <category>KGRec</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>LINUX</title>
+    <url>/2024/04/10/LINUX/</url>
+    <content><![CDATA[<span id="more"></span>
+<h1 id="一些常用方法">一些常用方法</h1>
+<h2 id="添加环境变量">添加环境变量</h2>
+<p>使用vim编辑环境变量文件（只修改当前用户的环境变量）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ vim ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>将下面的命令加入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ export PATH=$PATH:/usr/local/xxxxxx</span><br></pre></td></tr></table></figure>
+<p>最后，用source在当前bash环境下读取并执行FileName中的命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ source ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>Note:</p>
+<p>Hadoop环境变量配置cdoe如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export HADOOP_HOME=/安装目录</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Basic Of Computer</category>
       </categories>
   </entry>
   <entry>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="分布式训练">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式训练">
+<meta property="og:url" content="http://example.com/2024/05/08/DistributeTraining/index.html">
+<meta property="og:site_name" content="Lory&#39;s Page">
+<meta property="og:description" content="分布式训练">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pytorch.org/tutorials/_images/fsdp_workflow.png">
+<meta property="og:image" content="https://pytorch.org/tutorials/_images/fsdp_sharding.png">
+<meta property="article:published_time" content="2024-05-08T20:46:25.000Z">
+<meta property="article:modified_time" content="2024-05-20T05:27:22.100Z">
+<meta property="article:author" content="Lory">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pytorch.org/tutorials/_images/fsdp_workflow.png">
+
+
+<link rel="canonical" href="http://example.com/2024/05/08/DistributeTraining/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2024/05/08/DistributeTraining/","path":"2024/05/08/DistributeTraining/","title":"分布式训练"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>分布式训练 | Lory's Page</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Lory's Page</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">模型训练流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%B9%B6%E8%A1%8C"><span class="nav-number">2.</span> <span class="nav-text">数据并行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dp"><span class="nav-number">2.1.</span> <span class="nav-text">DP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ddp"><span class="nav-number">2.2.</span> <span class="nav-text">DDP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zero"><span class="nav-number">2.3.</span> <span class="nav-text">ZeRO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#zero-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">ZeRO-1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zero-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">ZeRO-2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zero-3"><span class="nav-number">2.3.3.</span> <span class="nav-text">ZeRO-3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8F%E8%A7%82%E5%81%9A%E6%B3%95"><span class="nav-number">2.3.3.1.</span> <span class="nav-text">宏观做法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3"><span class="nav-number">2.3.3.2.</span> <span class="nav-text">代码详解</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hdfs"><span class="nav-number">2.4.</span> <span class="nav-text">HDFS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%B5%81%E7%A8%8B"><span class="nav-number">2.4.1.</span> <span class="nav-text">计算流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.4.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%B9%B6%E8%A1%8C"><span class="nav-number">3.</span> <span class="nav-text">模型并行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%B9%B6%E8%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">流水线并行</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Lory</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/08/DistributeTraining/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Lory">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lory's Page">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="分布式训练 | Lory's Page">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          分布式训练
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-05-08 20:46:25" itemprop="dateCreated datePublished" datetime="2024-05-08T20:46:25+00:00">2024-05-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-05-20 05:27:22" itemprop="dateModified" datetime="2024-05-20T05:27:22+00:00">2024-05-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ML/BDC/" itemprop="url" rel="index"><span itemprop="name">BDC</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>分布式训练</p>
+<span id="more"></span>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/394064174">Optimizer state
+sharding (ZeRO) - 知乎 (zhihu.com)</a>写的很好很详细</p>
+<h1 id="模型训练流程">模型训练流程</h1>
+<p>1、正向传播计算出output</p>
+<p>2、反向传播计算梯度</p>
+<p>3、得到梯度后，用optimizer优化参数</p>
+<h1 id="数据并行">数据并行</h1>
+<h2 id="dp">DP</h2>
+<p>DP只能在一个主机上多个GPU间进行分布式训练。</p>
+<figure>
+<img
+src="https://pic2.zhimg.com/v2-040f702b1af9554c769c7b1ae7e4ef39_r.jpg"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>流程：</p>
+<ul>
+<li>将 inputs 从主 GPU 分发到所有 GPU 上。</li>
+<li>将 model 从主 GPU 分发到所有 GPU 上。</li>
+<li>每个 GPU 分别独立进行前向传播，得到 outputs。</li>
+<li>将每个 GPU 的 outputs 发回主 GPU。</li>
+<li>在主 GPU 上，通过 loss function 计算出 loss，对 loss function
+求导，求出损失梯度。</li>
+<li>计算得到的梯度分发到所有 GPU 上。</li>
+<li>反向传播计算参数梯度。</li>
+<li>将所有梯度回传到主 GPU，通过梯度更新模型权重。</li>
+<li>不断重复上面的过程</li>
+</ul>
+<h2 id="ddp">DDP</h2>
+<p>可以在不同主机的GPU进行分布式训练</p>
+<figure>
+<img
+src="https://pic1.zhimg.com/v2-d0347bc4f3f85e0944b39c5e18864af0_r.jpg"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>下面rank代表一个worker</p>
+<ul>
+<li>首先将 rank=0 进程中的模型参数广播到进程组中的其他进程；</li>
+<li>然后，每个 DDP 进程都会创建一个 <strong>local Reducer</strong>
+来负责梯度同步。</li>
+<li>在训练过程中，每个进程从磁盘加载 batch 数据，并将它们传递到其
+GPU。独立完成向前传播，计算出loss。</li>
+<li>反向传播过程中，梯度在各个 GPUs 间进行 All-Reduce，每个 GPU
+都收到其他 GPU
+的梯度，从而可以独自进行反向传播和参数更新。同时，每一层的梯度不依赖于前一层，所以<strong>梯度的
+All-Reduce 和后向过程同时计算</strong>，以进一步缓解网络瓶颈。</li>
+<li>用optimizer更新参数：每个节点都得到了平均梯度，原参数也是相同的，这样各个
+GPU 中的模型参数保持同步 。</li>
+</ul>
+<h2 id="zero">ZeRO</h2>
+<p>数据并行因其易用性，得到了最为广泛的应用。然而，数据并行会产生大量冗余
+Model States 的空间占用。ZeRO
+的本质，是在数据并行的基础上，对冗余空间占用进行深度优化。</p>
+<p>Model State的组成：</p>
+<ol type="1">
+<li>Optimizer States: <strong><code>Optimizer States</code></strong> 是
+<strong>Optimizer</strong> 在进行梯度更新时所需要用到的数据，例如 SGD
+中的<code>Momentum</code>以及使用混合精度训练时的<code>Float32 Master Parameters</code>。</li>
+<li>Gradient：
+在反向传播后所产生的梯度信息，其决定了参数的更新方向。</li>
+<li>Model Parameter:
+模型参数，也就是我们在整个过程中通过数据“学习”的信息。</li>
+</ol>
+<p>在传统数据并行下，每个进程都使用同样参数来进行训练。每个进程也会持有对<code>Optimizer States</code>的完整拷贝，同样占用了大量显存。在混合精度场景下，以参数量为<code>Ψ</code>的模型和Adam
+optimzier为例，Adam需要保存： -
+Float16的<code>参数</code>和<code>梯度</code>的备份。这两项分别消耗了2Ψ和2Ψ
+Bytes内存；（1 Float16 = 2 Bytes） -
+Float32的<code>参数</code>，<code>Momentum</code>，<code>Variance</code>备份，对应到
+3 份<code>4Ψ</code>的内存占用。（1 Float32 = 4 Bytes）</p>
+<p>最终需要<code>2Ψ + 2Ψ + KΨ = 16Ψ bytes</code>的显存。一个7.5B参数量的模型，就需要至少
+120 GB
+的显存空间才能装下这些<code>Model States</code>。当数据并行时，这些重复的<code>Model States</code>会在N个GPU上复制N份[1]。</p>
+<p>有三个级别的ZeRO：</p>
+<figure>
+<img
+src="https://pic3.zhimg.com/v2-8c87dd82df3b817be6342a15091660f6_r.jpg"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="zero-1">ZeRO-1</h3>
+<p>Optimizer
+在进行梯度更新时，会使用<code>参数</code>与<code>Optimizer States</code>计算新的<code>参数</code>。而在正向或反向传播中，<code>Optimizer States</code>并不会参与其中的计算。
+（算完反向传播梯度就不用关心每个GPU数据不同问题了，梯度已经统一了）因此，我们完全可以让每个进程只持有<strong>一小段</strong><code>Optimizer States</code>，利用这<strong>一小段</strong><code>Optimizer States</code>更新完与之对应的<strong>一小段</strong><code>参数</code>后，再把各个小段拼起来合为完整的模型参数。<strong>ZeRO-1</strong>
+中正是这么做的：</p>
+<ol type="1">
+<li>forward过程由每个rank的GPU独自完整的完成，然后进行backward过程。在backward过程中，梯度通过allReduce进行同步。</li>
+<li>Optimizer state
+使用贪心策略基于参数量进行分片，以此确保每个rank几乎拥有相同大小的优化器内存。</li>
+<li>每个rank只负责更新当前优化器分片的部分，由于每个rank只有分片的优化器state，所以当前rank忽略其余的state。</li>
+<li>在更新过后，通过广播或者allGather的方式确保所有的rank都收到最新更新过后的模型参数。</li>
+</ol>
+<p>ZeRO-1
+非常适合使用类似Adam进行优化的模型训练，因为Adam拥有额外的参数m（momentum）与v（variance），特别是FP16混合精度训练。ZeRO-1
+不适合使用SGD类似的优化器进行模型训练，因为SGD只有较少的参数内存，并且由于需要更新模型参数，导致额外的通讯成本。ZeRO-1只是解决了Optimizer
+state的冗余。</p>
+<h3 id="zero-2">ZeRO-2</h3>
+<p>ZeRO-1将<code>Optimizer States</code>分<strong>小段</strong>储存在了多个进程中，所以在计算时，这<strong>一小段</strong>的<code>Optimizer States</code>也只需要得到进程所需的对应<strong>一小段</strong><code>Gradient</code>就可以。遵循这种原理，和<code>Optimizer States</code>一样，ZeRO-2也将<code>Gradient</code>进行了<strong>切片</strong>：</p>
+<p>在一个Layer的<code>Gradient</code>都被计算出来后： -
+<code>Gradient</code>通过<code>AllReduce</code>进行聚合。 （类似于DDP）
+-
+聚合后的梯度只会被某一个进程用来更新参数，因此其它进程上的这段<code>Gradient</code>不再被需要，可以立马释放掉。（按需保留）</p>
+<p>这样就在<strong>ZeRO-1</strong>的基础上实现了对<code>Gradient</code>的切分。</p>
+<h3 id="zero-3">ZeRO-3</h3>
+<p>ZeRO-3
+通过对<code>Optimizer States</code>，<code>Gradient</code>和<code>Model Parameter</code>三方面的分割，从而使<strong>所有进程共同协作，只储存一份完整
+Model
+States</strong>。其核心思路就是<strong>精细化通讯</strong>，按照计算需求做到参数的收集和释放。</p>
+<h4 id="宏观做法">宏观做法</h4>
+<ul>
+<li><p>初始化：一个模型由多个<code>Submodule</code>组成。在初始化时，ZeRO-3
+会将<strong>每个</strong><code>Submodule Parameter Tensor</code>下的数据按照
+GPU
+的数量，<strong>分摊切割</strong>成多个小<code>ds_tensor</code>储存在在不同
+GPU
+进程中。因为<code>ds_tensor</code>可以共同组合出完整数据，所以原始<code>param</code>下的数据变为冗余信息，会被释放掉。</p></li>
+<li><p>训练中：在训练过程中，ZeRO-3
+会按照<code>Submodule</code>的计算需求进行参数的收集和释放：
+在当前<code>Submodule</code>正向/反向传播<strong>计算前</strong>，ZeRO-3
+通过<code>All-gather</code>拿到分摊储存在不同进程中的<code>ds_tensor</code>，重建原始的<code>param</code>。重建之后的参数就可以参与计算。</p></li>
+<li><p>计算后：在当前<code>Submodule</code>正向/反向传播计算后，<code>param</code>下的数据并没有发生变更，与
+ds_tensor
+相同，造成了冗余。因此，<code>param</code>会再次被释放。</p></li>
+</ul>
+<p>经过 ZeRO-3, 一套完整的 model states 就被分布式储存在了多个 GPU
+进程中。通过按照计算需求的数据收集和释放，实现储存空间有限的情况下超大规模模型的训练。</p>
+<h4 id="代码详解">代码详解</h4>
+<p>TBC <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/394064174">Optimizer state
+sharding (ZeRO) - 知乎 (zhihu.com)</a></p>
+<h2 id="hdfs">HDFS</h2>
+<h3 id="计算流程">计算流程</h3>
+<p>Pytorch
+的FSDP是一种数据并行的训练方法，<strong>它实际上就是ZeRO-3</strong>.</p>
+<figure>
+<img src="https://pytorch.org/tutorials/_images/fsdp_workflow.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>这里，All-Reduce操作被分为All-gather和Reduce-Scatter操作</p>
+<figure>
+<img src="https://pytorch.org/tutorials/_images/fsdp_sharding.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="代码实现">代码实现</h3>
+<h1 id="模型并行">模型并行</h1>
+<h1 id="流水线并行">流水线并行</h1>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/04/18/LLM_review/" rel="prev" title="LLM Basic Knowledge">
+                  <i class="fa fa-chevron-left"></i> LLM Basic Knowledge
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/05/13/BDC-Spark/" rel="next" title="Spark">
+                  Spark <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lory</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
